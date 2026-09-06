@@ -3,840 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIVASINGH BANNING PANEL //</title>
+    <title>Meet Arpita ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        :root {
-            --bg-color: #05080a;
-            --panel-bg: rgba(10, 16, 23, 0.75);
-            --border-color: #1a2936;
-            --neon-green: #00ff66;
-            --neon-green-glow: rgba(0, 255, 102, 0.25);
-            --neon-red: #ff0055;
-            --neon-red-glow: rgba(255, 0, 85, 0.25);
-            --text-main: #c0d0e0;
-            --text-dim: #506575;
-            --font-mono: 'Courier New', Courier, monospace;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@500;700&family=Outfit:wght@300;400;600&display=swap');
+        
+        body, html {
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0f001a, #1a0033, #2a004d);
+            font-family: 'Outfit', sans-serif;
+            color: #fff;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-sans);
+        
+        .cute-font { font-family: 'Dancing Script', cursive; }
+        .title-font { font-family: 'Playfair Display', serif; }
+        
+        .section {
             min-height: 100vh;
             display: flex;
+            align-items: center;
+            justify-content: center;
             flex-direction: column;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(0, 255, 102, 0.03) 0%, transparent 80%),
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-        }
-
-        /* Typography & Utility */
-        .mono { font-family: var(--font-mono); }
-        .text-green { color: var(--neon-green); }
-        .text-red { color: var(--neon-red); }
-        .text-dim { color: var(--text-dim); }
-
-        /* Glowing Interfaces */
-        .panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 40px 20px;
             position: relative;
         }
 
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,105,180,0.1);
+            border-radius: 28px;
+        }
+        
+        .pink-glow {
+            text-shadow: 
+                0 0 10px #ff69b4,
+                0 0 25px #ff1493,
+                0 0 45px #c71585;
         }
 
-        .btn {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 18px;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-radius: 2px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .bg-particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        
+        .particle {
+            position: absolute; top: -15%; 
+            color: #ff69b4;
+            animation: fallFloating linear infinite;
+            text-shadow: 0 0 12px currentColor;
+            will-change: transform, opacity;
         }
 
-        .btn:hover {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green-glow);
+        @keyframes fallFloating {
+            0% { transform: translate3d(0, -15vh, 0) rotate(0deg) scale(0.8); opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { transform: translate3d(0, 115vh, 0) rotate(360deg) scale(1.1); opacity: 0; }
         }
 
-        .btn-red:hover {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-            box-shadow: 0 0 10px var(--neon-red-glow);
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px 14px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--border-color);
-            color: var(--neon-green);
-            font-family: var(--font-mono);
-            border-radius: 2px;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .input-field:focus {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 8px var(--neon-green-glow);
-        }
-
-        /* Layout & Nav */
-        header {
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(5, 8, 10, 0.9);
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .brand {
-            font-family: var(--font-mono);
-            font-weight: bold;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand-badge {
-            font-size: 0.65rem;
-            background: var(--neon-green);
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 2px;
-            font-weight: bold;
-        }
-
-        nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            padding: 8px 14px;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            color: var(--neon-green);
-            border-bottom: 2px solid var(--neon-green);
-        }
-
-        main {
-            flex: 1;
-            padding: 25px;
-            max-width: 1400px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .view-section {
-            display: none;
-        }
-
-        .view-section.active {
-            display: block;
-        }
-
-        /* Login Screen Overlay */
-        #login-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--bg-color);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 380px;
-            border: 1px solid var(--neon-green);
-            box-shadow: 0 0 20px var(--neon-green-glow);
-        }
-
-        /* Grid System */
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-        }
-
-        /* Metrics */
-        .metric-card {
-            background: rgba(0,0,0,0.4);
-            border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 2px;
-        }
-
-        .metric-val {
-            font-family: var(--font-mono);
-            font-size: 1.8rem;
-            margin-top: 5px;
-        }
-
-        /* Terminal Display */
-        .terminal {
-            background: #020405;
-            border: 1px solid var(--border-color);
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            padding: 15px;
-            height: 220px;
-            overflow-y: auto;
-            color: #a0b0c0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .terminal-line {
-            line-height: 1.4;
-            word-break: break-all;
-        }
-
-        /* Progress Bar */
-        .progress-bar-wrap {
-            width: 100%;
-            height: 12px;
-            background: rgba(0,0,0,0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 2px;
+        .img-frame {
+            position: relative;
+            border-radius: 24px;
             overflow: hidden;
-            margin: 15px 0;
+            border: 3px solid rgba(255,182,193,0.3);
+            box-shadow: 0 15px 35px rgba(255,105,180,0.25);
+            transition: all 0.4s ease;
+        }
+        .img-frame:hover {
+            transform: scale(1.03) rotate(1deg);
+            border-color: rgba(255,105,180,0.8);
+            box-shadow: 0 20px 45px rgba(255,105,180,0.45);
         }
 
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--neon-green);
-            box-shadow: 0 0 10px var(--neon-green);
-            transition: width 0.3s ease;
+        .pulse-btn {
+            animation: pulseGlow 2s infinite;
         }
-
-        /* Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            text-align: left;
-        }
-
-        .data-table th, .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .data-table th {
-            color: var(--text-dim);
-            font-weight: normal;
-        }
-
-        .badge {
-            padding: 3px 8px;
-            border-radius: 2px;
-            font-size: 0.75rem;
-        }
-
-        .badge-green { background: rgba(0, 255, 102, 0.1); color: var(--neon-green); border: 1px solid var(--neon-green); }
-        .badge-red { background: rgba(255, 0, 85, 0.1); color: var(--neon-red); border: 1px solid var(--neon-red); }
-
-        /* Custom Checkbox / Toggle */
-        .toggle-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 15px; align-items: flex-start; }
-            nav { width: 100%; overflow-x: auto; padding-bottom: 5px; }
-            .grid-2 { grid-template-columns: 1fr; }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(236, 72, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
         }
     </style>
 </head>
 <body>
 
-    <div id="login-overlay">
-        <div class="panel login-card">
-            <div class="panel-header">
-                <span>SYSTEM AUTHENTICATION</span>
-                <span class="brand-badge">v2.4.0</span>
-            </div>
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <label class="mono text-dim" style="font-size: 0.75rem;">OPERATOR ID</label>
-                <input type="text" id="login-user" class="input-field" value="SIVASINGH" required>
-                
-                <label class="mono text-dim" style="font-size: 0.75rem;">ACCESS KEY</label>
-                <input type="password" id="login-pass" class="input-field" value="••••••••••••" required>
-                
-                <div id="auth-status" class="mono text-dim" style="font-size: 0.75rem; margin-bottom: 12px; height: 16px;"></div>
-                
-                <button type="submit" class="btn" style="width: 100%; justify-content: center;">INITIALIZE SESSION</button>
-            </form>
-        </div>
+    <div class="fixed top-4 left-0 w-full text-center z-[100] text-white/50 text-xs font-mono tracking-widest pointer-events-none">
+        made by sivasingh heart 💖 | instagram📷 - @smss1708
     </div>
 
-    <header>
-        <div class="brand">
-            <span class="text-green">⚡</span> SIVASINGH // BANNING PANEL
-            <span class="brand-badge">SOC SIMULATOR</span>
-        </div>
-        <nav>
-            <button class="nav-btn active" onclick="switchTab('dashboard')">DASHBOARD</button>
-            <button class="nav-btn" onclick="switchTab('simulation')">SIMULATION</button>
-            <button class="nav-btn" onclick="switchTab('analysis')">TARGET ANALYSIS</button>
-            <button class="nav-btn" onclick="switchTab('tasks')">TASKS</button>
-            <button class="nav-btn" onclick="switchTab('logs')">LOGS</button>
-            <button class="nav-btn" onclick="switchTab('settings')">SETTINGS</button>
-            <button class="nav-btn" onclick="switchTab('owner')">OWNER</button>
-        </nav>
-    </header>
+    <audio id="bgmusic" loop><source src="tere-liye.mp3" type="audio/mpeg"></audio>
 
-    <main>
-        <section id="sec-dashboard" class="view-section active">
-            <div class="grid-3" style="margin-bottom: 20px;">
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">SYSTEM OPERATOR</div>
-                    <div class="metric-val text-green">SIVASINGH</div>
-                </div>
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">SYSTEM STATUS</div>
-                    <div class="metric-val text-green" id="dash-sys-status">ONLINE // READY</div>
-                </div>
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">ACTIVE SIMULATIONS</div>
-                    <div class="metric-val" id="dash-active-tasks">0</div>
-                </div>
-            </div>
+    <div class="bg-particles" id="particles-container"></div>
 
-            <div class="grid-3" style="margin-bottom: 20px;">
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">TOTAL REPORT SIMULATIONS</div>
-                    <div class="metric-val" id="dash-total-reports">0</div>
-                </div>
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">SUCCESSFUL SIMULATIONS</div>
-                    <div class="metric-val text-green" id="dash-success-reports">0</div>
-                </div>
-                <div class="metric-card">
-                    <div class="mono text-dim" style="font-size: 0.75rem;">FAILED SIMULATIONS</div>
-                    <div class="metric-val text-red" id="dash-failed-reports">0</div>
-                </div>
-            </div>
+    <main class="relative z-10 max-w-4xl mx-auto min-h-screen flex flex-col items-center justify-center">
 
-            <div class="panel">
-                <div class="panel-header">LIVE SYSTEM METRICS SIMULATION</div>
-                <div class="terminal" id="dash-terminal">
-                    <div class="terminal-line text-dim">[SYSTEM] Initializing SOC core modules...</div>
-                    <div class="terminal-line text-dim">[SYSTEM] Local environment verification complete. Ready for tasks.</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="sec-simulation" class="view-section">
-            <div class="grid-2">
-                <div class="panel">
-                    <div class="panel-header">SIMULATION PARAMETERS</div>
-                    <label class="mono text-dim" style="font-size: 0.75rem;">TARGET USERNAME / ID</label>
-                    <input type="text" id="sim-target" class="input-field" placeholder="e.g. target_entity_01">
-
-                    <label class="mono text-dim" style="font-size: 0.75rem;">VIOLATION CATEGORY</label>
-                    <select id="sim-category" class="input-field">
-                        <option value="Inappropriate Content">Inappropriate Content</option>
-                        <option value="Impersonation / Spam">Impersonation / Spam</option>
-                        <option value="Hate Speech / Harassment">Hate Speech / Harassment</option>
-                        <option value="Terms of Service Violation">Terms of Service Violation</option>
-                    </select>
-
-                    <label class="mono text-dim" style="font-size: 0.75rem;">PRIMARY REASON</label>
-                    <select id="sim-reason" class="input-field">
-                        <option value="Automated Pattern Match">Automated Pattern Match</option>
-                        <option value="Safety Guideline Trigger">Safety Guideline Trigger</option>
-                        <option value="Account Authenticity Risk">Account Authenticity Risk</option>
-                    </select>
-
-                    <label class="mono text-dim" style="font-size: 0.75rem;">SIMULATED REPORT BATCH SIZE</label>
-                    <input type="number" id="sim-count" class="input-field" value="50" min="1" max="1000">
-
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <button class="btn" id="btn-start-sim" onclick="startReportSimulation()">START SIMULATION</button>
-                        <button class="btn btn-red" id="btn-stop-sim" onclick="stopReportSimulation()" disabled>STOP</button>
-                    </div>
+        <section id="hero" class="section text-center">
+            <div class="glass-card p-8 md:p-12 w-full max-w-2xl transform transition-all">
+                <div class="relative w-40 h-40 md:w-48 md:h-48 mx-auto mb-6 img-frame">
+                    <img src="photo1.jpg" alt="Arpita" class="w-full h-full object-cover">
                 </div>
 
-                <div class="panel">
-                    <div class="panel-header">SIMULATION MONITOR</div>
-                    <div class="mono text-dim" style="font-size: 0.75rem;">TASK PROGRESS</div>
-                    <div class="progress-bar-wrap">
-                        <div class="progress-bar-fill" id="sim-progress-fill"></div>
-                    </div>
-                    <div class="mono text-dim" style="font-size: 0.75rem; margin-bottom: 10px; display: flex; justify-content: space-between;">
-                        <span>STATUS: <span id="sim-status-text" class="text-main">IDLE</span></span>
-                        <span id="sim-percentage">0%</span>
-                    </div>
-
-                    <div class="mono text-dim" style="font-size: 0.75rem;">LIVE ACTIVITY TERMINAL</div>
-                    <div class="terminal" id="sim-terminal">
-                        <div class="terminal-line text-dim">[READY] Awaiting simulation dispatch...</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="sec-analysis" class="view-section">
-            <div class="panel">
-                <div class="panel-header">TARGET RISK & PROFILE ANALYSIS (LOCAL SIMULATION)</div>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <input type="text" id="analysis-input" class="input-field" placeholder="Enter username or account string..." style="margin-bottom: 0;">
-                    <button class="btn" onclick="runTargetAnalysis()">RUN SCAN</button>
-                </div>
-
-                <div id="analysis-results" style="display: none; margin-top: 20px;">
-                    <div class="grid-3" style="margin-bottom: 20px;">
-                        <div class="metric-card">
-                            <div class="mono text-dim" style="font-size: 0.75rem;">SIMULATED RISK SCORE</div>
-                            <div class="metric-val text-red" id="ana-risk-score">0 / 100</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="mono text-dim" style="font-size: 0.75rem;">SIMULATED ACCOUNT STATUS</div>
-                            <div class="metric-val text-green" id="ana-acc-status">ANALYZED</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="mono text-dim" style="font-size: 0.75rem;">DETECTED RISK LEVEL</div>
-                            <div class="metric-val" id="ana-risk-level">MEDIUM</div>
-                        </div>
-                    </div>
-
-                    <div class="panel" style="background: rgba(0,0,0,0.3);">
-                        <div class="mono text-dim" style="font-size: 0.8rem; margin-bottom: 10px;">SIMULATED VIOLATION BREAKDOWN</div>
-                        <ul class="mono" style="font-size: 0.85rem; padding-left: 20px; line-height: 1.8;" id="ana-violations-list">
-                            </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="sec-tasks" class="view-section">
-            <div class="panel">
-                <div class="panel-header">AUTOMATED TASK MANAGER</div>
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>TASK ID</th>
-                                <th>TARGET</th>
-                                <th>TIMESTAMP</th>
-                                <th>PROGRESS</th>
-                                <th>STATUS</th>
-                                <th>ACTIONS</th>
-                            </tr>
-                        </thead>
-                        <tbody id="task-table-body">
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section id="sec-logs" class="view-section">
-            <div class="panel">
-                <div class="panel-header">
-                    <span>SYSTEM ACTIVITY LOGS</span>
-                    <button class="btn btn-red" style="padding: 4px 8px; font-size: 0.75rem;" onclick="confirmClearLogs()">CLEAR LOGS</button>
-                </div>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <input type="text" id="log-search" class="input-field" placeholder="Search logs..." style="margin-bottom: 0;" oninput="renderLogs()">
-                </div>
-                <div style="overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>TIMESTAMP</th>
-                                <th>TARGET</th>
-                                <th>ACTION / EVENT</th>
-                                <th>STATUS</th>
-                            </tr>
-                        </thead>
-                        <tbody id="log-table-body">
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <section id="sec-settings" class="view-section">
-            <div class="panel" style="max-width: 600px;">
-                <div class="panel-header">INTERFACE & SYSTEM SETTINGS</div>
+                <h1 class="text-5xl md:text-7xl cute-font pink-glow text-pink-300 mb-2">Hello Friends! ✨</h1>
+                <h2 class="text-2xl md:text-3xl title-font font-bold text-white mb-6">I am <span class="text-pink-400">Arpita</span> 💕</h2>
                 
-                <div class="toggle-wrap">
-                    <span class="mono text-dim" style="font-size: 0.85rem;">UI ANIMATIONS</span>
-                    <button class="btn" id="set-toggle-anim" onclick="toggleSetting('animations')">ENABLED</button>
+                <p class="text-lg md:text-xl text-pink-100/90 leading-relaxed font-light mb-8">
+                    Welcome to my little cute corner of the internet! <br>
+                    Born with dreams in <span class="font-semibold text-pink-300">Raebareli</span> 🌸 and now spread across the vibrant city of <span class="font-semibold text-purple-300">Kanpur</span> 🏙️.
+                </p>
+
+                <button onclick="revealMore()" class="pulse-btn bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 rounded-full text-lg font-bold text-white hover:scale-105 transition-all duration-300 border border-pink-300/30">
+                    Know More About Me 💖
+                </button>
+            </div>
+        </section>
+
+        <section id="details" class="section hidden w-full">
+            <div class="glass-card p-8 md:p-12 w-full max-w-2xl text-center">
+                <div class="relative w-48 h-48 md:w-56 md:h-56 mx-auto mb-6 img-frame">
+                    <img src="photo2.jpg" alt="Arpita" class="w-full h-full object-cover">
                 </div>
 
-                <div class="toggle-wrap">
-                    <span class="mono text-dim" style="font-size: 0.85rem;">SIMULATION SOUND EFFECTS</span>
-                    <button class="btn" id="set-toggle-sound" onclick="toggleSetting('sound')">DISABLED</button>
+                <h3 class="text-4xl cute-font pink-glow text-pink-300 mb-4">A Little More Story 📖</h3>
+                
+                <div class="space-y-4 text-pink-100/90 text-lg leading-relaxed mb-8">
+                    <p class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        📍 Born in <b>Raebareli</b>, carrying sweet memories.
+                    </p>
+                    <p class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        🏡 Currently living and making memories in <b>Kanpur</b>.
+                    </p>
+                    <p class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        ❤️ Special place in heart: <b>Living in sivasingh heart</b>.
+                    </p>
                 </div>
 
-                <div class="toggle-wrap">
-                    <span class="mono text-dim" style="font-size: 0.85rem;">INTERFACE DENSITY</span>
-                    <button class="btn" id="set-toggle-density" onclick="toggleSetting('density')">COMPACT</button>
-                </div>
-
-                <div style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <button class="btn btn-red" onclick="confirmResetSettings()">RESET ALL PREFERENCES</button>
+                <div class="flex justify-center gap-4">
+                    <button onclick="sendLove()" class="bg-gradient-to-r from-rose-500 to-pink-600 px-8 py-3 rounded-full font-bold text-white shadow-lg hover:scale-105 transition">
+                        Send Love 💕
+                    </button>
                 </div>
             </div>
         </section>
 
-        <section id="sec-owner" class="view-section">
-            <div class="panel">
-                <div class="panel-header">OWNER CONTROL PANEL // SIVASINGH</div>
-                <div class="grid-2">
-                    <div>
-                        <div class="mono text-dim" style="font-size: 0.8rem; margin-bottom: 5px;">SYSTEM IDENTIFIER</div>
-                        <div class="mono text-green" style="margin-bottom: 15px;">SIVASINGH-BANNING-PANEL-v2.4</div>
-
-                        <div class="mono text-dim" style="font-size: 0.8rem; margin-bottom: 5px;">SESSION ENVIRONMENT</div>
-                        <div class="mono text-main" style="margin-bottom: 15px;">STANDALONE LOCAL SIMULATION ENGINE</div>
-
-                        <div class="mono text-dim" style="font-size: 0.8rem; margin-bottom: 5px;">SECURITY & INTEGRITY</div>
-                        <div class="mono text-green">ISOLATED SIMULATION (NO EXTERNAL API HOOKS)</div>
-                    </div>
-                    <div style="border-left: 1px solid var(--border-color); padding-left: 20px;">
-                        <div class="mono text-dim" style="font-size: 0.8rem; margin-bottom: 10px;">OPERATOR OVERRIDE STATS</div>
-                        <div class="mono text-dim" style="font-size: 0.85rem; line-height: 1.8;">
-                            Local Storage Usage: <span id="owner-storage-size" class="text-main">0 KB</span><br>
-                            Active Tasks Running: <span id="owner-active-tasks" class="text-main">0</span><br>
-                            Registered Log Entries: <span id="owner-log-count" class="text-main">0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <script>
-        // --- State Management ---
-        const DEFAULT_STATE = {
-            authenticated: false,
-            settings: { animations: true, sound: false, density: 'compact' },
-            stats: { total: 0, success: 0, failed: 0 },
-            tasks: [],
-            logs: []
-        };
+        // Start Animations
+        gsap.from("#hero .glass-card", { opacity: 0, y: 50, duration: 1.2, ease: "back.out(1.7)" });
 
-        let state = JSON.parse(localStorage.getItem('SIVASINGH_PANEL_DATA')) || DEFAULT_STATE;
+        function revealMore() {
+            // Play audio on interaction if file exists
+            let music = document.getElementById('bgmusic');
+            music.volume = 0.4;
+            music.play().catch(() => {});
 
-        function saveState() {
-            localStorage.setItem('SIVASINGH_PANEL_DATA', JSON.stringify(state));
-            updateDashboardMetrics();
+            // Trigger Confetti Effect
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+            // Animate transition to details section
+            const details = document.getElementById('details');
+            details.classList.remove('hidden');
+
+            gsap.fromTo(details, 
+                { opacity: 0, scale: 0.9 }, 
+                { opacity: 1, scale: 1, duration: 0.8, ease: "power2.out" }
+            );
+
+            // Smooth scroll down to details
+            details.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- App Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            if (state.authenticated) {
-                document.getElementById('login-overlay').style.display = 'none';
-            }
-            updateDashboardMetrics();
-            renderTasks();
-            renderLogs();
-            updateSettingsUI();
-        });
-
-        // --- Auth Module ---
-        function handleLogin(e) {
-            e.preventDefault();
-            const status = document.getElementById('auth-status');
-            status.textContent = 'VERIFYING CREDENTIALS...';
-            status.className = 'mono text-green';
-
-            setTimeout(() => {
-                state.authenticated = true;
-                saveState();
-                document.getElementById('login-overlay').style.display = 'none';
-                addLog('SYSTEM', 'Operator Authenticated Session Initialized', 'SUCCESS');
-            }, 800);
-        }
-
-        // --- Navigation ---
-        function switchTab(tabId) {
-            document.querySelectorAll('nav .nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-
-            event.target.classList.add('active');
-            document.getElementById(`sec-${tabId}`).classList.add('active');
-        }
-
-        // --- Simulation Module ---
-        let simInterval = null;
-
-        function startReportSimulation() {
-            const target = document.getElementById('sim-target').value.trim();
-            const count = parseInt(document.getElementById('sim-count').value);
-            const category = document.getElementById('sim-category').value;
-
-            if (!target) {
-                alert('Please specify a target identifier.');
-                return;
-            }
-
-            document.getElementById('btn-start-sim').disabled = true;
-            document.getElementById('btn-stop-sim').disabled = false;
-            document.getElementById('sim-status-text').textContent = 'RUNNING';
-            document.getElementById('sim-status-text').className = 'text-green';
-
-            let current = 0;
-            const term = document.getElementById('sim-terminal');
-            term.innerHTML = '';
-
-            const taskId = 'TSK-' + Math.floor(1000 + Math.random() * 9000);
-            const newTask = {
-                id: taskId,
-                target: target,
-                timestamp: new Date().toLocaleTimeString(),
-                progress: 0,
-                status: 'RUNNING'
-            };
-            state.tasks.push(newTask);
-            saveState();
-            renderTasks();
-
-            simInterval = setInterval(() => {
-                current += Math.floor(Math.random() * 5) + 1;
-                if (current > count) current = count;
-
-                const percent = Math.round((current / count) * 100);
-                document.getElementById('sim-progress-fill').style.width = percent + '%';
-                document.getElementById('sim-percentage').textContent = percent + '%';
-
-                // Update task in array
-                const taskRef = state.tasks.find(t => t.id === taskId);
-                if (taskRef) taskRef.progress = percent;
-
-                // Simulated Terminal Log Output
-                const isSuccess = Math.random() > 0.15;
-                const line = document.createElement('div');
-                line.className = `terminal-line ${isSuccess ? 'text-green' : 'text-red'}`;
-                line.textContent = `[${new Date().toLocaleTimeString()}] Batch element execution -> Target: ${target} [${category}] - Status: ${isSuccess ? 'SIMULATED_SUCCESS' : 'SIMULATED_FLAGGED'}`;
-                term.appendChild(line);
-                term.scrollTop = term.scrollHeight;
-
-                if (isSuccess) state.stats.success++;
-                else state.stats.failed++;
-                state.stats.total++;
-
-                if (current >= count) {
-                    stopReportSimulation();
-                    if (taskRef) taskRef.status = 'COMPLETED';
-                    addLog(target, `Simulation batch completed (${count} events)`, 'SUCCESS');
-                    saveState();
-                    renderTasks();
-                }
-            }, 300);
-        }
-
-        function stopReportSimulation() {
-            if (simInterval) clearInterval(simInterval);
-            document.getElementById('btn-start-sim').disabled = false;
-            document.getElementById('btn-stop-sim').disabled = true;
-            document.getElementById('sim-status-text').textContent = 'IDLE';
-            document.getElementById('sim-status-text').className = 'text-main';
-            saveState();
-        }
-
-        // --- Target Analysis Simulation ---
-        function runTargetAnalysis() {
-            const input = document.getElementById('analysis-input').value.trim();
-            if (!input) return;
-
-            const resDiv = document.getElementById('analysis-results');
-            resDiv.style.display = 'block';
-
-            // Generate deterministic pseudorandom data based on input
-            const mockRisk = Math.floor((input.length * 7) % 65) + 30;
-            document.getElementById('ana-risk-score').textContent = `${mockRisk} / 100`;
-            
-            const level = mockRisk > 70 ? 'HIGH' : (mockRisk > 40 ? 'MEDIUM' : 'LOW');
-            const levelEl = document.getElementById('ana-risk-level');
-            levelEl.textContent = level;
-            levelEl.className = `metric-val ${level === 'HIGH' ? 'text-red' : 'text-green'}`;
-
-            const violationsList = document.getElementById('ana-violations-list');
-            violationsList.innerHTML = `
-                <li>Automated Metadata Analysis: <span class="text-green">COMPLETED</span></li>
-                <li>Simulated Content Risk Indicators: <span class="text-red">${(mockRisk / 10).toFixed(1)}% variance detected</span></li>
-                <li>System Protocol Compliance Check: <span class="text-main">NON-CRITICAL FLAG</span></li>
-            `;
-
-            addLog(input, 'Target risk profile analysis simulated', 'COMPLETED');
-        }
-
-        // --- Log & Task Renderers ---
-        function addLog(target, action, status) {
-            state.logs.unshift({
-                timestamp: new Date().toLocaleTimeString(),
-                target: target || 'N/A',
-                action: action,
-                status: status
+        function sendLove() {
+            confetti({
+                particleCount: 150,
+                spread: 100,
+                origin: { y: 0.5 },
+                colors: ['#ff69b4', '#ff1493', '#ffffff', '#ffb6c1']
             });
-            if (state.logs.length > 50) state.logs.pop();
-            saveState();
-            renderLogs();
         }
 
-        function renderLogs() {
-            const tbody = document.getElementById('log-table-body');
-            const filter = document.getElementById('log-search')?.value.toLowerCase() || '';
-            tbody.innerHTML = '';
-
-            state.logs
-                .filter(l => l.target.toLowerCase().includes(filter) || l.action.toLowerCase().includes(filter))
-                .forEach(log => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="text-dim">${log.timestamp}</td>
-                        <td>${log.target}</td>
-                        <td>${log.action}</td>
-                        <td><span class="badge ${log.status === 'SUCCESS' || log.status === 'COMPLETED' ? 'badge-green' : 'badge-red'}">${log.status}</span></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-
-            document.getElementById('owner-log-count').textContent = state.logs.length;
-        }
-
-        function renderTasks() {
-            const tbody = document.getElementById('task-table-body');
-            tbody.innerHTML = '';
-
-            state.tasks.forEach(task => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${task.id}</td>
-                    <td>${task.target}</td>
-                    <td class="text-dim">${task.timestamp}</td>
-                    <td>${task.progress}%</td>
-                    <td><span class="badge ${task.status === 'RUNNING' ? 'badge-green' : 'badge-red'}">${task.status}</span></td>
-                    <td>
-                        <button class="btn" style="padding: 2px 6px; font-size: 0.7rem;" onclick="deleteTask('${task.id}')">REMOVE</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-
-            document.getElementById('dash-active-tasks').textContent = state.tasks.filter(t => t.status === 'RUNNING').length;
-            document.getElementById('owner-active-tasks').textContent = state.tasks.filter(t => t.status === 'RUNNING').length;
-        }
-
-        function deleteTask(id) {
-            if (confirm(`Remove task record ${id}?`)) {
-                state.tasks = state.tasks.filter(t => t.id !== id);
-                saveState();
-                renderTasks();
-            }
-        }
-
-        function confirmClearLogs() {
-            if (confirm('Clear all stored activity logs?')) {
-                state.logs = [];
-                saveState();
-                renderLogs();
-            }
-        }
-
-        // --- Settings Management ---
-        function toggleSetting(key) {
-            if (key === 'animations') {
-                state.settings.animations = !state.settings.animations;
-            } else if (key === 'sound') {
-                state.settings.sound = !state.settings.sound;
-            } else if (key === 'density') {
-                state.settings.density = state.settings.density === 'compact' ? 'normal' : 'compact';
-            }
-            saveState();
-            updateSettingsUI();
-        }
-
-        function updateSettingsUI() {
-            document.getElementById('set-toggle-anim').textContent = state.settings.animations ? 'ENABLED' : 'DISABLED';
-            document.getElementById('set-toggle-sound').textContent = state.settings.sound ? 'ENABLED' : 'DISABLED';
-            document.getElementById('set-toggle-density').textContent = state.settings.density.toUpperCase();
-        }
-
-        function confirmResetSettings() {
-            if (confirm('Reset system settings to default state?')) {
-                state.settings = { ...DEFAULT_STATE.settings };
-                saveState();
-                updateSettingsUI();
-            }
-        }
-
-        function updateDashboardMetrics() {
-            document.getElementById('dash-total-reports').textContent = state.stats.total;
-            document.getElementById('dash-success-reports').textContent = state.stats.success;
-            document.getElementById('dash-failed-reports').textContent = state.stats.failed;
-
-            const size = new Blob([JSON.stringify(state)]).size;
-            document.getElementById('owner-storage-size').textContent = (size / 1024).toFixed(2) + ' KB';
+        // Floating Heart & Rose Particles
+        const pContainer = document.getElementById('particles-container');
+        const icons = ['🌸', '✨', '💖', '🌷', '💕'];
+        
+        for(let i = 0; i < 25; i++) {
+            let p = document.createElement('div');
+            p.className = 'particle';
+            p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            p.style.left = `${Math.random() * 100}vw`;
+            p.style.animationDuration = `${Math.random() * 4 + 5}s`;
+            p.style.animationDelay = `${Math.random() * 5}s`;
+            p.style.fontSize = `${Math.random() * 16 + 14}px`;
+            pContainer.appendChild(p);
         }
     </script>
 </body>
