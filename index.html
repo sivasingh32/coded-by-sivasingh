@@ -3,126 +3,134 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>For You ❤️ </title>
+  <title>For You ❤️ – 😋</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    :root{--gold:#FFD700;--gold-dark:#B8860B;--heart-red:#e63946;--soft-pink:#ff6b8a;--bg-dark:#07060a}
+    :root{--gold:#FFD700;--gold-dark:#B8860B;--heart-red:#ff2e63;--soft-pink:#ff75a0;--bg-dark:#0a050d}
     html,body{height:100%;overflow:hidden;font-family:'Poppins',sans-serif;background:var(--bg-dark);color:#fff;-webkit-tap-highlight-color:transparent;user-select:none}
 
     /* TOP BAR */
     .top-bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;padding:14px;background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);pointer-events:none}
-    .ig-link{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:14px;font-weight:500;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:9px 18px;border-radius:50px;border:1px solid rgba(255,255,255,.12);transition:all .3s ease;letter-spacing:.3px}
-    .ig-link:hover{background:rgba(255,255,255,.16);transform:scale(1.04);border-color:rgba(255,215,0,.3)}
+    .ig-link{pointer-events:auto;display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:14px;font-weight:500;background:rgba(255,255,255,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:9px 20px;border-radius:50px;border:1px solid rgba(255,117,160,.3);transition:all .3s ease;letter-spacing:.3px;box-shadow:0 0 15px rgba(255,117,160,.2)}
+    .ig-link:hover{background:rgba(255,117,160,.2);transform:scale(1.05);border-color:var(--gold)}
     .ig-link svg{width:16px;height:16px}
 
     /* SCREENS */
-    .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .7s ease;z-index:10}
+    .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;transition:opacity .8s ease;z-index:10}
     .screen.active{display:flex;opacity:1}
 
     /* INTRO */
-    #intro-screen{background:radial-gradient(ellipse at 50% 40%,#1a0c16 0%,#07060a 65%)}
+    #intro-screen{background:radial-gradient(ellipse at 50% 40%,#280c22 0%,#0a050d 70%)}
     .intro-content{text-align:center;padding:24px;position:relative;z-index:2;max-width:420px}
-    .cute-title{font-family:'Great Vibes',cursive;font-size:clamp(3.8rem,13vw,5.8rem);color:var(--soft-pink);margin-bottom:8px;text-shadow:0 0 40px rgba(255,107,138,.45);animation:float 3.2s ease-in-out infinite}
+    .cute-title{font-family:'Great Vibes',cursive;font-size:clamp(4.2rem,14vw,6.2rem);color:var(--soft-pink);margin-bottom:8px;text-shadow:0 0 30px rgba(255,117,160,.6), 0 0 60px rgba(255,46,99,.4);animation:float 3.2s ease-in-out infinite}
     .intro-text{font-size:clamp(1.15rem,4.2vw,1.45rem);line-height:1.75;color:#f2eaea;margin-bottom:42px;font-weight:300}
-    .intro-text .name{color:var(--gold);font-weight:600;letter-spacing:.5px}
-    .romantic-btn{background:linear-gradient(135deg,#e63946 0%,#ff6b8a 100%);color:#fff;border:none;padding:17px 40px;font-size:1.12rem;font-weight:500;border-radius:50px;cursor:pointer;box-shadow:0 10px 30px rgba(230,57,70,.4);transition:all .3s cubic-bezier(.4,0,.2,1);font-family:'Poppins',sans-serif;letter-spacing:.3px}
-    .romantic-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 14px 36px rgba(230,57,70,.55)}
+    .intro-text .name{color:var(--gold);font-weight:600;letter-spacing:.5px;text-shadow:0 0 10px rgba(255,215,0,.5)}
+    
+    .romantic-btn{background:linear-gradient(135deg,#ff2e63 0%,#ff75a0 100%);color:#fff;border:none;padding:17px 42px;font-size:1.12rem;font-weight:500;border-radius:50px;cursor:pointer;box-shadow:0 10px 30px rgba(255,46,99,.5);transition:all .3s cubic-bezier(.4,0,.2,1);font-family:'Poppins',sans-serif;letter-spacing:.3px;position:relative;overflow:hidden}
+    .romantic-btn::after{content:'✨';position:absolute;right:15px;top:50%;transform:translateY(-50%);opacity:0;transition:all .3s ease}
+    .romantic-btn:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 14px 40px rgba(255,46,99,.7);padding-right:48px}
+    .romantic-btn:hover::after{opacity:1;right:18px}
     .romantic-btn:active{transform:scale(.97)}
 
+    /* FLOATING HEARTS & SPARKLES */
     .hearts-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-    .hearts-bg span{position:absolute;bottom:-40px;font-size:18px;opacity:0;animation:rise 9s linear infinite}
-    .hearts-bg span:nth-child(1){left:8%;animation-delay:0s;font-size:16px}
-    .hearts-bg span:nth-child(2){left:25%;animation-delay:1.8s;font-size:26px}
-    .hearts-bg span:nth-child(3){left:48%;animation-delay:3.5s;font-size:20px}
-    .hearts-bg span:nth-child(4){left:68%;animation-delay:.9s;font-size:22px}
-    .hearts-bg span:nth-child(5){left:85%;animation-delay:2.7s;font-size:17px}
-    .hearts-bg span::before{content:'❤️'}
+    .hearts-bg span{position:absolute;bottom:-40px;opacity:0;animation:rise 8s linear infinite}
+    .hearts-bg span:nth-child(1){left:8%;animation-delay:0s;font-size:18px}
+    .hearts-bg span:nth-child(2){left:25%;animation-delay:1.8s;font-size:28px}
+    .hearts-bg span:nth-child(3){left:48%;animation-delay:3.5s;font-size:22px}
+    .hearts-bg span:nth-child(4){left:68%;animation-delay:.9s;font-size:26px}
+    .hearts-bg span:nth-child(5){left:85%;animation-delay:2.7s;font-size:20px}
+    .hearts-bg span::before{content:'💖'}
 
-    @keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}12%{opacity:.18}88%{opacity:.12}100%{transform:translateY(-110vh) rotate(25deg);opacity:0}}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    @keyframes rise{0%{transform:translateY(0) scale(0.8) rotate(0deg);opacity:0}20%{opacity:.6}80%{opacity:.4}100%{transform:translateY(-110vh) scale(1.2) rotate(45deg);opacity:0}}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
 
-    /* PHOTO */
-    #photo-screen{background:radial-gradient(ellipse at center,#120a12 0%,#07060a 70%)}
+    /* PHOTO SCREEN */
+    #photo-screen{background:radial-gradient(ellipse at center,#200a1c 0%,#0a050d 70%)}
     .photo-container{text-align:center;max-width:92vw;display:flex;flex-direction:column;align-items:center;gap:22px}
-    #main-photo{max-width:100%;max-height:58vh;border-radius:18px;box-shadow:0 20px 50px rgba(230,57,70,.22),0 0 0 1px rgba(255,215,0,.15);object-fit:contain;background:#111}
-    .photo-fallback{display:none;width:min(300px,80vw);height:min(300px,80vw);border-radius:18px;background:linear-gradient(145deg,#1a0f18,#0d0a10);border:2px dashed rgba(255,107,138,.35);flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#999;font-size:.95rem}
+    #main-photo{max-width:100%;max-height:56vh;border-radius:24px;box-shadow:0 20px 50px rgba(255,46,99,.35),0 0 0 2px rgba(255,215,0,.3);object-fit:contain;background:#111}
+    .photo-fallback{display:none;width:min(300px,80vw);height:min(300px,80vw);border-radius:24px;background:linear-gradient(145deg,#231020,#120814);border:2px dashed rgba(255,117,160,.4);flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#aaa;font-size:.95rem}
     .fallback-heart{font-size:64px;animation:pulse 1.6s ease infinite}
-    .photo-caption{font-size:1.05rem;color:#ccc;font-style:italic;letter-spacing:.3px}
+    .photo-caption{font-size:1.1rem;color:#f0e6ed;font-style:italic;letter-spacing:.5px;text-shadow:0 0 10px rgba(255,117,160,.3)}
 
     /* MAIN GAME */
-    #main-game{background:radial-gradient(ellipse at 30% 45%,#160e1a 0%,#07060a 60%)}
+    #main-game{background:radial-gradient(ellipse at 30% 45%,#22091c 0%,#0a050d 70%)}
     .scene{position:relative;width:100%;height:68vh;max-height:540px;display:flex;align-items:center;justify-content:space-between;padding:0 4%;overflow:hidden}
-    .scene-bg{position:absolute;inset:0;background:radial-gradient(circle at 72% 48%,rgba(230,57,70,.07),transparent 55%);pointer-events:none}
+    .scene-bg{position:absolute;inset:0;background:radial-gradient(circle at 72% 48%,rgba(255,46,99,.12),transparent 60%);pointer-events:none}
 
     .bow-area{position:relative;width:46%;height:100%;display:flex;align-items:center;justify-content:center}
     .bow-container{position:relative;width:120px;height:200px;transition:transform .35s ease}
-    .bow{position:absolute;left:0;top:0;filter:drop-shadow(0 0 10px rgba(255,215,0,.45));z-index:2}
-    .string{position:absolute;left:58px;top:18px;width:2px;height:164px;background:linear-gradient(to bottom,#ccc,#fff,#ccc);transform-origin:top center;z-index:1;transition:transform .45s cubic-bezier(.4,0,.2,1);box-shadow:0 0 4px rgba(255,255,255,.3)}
+    .bow{position:absolute;left:0;top:0;filter:drop-shadow(0 0 12px rgba(255,215,0,.6));z-index:2}
+    .string{position:absolute;left:58px;top:18px;width:2px;height:164px;background:linear-gradient(to bottom,#fff,#ffd700,#fff);transform-origin:top center;z-index:1;transition:transform .45s cubic-bezier(.4,0,.2,1);box-shadow:0 0 6px rgba(255,215,0,.6)}
     .bow-container.drawn .string{transform:scaleY(.68) translateX(28px)}
     .bow-container.drawn #arrow{transform:translateX(22px)}
 
     .arrow{position:absolute;left:30px;top:95px;width:145px;height:12px;z-index:3;transform-origin:left center;transition:transform .18s ease}
-    .arrow-shaft{position:absolute;left:0;top:4px;width:115px;height:4px;background:linear-gradient(to right,#6B3A1F,#C17A3A,#FFD700);border-radius:2px;box-shadow:0 0 6px rgba(255,215,0,.3)}
-    .arrow-head{position:absolute;right:18px;top:1px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:20px solid #FFD700;filter:drop-shadow(0 0 5px rgba(255,215,0,.7))}
-    .arrow-fletching{position:absolute;left:0;top:-4px;width:20px;height:18px;background:linear-gradient(135deg,#f5f5f5,#bbb);clip-path:polygon(0 0,100% 50%,0 100%,28% 50%)}
+    .arrow-shaft{position:absolute;left:0;top:4px;width:115px;height:4px;background:linear-gradient(to right,#8B4513,#FFD700,#FFF);border-radius:2px;box-shadow:0 0 8px rgba(255,215,0,.5)}
+    .arrow-head{position:absolute;right:18px;top:1px;width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;border-left:20px solid #FFD700;filter:drop-shadow(0 0 8px rgba(255,215,0,.9))}
+    .arrow-fletching{position:absolute;left:0;top:-4px;width:20px;height:18px;background:linear-gradient(135deg,#ff75a0,#fff);clip-path:polygon(0 0,100% 50%,0 100%,28% 50%)}
 
     .heart-area{position:relative;width:46%;height:100%;display:flex;align-items:center;justify-content:center}
-    .target-heart{position:relative;font-size:clamp(90px,20vw,150px);filter:drop-shadow(0 0 30px rgba(230,57,70,.65));transition:transform .25s ease,opacity .4s ease;z-index:5}
-    .heart-body{display:block;animation:heartBeat 1.9s ease-in-out infinite}
+    .target-heart{position:relative;font-size:clamp(95px,22vw,155px);filter:drop-shadow(0 0 35px rgba(255,46,99,.8));transition:transform .25s ease,opacity .4s ease;z-index:5}
+    .heart-body{display:block;animation:heartBeat 1.8s ease-in-out infinite}
     .target-heart.hit .heart-body{animation:none}
-    .crack{position:absolute;inset:0;background:linear-gradient(128deg,transparent 38%,rgba(0,0,0,.7) 44%,transparent 49%,rgba(0,0,0,.6) 55%,transparent 61%);opacity:0;pointer-events:none;transition:opacity .2s}
+    .crack{position:absolute;inset:0;background:linear-gradient(128deg,transparent 38%,rgba(0,0,0,.75) 44%,transparent 49%,rgba(0,0,0,.7) 55%,transparent 61%);opacity:0;pointer-events:none;transition:opacity .2s}
     .target-heart.cracked .crack{opacity:1}
 
-    .explosion{position:absolute;width:220px;height:220px;pointer-events:none;opacity:0;z-index:12}
+    .explosion{position:absolute;width:240px;height:240px;pointer-events:none;opacity:0;z-index:12}
     .explosion.active{opacity:1}
-    .particle{position:absolute;width:13px;height:13px;background:var(--heart-red);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
-    .particle.small{width:7px;height:7px;background:#ff6b8a}
-    .particle.gold{background:var(--gold);width:9px;height:9px}
+    .particle{position:absolute;width:14px;height:14px;background:var(--heart-red);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+    .particle.small{width:8px;height:8px;background:#ff75a0}
+    .particle.gold{background:var(--gold);width:10px;height:10px}
 
-    .status-text{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:1.02rem;color:#ddd;letter-spacing:.4px;opacity:.92;font-weight:400}
+    .status-text{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-size:1.05rem;color:#f0e6ed;letter-spacing:.5px;opacity:.95;font-weight:300;text-shadow:0 0 8px rgba(255,117,160,.4)}
 
-    .shoot-btn{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FFD700,#FFA500);color:#1a0a00;border:none;padding:17px 42px;font-size:1.18rem;font-weight:600;border-radius:50px;cursor:pointer;box-shadow:0 10px 28px rgba(255,215,0,.38);transition:all .3s cubic-bezier(.4,0,.2,1);z-index:20;font-family:'Poppins',sans-serif;letter-spacing:.3px}
-    .shoot-btn:hover:not(:disabled){transform:translateX(-50%) translateY(-4px) scale(1.04);box-shadow:0 14px 34px rgba(255,215,0,.52)}
+    .shoot-btn{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#FFD700,#FF8C00);color:#1a0a00;border:none;padding:17px 44px;font-size:1.18rem;font-weight:600;border-radius:50px;cursor:pointer;box-shadow:0 10px 30px rgba(255,215,0,.45);transition:all .3s cubic-bezier(.4,0,.2,1);z-index:20;font-family:'Poppins',sans-serif;letter-spacing:.3px}
+    .shoot-btn:hover:not(:disabled){transform:translateX(-50%) translateY(-4px) scale(1.04);box-shadow:0 14px 38px rgba(255,215,0,.6)}
     .shoot-btn:disabled{opacity:.55;cursor:not-allowed}
     .shoot-btn.hidden{display:none}
 
-    /* VIDEO */
+    /* VIDEO OVERLAY & TIMER PROGRESS */
     .video-overlay{position:fixed;inset:0;background:#000;z-index:200;display:none;align-items:center;justify-content:center;opacity:0;transition:opacity .45s ease}
     .video-overlay.active{display:flex;opacity:1}
     #romantic-video{width:100%;height:100%;object-fit:contain;background:#000}
     #romantic-video::-webkit-media-controls,#romantic-video::-webkit-media-controls-enclosure{display:none!important}
-    .video-end-ui{position:absolute;bottom:11%;left:0;right:0;text-align:center;opacity:0;pointer-events:none;transition:opacity .55s ease;z-index:210}
-    .video-end-ui.show{opacity:1;pointer-events:auto}
-    .next-msg{font-size:1.25rem;margin-bottom:20px;color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.85);font-weight:400}
+    
+    /* 5 Second Progress Bar */
+    .video-progress-bar{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:80%;max-width:300px;height:4px;background:rgba(255,255,255,.2);border-radius:10px;overflow:hidden;z-index:215}
+    .video-progress-fill{width:0%;height:100%;background:linear-gradient(90deg,var(--gold),var(--soft-pink));transition:width 0.1s linear}
+
+    .video-end-ui{position:absolute;bottom:12%;left:0;right:0;text-align:center;opacity:0;pointer-events:none;transition:all .55s cubic-bezier(.175,.885,.32,1.275);transform:translateY(20px);z-index:210}
+    .video-end-ui.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+    .next-msg{font-size:1.3rem;margin-bottom:20px;color:#fff;text-shadow:0 0 15px rgba(255,117,160,.8);font-weight:400;font-family:'Great Vibes',cursive;font-size:2.2rem}
 
     /* FINAL */
-    #final-screen{background:radial-gradient(ellipse at 50% 40%,#1a0c16 0%,#050408 70%)}
-    .final-content{text-align:center;padding:30px 24px;max-width:400px}
-    .big-heart{font-size:86px;animation:pulse 1.6s ease infinite;margin-bottom:18px;filter:drop-shadow(0 0 20px rgba(255,107,138,.4))}
-    .final-content h2{font-family:'Great Vibes',cursive;font-size:clamp(2.4rem,9vw,3.6rem);color:var(--soft-pink);margin-bottom:18px;text-shadow:0 0 25px rgba(255,107,138,.3)}
-    .final-text{font-size:1.08rem;line-height:1.75;color:#ddd;margin-bottom:28px;font-weight:300}
-    .signature{font-size:1.35rem;color:var(--gold);font-weight:500;margin-bottom:32px;letter-spacing:.5px}
-    .ig-final{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;background:rgba(255,255,255,.08);padding:11px 22px;border-radius:50px;border:1px solid rgba(255,255,255,.15);transition:all .3s ease}
-    .ig-final:hover{background:rgba(255,255,255,.15);border-color:rgba(255,215,0,.3)}
+    #final-screen{background:radial-gradient(ellipse at 50% 40%,#280c22 0%,#050408 75%)}
+    .final-content{text-align:center;padding:30px 24px;max-width:420px}
+    .big-heart{font-size:90px;animation:pulse 1.6s ease infinite;margin-bottom:18px;filter:drop-shadow(0 0 30px rgba(255,117,160,.6))}
+    .final-content h2{font-family:'Great Vibes',cursive;font-size:clamp(2.6rem,10vw,3.8rem);color:var(--soft-pink);margin-bottom:18px;text-shadow:0 0 30px rgba(255,117,160,.5)}
+    .final-text{font-size:1.1rem;line-height:1.8;color:#eee;margin-bottom:28px;font-weight:300}
+    .signature{font-size:1.4rem;color:var(--gold);font-weight:500;margin-bottom:32px;letter-spacing:.5px;text-shadow:0 0 10px rgba(255,215,0,.4)}
+    .ig-final{display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-size:15px;background:rgba(255,255,255,.1);padding:12px 24px;border-radius:50px;border:1px solid rgba(255,215,0,.3);transition:all .3s ease;box-shadow:0 0 15px rgba(255,215,0,.2)}
+    .ig-final:hover{background:rgba(255,215,0,.2);border-color:var(--gold);transform:scale(1.05)}
 
-    @keyframes heartBeat{0%,100%{transform:scale(1)}14%{transform:scale(1.09)}28%{transform:scale(1)}42%{transform:scale(1.07)}56%{transform:scale(1)}}
-    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.12);opacity:.88}}
+    @keyframes heartBeat{0%,100%{transform:scale(1)}14%{transform:scale(1.1)}28%{transform:scale(1)}42%{transform:scale(1.07)}56%{transform:scale(1)}}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.85}}
     @keyframes particleFly{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(calc(-50% + var(--px)),calc(-50% + var(--py))) scale(0);opacity:0}}
 
     @media(max-width:600px){
       .scene{height:54vh;padding:0 2%}
       .bow-container{transform:scale(.82)}
-      .shoot-btn{bottom:26px;padding:15px 32px;font-size:1.05rem}
-      .status-text{font-size:.92rem;bottom:10px}
-      .target-heart{font-size:clamp(80px,22vw,120px)}
+      .shoot-btn{bottom:26px;padding:15px 34px;font-size:1.05rem}
+      .status-text{font-size:.95rem;bottom:10px}
+      .target-heart{font-size:clamp(85px,22vw,125px)}
     }
-    @media(max-height:700px){.scene{height:56vh}}
   </style>
 </head>
 <body>
 
-  <!-- Instagram -->
+  <!-- Instagram Header -->
   <div class="top-bar">
     <a href="https://instagram.com/sivasingh314" target="_blank" class="ig-link">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
@@ -130,30 +138,30 @@
     </a>
   </div>
 
-  <!-- INTRO -->
+  <!-- INTRO SCREEN -->
   <div id="intro-screen" class="screen active">
     <div class="hearts-bg"><span></span><span></span><span></span><span></span><span></span></div>
     <div class="intro-content">
-      <h1 class="cute-title">cutiee</h1>
-      <p class="intro-text">i am <span class="name">siva</span><br>i coded something for you<br>just for your smile 😸</p>
+      <h1 class="cute-title">Hey Cutie...</h1>
+      <p class="intro-text">i am <span class="name">Siva</span><br>i coded a tiny piece of my heart for you<br>just to catch your sweet smile 😸✨</p>
       <button id="start-btn" class="romantic-btn">Open My Heart ❤️</button>
     </div>
   </div>
 
-  <!-- PHOTO -->
+  <!-- PHOTO SCREEN -->
   <div id="photo-screen" class="screen">
     <div class="photo-container">
       <img src="photo1.jpg" alt="For You" id="main-photo" onerror="this.style.display='none';document.getElementById('photo-fallback').style.display='flex'">
       <div id="photo-fallback" class="photo-fallback">
-        <div class="fallback-heart">❤️</div>
+        <div class="fallback-heart">💖</div>
         <p>Add <strong>photo1.jpg</strong></p>
       </div>
-      <p class="photo-caption">This is just the beginning...</p>
-      <button id="to-archery-btn" class="romantic-btn">Continue 🏹</button>
+      <p class="photo-caption">"In your smile, I see something more beautiful than stars..."</p>
+      <button id="to-archery-btn" class="romantic-btn">Continue to 😋 🏹</button>
     </div>
   </div>
 
-  <!-- MAIN GAME -->
+  <!-- MAIN GAME SCREEN -->
   <div id="main-game" class="screen">
     <div id="scene" class="scene">
       <div class="scene-bg"></div>
@@ -187,25 +195,29 @@
         </div>
         <div id="explosion" class="explosion"></div>
       </div>
-      <div id="status-text" class="status-text">Draw the bow for her...</div>
+      <div id="status-text" class="status-text">Draw Cupid's bow for her...</div>
     </div>
     <button id="shoot-btn" class="shoot-btn">Release the Arrow 💘</button>
 
+    <!-- VIDEO OVERLAY WITH AUTOMATIC 5S SKIP -->
     <div id="video-overlay" class="video-overlay">
+      <div class="video-progress-bar">
+        <div id="progress-fill" class="video-progress-fill"></div>
+      </div>
       <video id="romantic-video" playsinline></video>
       <div id="video-end-ui" class="video-end-ui">
-        <p class="next-msg">That was for you ❤️</p>
+        <p class="next-msg">I just coded something for your happiness❤️</p>
         <button id="next-btn" class="romantic-btn">Next Arrow 🏹</button>
       </div>
     </div>
   </div>
 
-  <!-- FINAL -->
+  <!-- FINAL SCREEN -->
   <div id="final-screen" class="screen">
     <div class="final-content">
       <div class="big-heart">💖</div>
       <h2>You are my kuchupuchu</h2>
-      <p class="final-text">Every arrow I shoot lands only in your heart.<br>Thank you for for opening this.</p>
+      <p class="final-text">Every arrow I shoot was destined to land in your heart.<br>Thank you for opening my heart.</p>
       <p class="signature">— Siva ❤️</p>
       <a href="https://instagram.com/sivasingh314" target="_blank" class="ig-final">@sivasingh314</a>
     </div>
@@ -214,6 +226,7 @@
   <script>
     const VIDEOS = ['video1.mp4','video2.mp4','video3.mp4','video4.mp4'];
     let currentStage = 0, isAnimating = false;
+    let videoTimer = null, progressInterval = null;
 
     const introScreen = document.getElementById('intro-screen');
     const photoScreen = document.getElementById('photo-screen');
@@ -231,6 +244,7 @@
     const videoOverlay = document.getElementById('video-overlay');
     const romanticVideo = document.getElementById('romantic-video');
     const videoEndUI = document.getElementById('video-end-ui');
+    const progressFill = document.getElementById('progress-fill');
 
     function showScreen(s) {
       document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
@@ -253,9 +267,15 @@
       targetHeart.style.opacity = '1';
       targetHeart.style.transform = '';
       targetHeart.style.transition = '';
-      targetHeart.querySelector('.heart-body').style.animation = 'heartBeat 1.9s ease-in-out infinite';
+      targetHeart.querySelector('.heart-body').style.animation = 'heartBeat 1.8s ease-in-out infinite';
       explosion.innerHTML = '';
       explosion.classList.remove('active');
+      
+      // Clear timers
+      clearTimeout(videoTimer);
+      clearInterval(progressInterval);
+      progressFill.style.width = '0%';
+
       videoOverlay.classList.remove('active');
       romanticVideo.pause();
       romanticVideo.removeAttribute('src');
@@ -264,7 +284,7 @@
       shootBtn.classList.remove('hidden');
       shootBtn.disabled = false;
       shootBtn.textContent = 'Release the Arrow 💘';
-      setStatus(`Arrow ${currentStage + 1} of 4 — Ready...`);
+      setStatus(`Love Arrow ${currentStage + 1} of 4 — Ready...`);
     }
 
     shootBtn.addEventListener('click', () => {
@@ -272,11 +292,11 @@
       isAnimating = true;
       shootBtn.disabled = true;
       shootBtn.textContent = 'Shooting...';
-      setStatus('Drawing the bow...');
+      setStatus('Aiming straight for your heart...');
       bowContainer.classList.add('drawn');
 
       setTimeout(() => {
-        setStatus('Arrow flying...');
+        setStatus('Love is on its way...');
         bowContainer.classList.remove('drawn');
         const aR = arrow.getBoundingClientRect();
         const hR = targetHeart.getBoundingClientRect();
@@ -288,7 +308,7 @@
         setTimeout(() => {
           arrow.style.opacity = '0';
           targetHeart.classList.add('hit','cracked');
-          setStatus('Direct hit! 💥');
+          setStatus('Direct Hit! 💖');
           targetHeart.style.transform = 'scale(1.22)';
           setTimeout(() => {
             createExplosion();
@@ -304,14 +324,14 @@
     function createExplosion() {
       explosion.innerHTML = '';
       explosion.classList.add('active');
-      const colors = ['#e63946','#ff6b8a','#FFD700','#ff4757','#fff','#ff8fa3'];
-      for (let i = 0; i < 32; i++) {
+      const colors = ['#ff2e63','#ff75a0','#FFD700','#ff4757','#fff','#ff8fa3'];
+      for (let i = 0; i < 36; i++) {
         const p = document.createElement('div');
         p.classList.add('particle');
         if (i % 4 === 0) p.classList.add('gold');
         if (i % 3 === 0) p.classList.add('small');
-        const angle = (i / 32) * Math.PI * 2 + Math.random() * 0.6;
-        const dist = 70 + Math.random() * 130;
+        const angle = (i / 36) * Math.PI * 2 + Math.random() * 0.6;
+        const dist = 75 + Math.random() * 140;
         p.style.setProperty('--px', `${Math.cos(angle)*dist}px`);
         p.style.setProperty('--py', `${Math.sin(angle)*dist}px`);
         p.style.background = colors[i % colors.length];
@@ -321,6 +341,7 @@
       setTimeout(() => { explosion.classList.remove('active'); explosion.innerHTML = ''; }, 1300);
     }
 
+    /* VIDEO PLAYER LOGIC (EXACTLY 5 SECONDS & SKIP) */
     function playCurrentVideo() {
       romanticVideo.src = VIDEOS[currentStage];
       romanticVideo.controls = false;
@@ -328,17 +349,40 @@
       romanticVideo.setAttribute('controlsList','nodownload nofullscreen noremoteplayback');
       videoOverlay.classList.add('active');
       videoEndUI.classList.remove('show');
-      romanticVideo.play().catch(()=>{});
+      
+      progressFill.style.width = '0%';
+      let startTime = Date.now();
+      
+      romanticVideo.play().then(() => {
+        // Smooth 5-Second Progress Bar
+        progressInterval = setInterval(() => {
+          let elapsedTime = Date.now() - startTime;
+          let percentage = Math.min((elapsedTime / 5000) * 100, 100);
+          progressFill.style.width = percentage + '%';
+        }, 50);
+
+        // Auto Stop & Show Next Button after exactly 5 seconds
+        videoTimer = setTimeout(() => {
+          stopVideoAndShowUI();
+        }, 5000);
+
+      }).catch(() => {
+        stopVideoAndShowUI();
+      });
+
       setStatus('');
     }
 
-    romanticVideo.addEventListener('ended', () => {
+    function stopVideoAndShowUI() {
+      clearInterval(progressInterval);
+      clearTimeout(videoTimer);
+      progressFill.style.width = '100%';
       romanticVideo.pause();
       videoEndUI.classList.add('show');
-    });
-    romanticVideo.addEventListener('error', () => {
-      setTimeout(() => videoEndUI.classList.add('show'), 700);
-    });
+    }
+
+    romanticVideo.addEventListener('ended', stopVideoAndShowUI);
+    romanticVideo.addEventListener('error', stopVideoAndShowUI);
     romanticVideo.addEventListener('contextmenu', e => e.preventDefault());
 
     nextBtn.addEventListener('click', () => {
