@@ -2,875 +2,808 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THE LION • Admin Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NTMY 🌷</title>
 <style>
-  :root {
-    --bg-dark: #0D0408;
-    --bg-darker: #08020A;
-    --red-primary: #FF1E5C;
-    --red-glow: #FF4D79;
-    --red-deep: #6B0A24;
-    --red-soft: #8A0F30;
-    --text-white: #FFFFFF;
-    --text-pink: #FFB3C6;
-    --text-muted: #B38A9A;
-    --border-glow: rgba(255, 30, 92, 0.4);
-    --border-soft: rgba(255, 51, 102, 0.4);
-  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 20% 10%, #1A0408 0%, #0D0408 40%, #08020A 100%);
-    color: var(--text-white);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #030208;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 20% 30%, #fff, transparent),
-      radial-gradient(1px 1px at 60% 70%, #FF4D79, transparent),
-      radial-gradient(1px 1px at 80% 10%, #fff, transparent),
-      radial-gradient(2px 2px at 40% 50%, #FF1E5C, transparent),
-      radial-gradient(1px 1px at 90% 80%, #FFB3C6, transparent),
-      radial-gradient(1px 1px at 15% 85%, #fff, transparent);
-    background-size: 400px 400px, 500px 500px, 600px 600px, 350px 350px, 450px 450px, 550px 550px;
-    opacity: 0.5;
-    pointer-events: none;
-    animation: drift 60s linear infinite;
-    z-index: 0;
-  }
-  @keyframes drift {
-    0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
-    100% { background-position: 400px 400px, -500px 500px, 600px -600px, -350px 350px, 450px -450px, -550px 550px; }
-  }
-  #loginScreen {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 10; padding: 20px;
-  }
-  .login-box {
-    width: 100%; max-width: 420px;
-    background: linear-gradient(180deg, rgba(13,4,8,0.95), rgba(26,4,8,0.95));
-    border: 2px solid var(--red-primary);
-    border-radius: 22px;
-    padding: 40px 32px;
-    box-shadow: 0 0 40px rgba(255, 30, 92, 0.4), inset 0 0 30px rgba(255, 30, 92, 0.05);
-    animation: boxPulse 3s ease-in-out infinite alternate;
-  }
-  @keyframes boxPulse {
-    0% { box-shadow: 0 0 40px rgba(255,30,92,0.35); }
-    100% { box-shadow: 0 0 60px rgba(255,30,92,0.55); }
-  }
-  .logo-title {
-    text-align: center; font-size: 28px; font-weight: 800;
-    letter-spacing: 0.25em; color: #fff;
-    text-shadow: 0 0 20px var(--red-primary), 0 0 40px var(--red-primary);
-    margin-bottom: 8px;
-  }
-  .logo-accent {
-    width: 80px; height: 3px;
-    background: linear-gradient(90deg, transparent, var(--red-primary), transparent);
-    margin: 0 auto 12px; border-radius: 2px;
-  }
-  .logo-sub {
-    text-align: center; font-size: 11px;
-    letter-spacing: 0.4em; color: var(--red-glow);
-    font-weight: 700; margin-bottom: 36px;
-  }
-  .field { margin-bottom: 18px; }
-  .field label {
-    display: block; font-size: 10px;
-    letter-spacing: 0.2em; color: var(--red-glow);
-    font-weight: 700; margin-bottom: 8px; padding-left: 4px;
-  }
-  .field input {
-    width: 100%; height: 54px;
-    background: rgba(26,5,8,0.8);
-    border: 1px solid rgba(255, 51, 102, 0.4);
-    border-radius: 14px; padding: 0 18px;
-    color: #fff; font-size: 14px; outline: none;
-    transition: all 0.2s;
-  }
-  .field input:focus {
-    border-color: var(--red-primary);
-    box-shadow: 0 0 20px rgba(255, 30, 92, 0.3);
-  }
-  .btn {
-    width: 100%; height: 56px;
-    background: linear-gradient(90deg, #FF1E5C, #8A0F30);
-    border: none; border-radius: 14px;
-    color: #fff; font-size: 14px; font-weight: 800;
-    letter-spacing: 0.2em; cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 8px 24px rgba(255, 30, 92, 0.4);
-    margin-top: 8px;
-  }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255, 30, 92, 0.6); }
-  .btn:active { transform: translateY(0); }
-  .btn.loading { pointer-events: none; opacity: 0.7; }
-  .error-msg {
-    color: #FF6B6B; font-size: 12px;
-    text-align: center; margin-top: 14px; min-height: 18px;
-    font-weight: 600;
-  }
-  #dashboard {
-    display: none;
-    position: relative; z-index: 5;
-    min-height: 100vh; padding: 24px;
-  }
-  .header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 24px;
-    background: linear-gradient(90deg, rgba(255,30,92,0.15), rgba(107,10,36,0.15));
-    border: 1px solid var(--border-glow);
-    border-radius: 18px; margin-bottom: 24px;
-  }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .header-star {
-    font-size: 22px; color: var(--red-primary);
-    text-shadow: 0 0 12px var(--red-primary);
-    animation: spin 8s linear infinite;
-  }
-  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  .header-title { font-size: 16px; font-weight: 800; letter-spacing: 0.2em; color: #fff; }
-  .header-version {
-    font-size: 11px; color: var(--red-glow); font-weight: 700;
-    padding: 3px 10px;
-    background: rgba(255, 30, 92, 0.15);
-    border-radius: 20px;
-    border: 1px solid var(--border-glow);
-  }
-  .logout-btn {
-    padding: 10px 20px;
-    background: rgba(138, 15, 48, 0.6);
-    border: 1px solid var(--border-glow);
-    border-radius: 10px;
-    color: var(--text-pink);
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.15em; cursor: pointer;
-    transition: all 0.2s;
-  }
-  .logout-btn:hover { background: var(--red-soft); color: #fff; }
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px; margin-bottom: 24px;
-  }
-  .stat-card {
-    background: linear-gradient(180deg, rgba(13,4,8,0.9), rgba(26,4,8,0.9));
-    border: 1px solid var(--border-soft);
-    border-radius: 16px; padding: 22px 20px;
-    position: relative;
-    transition: all 0.3s;
-  }
-  .stat-card:hover {
-    border-color: var(--red-primary);
-    box-shadow: 0 0 24px rgba(255, 30, 92, 0.25);
-    transform: translateY(-3px);
-  }
-  .stat-label { font-size: 10px; letter-spacing: 0.2em; color: var(--red-glow); font-weight: 700; margin-bottom: 10px; }
-  .stat-value { font-size: 32px; font-weight: 800; color: #fff; text-shadow: 0 0 20px rgba(255, 30, 92, 0.5); }
-  .stat-icon { position: absolute; top: 16px; right: 16px; font-size: 24px; opacity: 0.6; }
-  .actions-bar { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
-  .action-btn {
-    padding: 14px 24px;
-    background: linear-gradient(90deg, rgba(255,30,92,0.2), rgba(107,10,36,0.2));
-    border: 1px solid var(--border-glow);
-    border-radius: 12px; color: #fff;
-    font-size: 12px; font-weight: 700;
-    letter-spacing: 0.15em; cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .action-btn:hover {
-    background: linear-gradient(90deg, rgba(255,30,92,0.4), rgba(107,10,36,0.4));
-    box-shadow: 0 0 24px rgba(255, 30, 92, 0.4);
-    transform: translateY(-2px);
-  }
-  .action-btn.primary {
-    background: linear-gradient(90deg, #FF1E5C, #8A0F30);
-    box-shadow: 0 8px 24px rgba(255, 30, 92, 0.4);
-  }
-  .table-container {
-    background: linear-gradient(180deg, rgba(13,4,8,0.9), rgba(26,4,8,0.9));
-    border: 1px solid var(--border-soft);
-    border-radius: 18px; padding: 4px; overflow: hidden;
-  }
-  .table-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 24px; border-bottom: 1px solid var(--border-soft);
-  }
-  .table-title { font-size: 12px; font-weight: 800; letter-spacing: 0.2em; color: var(--red-glow); }
-  .search-box {
-    background: rgba(26,5,8,0.8);
-    border: 1px solid var(--border-soft);
-    border-radius: 10px; padding: 10px 16px;
-    color: #fff; font-size: 12px; outline: none;
-    width: 240px; transition: all 0.2s;
-  }
-  .search-box:focus { border-color: var(--red-primary); box-shadow: 0 0 16px rgba(255, 30, 92, 0.3); }
-  table { width: 100%; border-collapse: collapse; }
-  thead { background: rgba(255, 30, 92, 0.08); }
-  th {
-    padding: 14px 20px; text-align: left;
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 0.2em; color: var(--red-glow);
-    text-transform: uppercase;
-  }
-  td {
-    padding: 16px 20px; font-size: 13px;
-    color: #fff;
-    border-top: 1px solid rgba(255, 51, 102, 0.1);
-  }
-  tr:hover td { background: rgba(255, 30, 92, 0.05); }
-  .badge {
-    display: inline-block;
-    padding: 5px 12px; border-radius: 20px;
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 0.1em;
-  }
-  .badge.active {
-    background: rgba(76, 175, 80, 0.2);
-    color: #4CAF50;
-    border: 1px solid rgba(76, 175, 80, 0.4);
-  }
-  .badge.expired {
-    background: rgba(244, 67, 54, 0.2);
-    color: #F44336;
-    border: 1px solid rgba(244, 67, 54, 0.4);
-  }
-  .badge.banned {
-    background: rgba(138, 15, 48, 0.4);
-    color: var(--red-glow);
-    border: 1px solid var(--red-primary);
-  }
-  .row-actions { display: flex; gap: 8px; }
-  .icon-btn {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--border-soft);
-    background: rgba(26,5,8,0.6);
-    color: var(--red-glow);
-    font-size: 14px; cursor: pointer;
-    transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .icon-btn:hover {
-    background: var(--red-soft);
-    border-color: var(--red-primary);
-    color: #fff;
-    box-shadow: 0 0 16px rgba(255, 30, 92, 0.5);
-  }
-  .empty-state {
-    text-align: center; padding: 60px 20px;
-    color: var(--text-muted); font-size: 13px;
-  }
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(6px);
-    z-index: 100;
-    align-items: center; justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal {
-    width: 100%; max-width: 480px;
-    background: linear-gradient(180deg, rgba(13,4,8,0.98), rgba(26,4,8,0.98));
-    border: 2px solid var(--red-primary);
-    border-radius: 22px; padding: 32px;
-    box-shadow: 0 0 60px rgba(255, 30, 92, 0.5);
-    animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(0.85); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  .modal-title { font-size: 16px; font-weight: 800; letter-spacing: 0.2em; color: #fff; text-align: center; margin-bottom: 6px; }
-  .modal-sub { text-align: center; font-size: 11px; color: var(--red-glow); letter-spacing: 0.3em; margin-bottom: 26px; }
-  .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
-  .modal-actions .btn { flex: 1; margin: 0; }
-  .btn-secondary {
-    background: rgba(26,5,8,0.8);
-    border: 1px solid var(--border-soft);
-    color: var(--text-pink);
-  }
-  .btn-secondary:hover { background: rgba(138,15,48,0.4); color: #fff; }
-  .toast {
+
+  #intro {
     position: fixed;
-    bottom: 30px; left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: linear-gradient(180deg, rgba(13,4,8,0.98), rgba(26,4,8,0.98));
-    border: 2px solid var(--red-primary);
-    border-radius: 18px;
-    padding: 16px 26px; color: #fff;
-    font-size: 13px; font-weight: 600;
-    box-shadow: 0 0 40px rgba(255, 30, 92, 0.5);
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at center, #1a0a18 0%, #030208 70%);
+    transition: opacity 1.3s ease, visibility 1.3s;
+    padding: 24px;
+    text-align: center;
+  }
+  #intro.hide {
     opacity: 0;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 999;
-    display: flex; align-items: center; gap: 12px;
-    max-width: 90%;
+    visibility: hidden;
+    pointer-events: none;
   }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.success { border-color: #4CAF50; box-shadow: 0 0 40px rgba(76,175,80,0.5); }
-  .toast.error { border-color: #F44336; box-shadow: 0 0 40px rgba(244,67,54,0.5); }
-  .toast-icon { font-size: 20px; color: var(--red-primary); }
-  .loading-spinner {
+
+  .msg {
+    max-width: 540px;
+    color: #ffc1d4;
+    font-size: clamp(16px, 4.1vw, 22px);
+    line-height: 1.75;
+    letter-spacing: 0.3px;
+    text-shadow: 0 0 22px rgba(255, 158, 192, 0.5);
+    margin-bottom: 42px;
+    animation: fadeUp 1.5s ease both;
+  }
+  .msg .heart {
     display: inline-block;
-    width: 16px; height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: heartbeat 1.6s ease-in-out infinite;
   }
-  @media (max-width: 768px) {
-    .header { padding: 16px; flex-wrap: wrap; gap: 12px; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .table-header { flex-direction: column; align-items: stretch; gap: 12px; }
-    .search-box { width: 100%; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%      { transform: scale(1.28); }
+    28%      { transform: scale(1); }
+    42%      { transform: scale(1.16); }
+  }
+
+  #seeBtn {
+    background: linear-gradient(135deg, #ff4d7a, #ff9ec0);
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 1.6px;
+    padding: 17px 42px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 32px rgba(255, 80, 130, 0.6), 0 10px 24px rgba(0,0,0,0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+    animation: fadeUp 1.7s ease both;
+  }
+  #seeBtn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 45px rgba(255, 80, 130, 0.8), 0 12px 28px rgba(0,0,0,0.4);
+  }
+  #seeBtn:active { transform: scale(0.96); }
+
+  /* Rose message */
+  #roseMsg {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background: rgba(20, 8, 18, 0.75);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 120, 160, 0.35);
+    color: #ffc1d4;
+    font-size: 15px;
+    padding: 12px 26px;
+    border-radius: 40px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease, transform 0.4s;
+    box-shadow: 0 0 25px rgba(255, 80, 130, 0.25);
+    white-space: nowrap;
+  }
+  #roseMsg.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #roseMsg:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 0 35px rgba(255, 80, 130, 0.45);
+  }
+
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 5;
+    font-size: 15px;
+    opacity: 0;
+    animation: floatSparkle 7s linear infinite;
+  }
+  @keyframes floatSparkle {
+    0%   { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+    12%  { opacity: 0.75; }
+    88%  { opacity: 0.5; }
+    100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
   }
 </style>
 </head>
 <body>
 
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="logo-title">THE LION</div>
-    <div class="logo-accent"></div>
-    <div class="logo-sub">ADMIN PANEL</div>
-
-    <div class="field">
-      <label>USERNAME</label>
-      <input type="text" id="loginUser" placeholder="Enter admin username">
-    </div>
-
-    <div class="field">
-      <label>PASSWORD</label>
-      <input type="password" id="loginPass" placeholder="Enter password">
-    </div>
-
-    <button class="btn" id="loginBtn" onclick="doLogin()">▶ LOGIN</button>
-    <div class="error-msg" id="loginError"></div>
+<div id="intro">
+  <div class="msg">
+    Hi cutiee <span class="heart">💕</span><br>
+    I just met you and talked to you,<br>
+    so I just told you <b>NTMY</b>…<br>
+    but where are the flowers? 🌷
   </div>
+  <button id="seeBtn">See Flowers ✨</button>
 </div>
 
-<div id="dashboard">
-  <div class="header">
-    <div class="header-left">
-      <span class="header-star">✦</span>
-      <span class="header-title">THE LION</span>
-      <span class="header-version">ADMIN</span>
-    </div>
-    <button class="logout-btn" onclick="doLogout()">LOGOUT</button>
-  </div>
+<div id="roseMsg">I think you're missing a rose? Click here 🌹</div>
 
-  <div class="stats">
-    <div class="stat-card">
-      <div class="stat-icon">🔑</div>
-      <div class="stat-label">TOTAL KEYS</div>
-      <div class="stat-value" id="statTotal">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">✅</div>
-      <div class="stat-label">ACTIVE</div>
-      <div class="stat-value" id="statActive">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">❌</div>
-      <div class="stat-label">EXPIRED</div>
-      <div class="stat-value" id="statExpired">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon">📱</div>
-      <div class="stat-label">BOUND DEVICES</div>
-      <div class="stat-value" id="statBound">0</div>
-    </div>
-  </div>
+<canvas id="c"></canvas>
 
-  <div class="actions-bar">
-    <button class="action-btn primary" onclick="openAddModal()">
-      <span>➕</span> ADD KEY
-    </button>
-    <button class="action-btn" onclick="loadKeys()">
-      <span>🔄</span> REFRESH
-    </button>
-    <button class="action-btn" onclick="exportKeys()">
-      <span>📥</span> EXPORT
-    </button>
-  </div>
+<audio id="music" loop preload="auto">
+  <source src="tere-liye.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="table-container">
-    <div class="table-header">
-      <span class="table-title">◈ LICENSE KEYS</span>
-      <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search key or device..." oninput="filterKeys()">
-    </div>
-    <div id="tableWrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Key</th>
-            <th>Status</th>
-            <th>Expiry</th>
-            <th>Device</th>
-            <th>Logins</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="keysTable">
-          <tr><td colspan="6" class="empty-state">Loading...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const music = document.getElementById('music');
+const intro = document.getElementById('intro');
+const seeBtn = document.getElementById('seeBtn');
+const roseMsg = document.getElementById('roseMsg');
 
-<div class="modal-overlay" id="keyModal">
-  <div class="modal">
-    <div class="modal-title" id="modalTitle">ADD NEW KEY</div>
-    <div class="modal-sub">◈ LICENSE MANAGEMENT ◈</div>
+let W, H;
+const particles = [];
+const flowers = [];
+const roses = [];          // special realistic roses
+let started = false;
+let rosesStarted = false;
+let roseStartT = 0;
+let mainDone = false;
 
-    <div class="field">
-      <label>LICENSE KEY</label>
-      <input type="text" id="keyInput" placeholder="LION-XXXX-XXXX-XXXX">
-    </div>
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
 
-    <div class="field">
-      <label>STATUS</label>
-      <input type="text" id="statusInput" placeholder="active / banned / expired" value="active">
-    </div>
+/* soft floating particles */
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init) {
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 40;
+    this.r = 1.0 + Math.random() * 2.8;
+    this.speed = 0.18 + Math.random() * 0.5;
+    this.a = 0.07 + Math.random() * 0.22;
+    this.col = Math.random() > 0.38 ? '#ff9ec0' : '#ffe0ec';
+    this.wobble = Math.random() * Math.PI * 2;
+  }
+  update() {
+    this.y -= this.speed;
+    this.x += Math.sin(this.wobble + this.y * 0.008) * 0.35;
+    if (this.y < -40) this.reset(false);
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.col;
+    ctx.globalAlpha = this.a;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+for (let i = 0; i < 60; i++) particles.push(new Particle());
 
-    <div class="field">
-      <label>EXPIRY DATE</label>
-      <input type="date" id="expiryInput">
-    </div>
+/* normal garden presets */
+const PRESETS = [
+  { petalDeep: '#e91e63', petalMid: '#ff80ab', petalLight: '#ffc1d4', bud: '#f48fb1', core: '#ffd54f', glow: 'rgba(255,70,130,0.55)' },
+  { petalDeep: '#ce93d8', petalMid: '#f3e5f5', petalLight: '#faf5ff', bud: '#e1bee7', core: '#fff', glow: 'rgba(220,180,255,0.5)' },
+  { petalDeep: '#ad1457', petalMid: '#ec407a', petalLight: '#f8bbd0', bud: '#f06292', core: null, glow: 'rgba(180,30,90,0.55)' },
+  { petalDeep: '#ef6c00', petalMid: '#ffb300', petalLight: '#ffe082', bud: '#ff8f00', core: '#4e342e', glow: 'rgba(255,150,0,0.45)' },
+  { petalDeep: '#7b1fa2', petalMid: '#ba68c8', petalLight: '#e1bee7', bud: '#ce93d8', core: '#ffd54f', glow: 'rgba(150,60,200,0.5)' },
+  { petalDeep: '#e57373', petalMid: '#ef9a9a', petalLight: '#ffcdd2', bud: '#ef9a9a', core: '#fff59d', glow: 'rgba(255,120,120,0.5)' },
+  { petalDeep: '#f06292', petalMid: '#f8bbd0', petalLight: '#fce4ec', bud: '#f48fb1', core: '#ffecb3', glow: 'rgba(240,100,150,0.5)' }
+];
 
-    <div class="field">
-      <label>DEVICE ID (optional)</label>
-      <input type="text" id="deviceInput" placeholder="Leave empty for first login bind">
-    </div>
+/* special realistic rose presets (more red/pink/classic) */
+const ROSE_PRESETS = [
+  { // classic deep red rose
+    petalDeep: '#b71c1c', petalMid: '#e53935', petalLight: '#ef9a9a',
+    bud: '#c62828', core: '#ffd54f', glow: 'rgba(200,30,40,0.6)'
+  },
+  { // romantic pink rose
+    petalDeep: '#c2185b', petalMid: '#f06292', petalLight: '#f8bbd0',
+    bud: '#ec407a', core: '#ffecb3', glow: 'rgba(220,50,100,0.55)'
+  },
+  { // soft peach rose
+    petalDeep: '#e91e63', petalMid: '#f48fb1', petalLight: '#fce4ec',
+    bud: '#f06292', core: '#fff59d', glow: 'rgba(240,80,130,0.5)'
+  },
+  { // deep burgundy
+    petalDeep: '#880e4f', petalMid: '#ad1457', petalLight: '#f48fb1',
+    bud: '#c2185b', core: '#ffd54f', glow: 'rgba(160,20,70,0.55)'
+  },
+  { // soft coral rose
+    petalDeep: '#d32f2f', petalMid: '#ef5350', petalLight: '#ffcdd2',
+    bud: '#e57373', core: '#fff8e1', glow: 'rgba(230,60,60,0.5)'
+  }
+];
 
-    <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeModal()">CANCEL</button>
-      <button class="btn" id="saveKeyBtn" onclick="saveKey()">SAVE</button>
-    </div>
-  </div>
-</div>
+const STAGE = { root: 0.0, stem: 0.4, leaf: 1.55, bud: 2.5, open: 3.3 };
 
-<div class="toast" id="toast">
-  <span class="toast-icon" id="toastIcon">✦</span>
-  <span id="toastMsg">Welcome</span>
-</div>
+function createFlower(cfg, isRose = false) {
+  return {
+    cx: cfg.x,
+    base: 0.93,
+    maxH: cfg.h,
+    ang: cfg.ang * Math.PI / 180,
+    delay: cfg.delay,
+    preset: isRose ? ROSE_PRESETS[cfg.p % ROSE_PRESETS.length] : PRESETS[cfg.p % PRESETS.length],
+    petals: cfg.petals || 6,
+    isTulip: cfg.tulip || false,
+    isSun: cfg.sun || false,
+    isRose: isRose,
+    sway: 0.12 + Math.random() * 0.28,
+    swaySpeed: 0.55 + Math.random() * 0.7,
+    phase: Math.random() * Math.PI * 2
+  };
+}
 
-<script type="module">
-// ═══════════════════════════════════════════════
-//  FIREBASE IMPORTS — REALTIME DATABASE
-// ═══════════════════════════════════════════════
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  get,
-  set,
-  update,
-  remove,
-  onValue,
-  query,
-  orderByChild
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-import {
-  getAuth,
-  signInAnonymously,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+/* normal garden layout */
+const LAYOUT = [
+  { x: 0.07, h: 0.40, delay: 0.0,  ang: -30, p: 0, petals: 7 },
+  { x: 0.17, h: 0.52, delay: 1.1,  ang: -20, p: 3, petals: 16, sun: true },
+  { x: 0.27, h: 0.46, delay: 2.3,  ang: -12, p: 1, petals: 6 },
+  { x: 0.37, h: 0.58, delay: 3.5,  ang: -5,  p: 2, petals: 3, tulip: true },
+  { x: 0.47, h: 0.64, delay: 4.7,  ang: 0,   p: 0, petals: 8 },
+  { x: 0.57, h: 0.50, delay: 5.9,  ang: 7,   p: 4, petals: 6 },
+  { x: 0.67, h: 0.56, delay: 7.1,  ang: 13,  p: 5, petals: 7 },
+  { x: 0.77, h: 0.44, delay: 8.3,  ang: 20,  p: 1, petals: 6 },
+  { x: 0.87, h: 0.48, delay: 9.5,  ang: 27,  p: 6, petals: 7 },
+  { x: 0.13, h: 0.32, delay: 10.8, ang: -24, p: 2, petals: 3, tulip: true },
+  { x: 0.31, h: 0.30, delay: 12.0, ang: -9,  p: 0, petals: 6 },
+  { x: 0.51, h: 0.34, delay: 13.2, ang: 5,   p: 3, petals: 14, sun: true },
+  { x: 0.71, h: 0.31, delay: 14.4, ang: 16,  p: 5, petals: 6 },
+  { x: 0.41, h: 0.38, delay: 15.6, ang: -3,  p: 6, petals: 7 },
+  { x: 0.61, h: 0.36, delay: 16.8, ang: 11,  p: 0, petals: 6 },
+  { x: 0.22, h: 0.26, delay: 18.0, ang: -15, p: 4, petals: 5 },
+  { x: 0.82, h: 0.28, delay: 19.2, ang: 22,  p: 1, petals: 6 }
+];
+LAYOUT.forEach(l => flowers.push(createFlower(l)));
 
-// ═══════════════════════════════════════════════
-//  TUMHARA FIREBASE CONFIG
-// ═══════════════════════════════════════════════
-const firebaseConfig = {
-  apiKey: "AIzaSyAwAkHEl5pCiQ7KdaTmtrZ-OBL9pFv6aHg",
-  authDomain: "fir-8c71e.firebaseapp.com",
-  databaseURL: "https://fir-8c71e-default-rtdb.firebaseio.com",
-  projectId: "fir-8c71e",
-  storageBucket: "fir-8c71e.firebasestorage.app",
-  messagingSenderId: "848454781583",
-  appId: "1:848454781583:web:573d5bd4b3963f02c13efa",
-  measurementId: "G-ENYP1PJHPB"
-};
+/* special realistic roses layout (appear after click) */
+const ROSE_LAYOUT = [
+  { x: 0.18, h: 0.55, delay: 0.0,  ang: -18, p: 0, petals: 9 },
+  { x: 0.32, h: 0.62, delay: 1.4,  ang: -8,  p: 1, petals: 10 },
+  { x: 0.48, h: 0.68, delay: 2.8,  ang: 0,   p: 2, petals: 11 },
+  { x: 0.64, h: 0.60, delay: 4.2,  ang: 9,   p: 3, petals: 10 },
+  { x: 0.78, h: 0.52, delay: 5.6,  ang: 18,  p: 4, petals: 9 },
+  { x: 0.25, h: 0.40, delay: 7.0,  ang: -12, p: 0, petals: 8 },
+  { x: 0.55, h: 0.42, delay: 8.4,  ang: 6,   p: 1, petals: 9 },
+  { x: 0.72, h: 0.38, delay: 9.8,  ang: 15,  p: 2, petals: 8 }
+];
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const auth = getAuth(app);
+function ease(t) {
+  return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3);
+}
+function easeBack(t) {
+  const c = 1.7;
+  return t <= 0 ? 0 : t >= 1 ? 1 : 1 + c * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+}
 
-// ═══════════════════════════════════════════════
-//  ADMIN CREDENTIALS
-// ═══════════════════════════════════════════════
-const ADMIN_USER = "lion_admin";
-const ADMIN_PASS = "LionCheats@2026";
+/* root */
+function drawRoot(f, p) {
+  if (p <= 0) return;
+  const x = f.cx * W, y = f.base * H;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(f.ang);
+  const s = ease(p) * 18;
+  const soil = ctx.createRadialGradient(0, 4, 2, 0, 6, s * 1.8);
+  soil.addColorStop(0, 'rgba(70, 45, 35, 0.85)');
+  soil.addColorStop(1, 'rgba(40, 25, 20, 0.0)');
+  ctx.beginPath();
+  ctx.ellipse(0, 6, s * 1.7, s * 0.65, 0, 0, Math.PI * 2);
+  ctx.fillStyle = soil;
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(65, 40, 35, 0.7)';
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-8, 4); ctx.quadraticCurveTo(-14, 15, -6, 22);
+  ctx.moveTo(7, 5);  ctx.quadraticCurveTo(15, 14, 8, 21);
+  ctx.moveTo(0, 3);  ctx.quadraticCurveTo(3, 16, -2, 24);
+  ctx.stroke();
+  ctx.restore();
+}
 
-let currentEditKey = null;
-let allKeys = [];
-let authReady = false;
+/* stem + leaves */
+function drawStemAndLeaves(f, stemP, leafP, time) {
+  const h = f.maxH * H * ease(stemP);
+  if (h < 2) return { tipX: f.cx * W, tipY: f.base * H };
 
-// ═══════════════════════════════════════════════
-//  ANONYMOUS AUTH (for admin write access)
-// ═══════════════════════════════════════════════
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log('Auth ready:', user.uid);
-    authReady = true;
-  } else {
-    console.log('Signing in anonymously...');
-    signInAnonymously(auth).catch(e => console.error('Auth error:', e));
+  const sway = Math.sin(time * f.swaySpeed + f.phase) * f.sway * (h / (f.maxH * H));
+  const x = f.cx * W, y = f.base * H;
+
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(f.ang + sway * 0.18);
+
+  const stemGrad = ctx.createLinearGradient(0, 0, 0, -h);
+  stemGrad.addColorStop(0, '#1b5e20');
+  stemGrad.addColorStop(0.4, '#2e7d32');
+  stemGrad.addColorStop(1, '#66bb6a');
+
+  ctx.beginPath();
+  ctx.moveTo(-2.2, 0);
+  ctx.quadraticCurveTo(6 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, -1.5 + sway * 3, -h);
+  ctx.lineTo(1.5 + sway * 3, -h);
+  ctx.quadraticCurveTo(8 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, 2.2, 0);
+  ctx.closePath();
+  ctx.fillStyle = stemGrad;
+  ctx.shadowColor = 'rgba(60, 140, 60, 0.4)';
+  ctx.shadowBlur = 8;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  ctx.beginPath();
+  ctx.moveTo(0.8, 0);
+  ctx.quadraticCurveTo(3, -h * 0.5, 0.5 + sway * 2, -h);
+  ctx.strokeStyle = 'rgba(180, 230, 160, 0.35)';
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
+
+  if (leafP > 0) {
+    const leaves = [
+      { pos: 0.70, side: -1, size: 1.1, rot: 0.72 },
+      { pos: 0.52, side:  1, size: 1.0, rot: 0.68 },
+      { pos: 0.36, side: -1, size: 0.85, rot: 0.75 },
+      { pos: 0.24, side:  1, size: 0.72, rot: 0.65 }
+    ];
+    leaves.forEach((L, i) => {
+      const lp = Math.max(0, Math.min(1, (leafP - i * 0.11) / 0.42));
+      if (lp <= 0) return;
+      const ly = -h * L.pos;
+      const sc = ease(lp) * L.size;
+      ctx.save();
+      ctx.translate(sway * 2.5, ly);
+      ctx.rotate(L.side * L.rot * sc);
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(L.side * 10 * sc, -6 * sc, L.side * 26 * sc, 4 * sc, L.side * 22 * sc, 14 * sc);
+      ctx.bezierCurveTo(L.side * 14 * sc, 10 * sc, L.side * 6 * sc, 5 * sc, 0, 0);
+      const lg = ctx.createLinearGradient(0, 0, L.side * 22 * sc, 10 * sc);
+      lg.addColorStop(0, '#a5d6a7');
+      lg.addColorStop(0.5, '#66bb6a');
+      lg.addColorStop(1, '#388e3c');
+      ctx.fillStyle = lg;
+      ctx.globalAlpha = 0.92 * sc;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(L.side * 11 * sc, 5 * sc, L.side * 20 * sc, 12 * sc);
+      ctx.strokeStyle = 'rgba(40, 100, 50, 0.55)';
+      ctx.lineWidth = 1.3;
+      ctx.stroke();
+
+      for (let v = 1; v <= 3; v++) {
+        const t = v / 4;
+        ctx.beginPath();
+        ctx.moveTo(L.side * 5 * sc * t, 2 * sc * t);
+        ctx.quadraticCurveTo(L.side * (8 + v * 3) * sc * t, (3 + v) * sc * t, L.side * (12 + v * 2) * sc * t, (6 + v * 1.5) * sc * t);
+        ctx.strokeStyle = 'rgba(50, 110, 55, 0.35)';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+    });
+  }
+  ctx.restore();
+
+  const tipX = x + Math.sin(f.ang + sway * 0.18) * h;
+  const tipY = y - Math.cos(f.ang + sway * 0.18) * h;
+  return { tipX, tipY };
+}
+
+/* bud */
+function drawBud(f, tipX, tipY, budP) {
+  if (budP <= 0) return;
+  const s = ease(budP);
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang);
+  ctx.scale(s, s);
+
+  ctx.beginPath();
+  ctx.ellipse(0, -12, 11, 16, 0, 0, Math.PI * 2);
+  const bg = ctx.createLinearGradient(0, 0, 0, -28);
+  bg.addColorStop(0, f.preset.bud);
+  bg.addColorStop(0.55, f.preset.petalMid);
+  bg.addColorStop(1, f.preset.petalDeep);
+  ctx.fillStyle = bg;
+  ctx.shadowColor = f.preset.glow;
+  ctx.shadowBlur = 14;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  ctx.beginPath();
+  ctx.ellipse(-3, -16, 4, 7, -0.3, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.fill();
+
+  ctx.fillStyle = '#558b2f';
+  ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  ctx.ellipse(-9, -4, 5.5, 9, -0.5, 0, Math.PI * 2);
+  ctx.ellipse(9, -4, 5.5, 9, 0.5, 0, Math.PI * 2);
+  ctx.ellipse(0, 2, 7, 6, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+/* normal bloom */
+function drawBloom(f, tipX, tipY, openP, time) {
+  if (openP <= 0) return;
+  const s = 0.1 + easeBack(openP) * 0.9;
+  const pr = f.preset;
+  const breathe = 1 + Math.sin(time * 1.6 + f.phase) * 0.03;
+
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang + Math.sin(time * 0.65 + f.phase) * 0.05);
+  ctx.scale(s * breathe, s * breathe);
+
+  ctx.beginPath();
+  ctx.arc(0, 0, 52, 0, Math.PI * 2);
+  const gl = ctx.createRadialGradient(0, 0, 6, 0, 0, 52);
+  gl.addColorStop(0, pr.glow);
+  gl.addColorStop(1, 'transparent');
+  ctx.fillStyle = gl;
+  ctx.fill();
+
+  const total = f.petals;
+  for (let i = 0; i < total; i++) {
+    const a = (i / total) * Math.PI * 2 - Math.PI / 2 + 0.15;
+    ctx.save();
+    ctx.rotate(a);
+    ctx.beginPath();
+    if (f.isTulip) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(16, -16, 14, -38, 0, -44);
+      ctx.bezierCurveTo(-14, -38, -16, -16, 0, 0);
+    } else if (f.isSun) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(8, -8, 7, -25, 0, -30);
+      ctx.bezierCurveTo(-7, -25, -8, -8, 0, 0);
+    } else {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(20, -12, 18, -34, 0, -40);
+      ctx.bezierCurveTo(-18, -34, -20, -12, 0, 0);
+    }
+    const pg = ctx.createLinearGradient(0, 0, 0, -42);
+    pg.addColorStop(0, pr.petalDeep);
+    pg.addColorStop(0.5, pr.petalMid);
+    pg.addColorStop(1, pr.petalLight);
+    ctx.fillStyle = pg;
+    ctx.globalAlpha = 0.85;
+    ctx.shadowColor = pr.glow;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  for (let i = 0; i < total; i++) {
+    const a = (i / total) * Math.PI * 2 - Math.PI / 2;
+    ctx.save();
+    ctx.rotate(a);
+    ctx.beginPath();
+    if (f.isTulip) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(14, -14, 12, -34, 0, -40);
+      ctx.bezierCurveTo(-12, -34, -14, -14, 0, 0);
+    } else if (f.isSun) {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(7, -7, 6, -23, 0, -28);
+      ctx.bezierCurveTo(-6, -23, -7, -7, 0, 0);
+    } else {
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(17, -10, 15, -32, 0, -37);
+      ctx.bezierCurveTo(-15, -32, -17, -10, 0, 0);
+    }
+    const pg = ctx.createLinearGradient(0, 0, 0, -38);
+    pg.addColorStop(0, pr.petalMid);
+    pg.addColorStop(0.45, pr.petalLight);
+    pg.addColorStop(1, '#fffaf5');
+    ctx.fillStyle = pg;
+    ctx.shadowColor = 'rgba(255,255,255,0.3)';
+    ctx.shadowBlur = 6;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.moveTo(0, -3);
+    ctx.quadraticCurveTo(2, -18, 0, -33);
+    ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+    ctx.lineWidth = 1.1;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  if (pr.core) {
+    const r = f.isSun ? 14 : 10;
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    if (f.isSun) {
+      const cg = ctx.createRadialGradient(0, 0, 2, 0, 0, r);
+      cg.addColorStop(0, '#5d4037');
+      cg.addColorStop(0.7, '#3e2723');
+      cg.addColorStop(1, '#2c1a12');
+      ctx.fillStyle = cg;
+      ctx.shadowColor = 'rgba(0,0,0,0.4)';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.fillStyle = 'rgba(40, 25, 15, 0.7)';
+      for (let k = 0; k < 18; k++) {
+        const aa = (k / 18) * Math.PI * 2 + time * 0.1;
+        const rr = 4 + (k % 3) * 2.2;
+        ctx.beginPath();
+        ctx.ellipse(Math.cos(aa) * rr * 0.7, Math.sin(aa) * rr * 0.7, 1.6, 2.2, aa, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else {
+      const cg = ctx.createRadialGradient(-3, -3, 1, 0, 0, r);
+      cg.addColorStop(0, '#fffde7');
+      cg.addColorStop(0.5, pr.core);
+      cg.addColorStop(1, '#ffb300');
+      ctx.fillStyle = cg;
+      ctx.shadowColor = 'rgba(255,200,50,0.7)';
+      ctx.shadowBlur = 12;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 220, 100, 0.7)';
+      ctx.lineWidth = 1.1;
+      for (let k = 0; k < 10; k++) {
+        const aa = (k / 10) * Math.PI * 2;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(aa) * 3, Math.sin(aa) * 3);
+        ctx.lineTo(Math.cos(aa) * 7.5, Math.sin(aa) * 7.5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(Math.cos(aa) * 7.5, Math.sin(aa) * 7.5, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff59d';
+        ctx.fill();
+      }
+    }
+  }
+  ctx.restore();
+}
+
+/* ========== EXTRA REALISTIC ROSE ========== */
+function drawRealisticRose(f, tipX, tipY, openP, time) {
+  if (openP <= 0) return;
+  const s = 0.12 + easeBack(openP) * 0.88;
+  const pr = f.preset;
+  const breathe = 1 + Math.sin(time * 1.5 + f.phase) * 0.028;
+
+  ctx.save();
+  ctx.translate(tipX, tipY);
+  ctx.rotate(f.ang + Math.sin(time * 0.6 + f.phase) * 0.04);
+  ctx.scale(s * breathe, s * breathe);
+
+  // soft glow
+  ctx.beginPath();
+  ctx.arc(0, 0, 58, 0, Math.PI * 2);
+  const gl = ctx.createRadialGradient(0, 0, 8, 0, 0, 58);
+  gl.addColorStop(0, pr.glow);
+  gl.addColorStop(1, 'transparent');
+  ctx.fillStyle = gl;
+  ctx.fill();
+
+  // Rose has many overlapping spiral petals
+  const layers = [
+    { count: 5,  radius: 38, width: 22, alpha: 0.75, offset: 0.0  },
+    { count: 7,  radius: 32, width: 19, alpha: 0.85, offset: 0.3  },
+    { count: 8,  radius: 25, width: 16, alpha: 0.92, offset: 0.55 },
+    { count: 6,  radius: 18, width: 13, alpha: 0.95, offset: 0.8  },
+    { count: 5,  radius: 12, width: 10, alpha: 1.0,  offset: 1.1  }
+  ];
+
+  layers.forEach((layer, li) => {
+    for (let i = 0; i < layer.count; i++) {
+      const a = (i / layer.count) * Math.PI * 2 - Math.PI / 2 + layer.offset + li * 0.15;
+      ctx.save();
+      ctx.rotate(a);
+      ctx.beginPath();
+      // classic rose petal shape (rounded + pointed tip)
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(layer.width * 0.7, -layer.radius * 0.25,
+                        layer.width, -layer.radius * 0.7,
+                        0, -layer.radius);
+      ctx.bezierCurveTo(-layer.width, -layer.radius * 0.7,
+                        -layer.width * 0.7, -layer.radius * 0.25,
+                        0, 0);
+
+      const pg = ctx.createLinearGradient(0, 0, 0, -layer.radius);
+      if (li < 2) {
+        pg.addColorStop(0, pr.petalDeep);
+        pg.addColorStop(0.55, pr.petalMid);
+        pg.addColorStop(1, pr.petalLight);
+      } else {
+        pg.addColorStop(0, pr.petalMid);
+        pg.addColorStop(0.5, pr.petalLight);
+        pg.addColorStop(1, '#fff5f5');
+      }
+      ctx.fillStyle = pg;
+      ctx.globalAlpha = layer.alpha;
+      ctx.shadowColor = pr.glow;
+      ctx.shadowBlur = li === 0 ? 12 : 5;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // subtle inner fold
+      ctx.beginPath();
+      ctx.moveTo(0, -2);
+      ctx.quadraticCurveTo(layer.width * 0.15, -layer.radius * 0.5, 0, -layer.radius * 0.9);
+      ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+      ctx.lineWidth = 1.0;
+      ctx.stroke();
+      ctx.restore();
+    }
+  });
+
+  // center
+  ctx.beginPath();
+  ctx.arc(0, 0, 9, 0, Math.PI * 2);
+  const cg = ctx.createRadialGradient(-2, -2, 1, 0, 0, 9);
+  cg.addColorStop(0, '#fffde7');
+  cg.addColorStop(0.5, pr.core || '#ffd54f');
+  cg.addColorStop(1, '#ffb300');
+  ctx.fillStyle = cg;
+  ctx.shadowColor = 'rgba(255,200,50,0.7)';
+  ctx.shadowBlur = 10;
+  ctx.fill();
+
+  // tiny stamens
+  ctx.strokeStyle = 'rgba(255, 220, 100, 0.75)';
+  ctx.lineWidth = 1.15;
+  for (let k = 0; k < 12; k++) {
+    const aa = (k / 12) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(aa) * 3.5, Math.sin(aa) * 3.5);
+    ctx.lineTo(Math.cos(aa) * 8, Math.sin(aa) * 8);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(Math.cos(aa) * 8, Math.sin(aa) * 8, 1.4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff59d';
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+/* main animation */
+let startT = 0;
+function frame(now) {
+  if (!startT) startT = now;
+  const elapsed = (now - startT) / 1000;
+  const time = now / 1000;
+
+  ctx.clearRect(0, 0, W, H);
+
+  const bg = ctx.createRadialGradient(W / 2, H * 0.3, 0, W / 2, H * 0.4, Math.max(W, H) * 0.9);
+  bg.addColorStop(0, '#1f0b1a');
+  bg.addColorStop(0.5, '#0c050e');
+  bg.addColorStop(1, '#030208');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  const ground = ctx.createLinearGradient(0, H * 0.82, 0, H);
+  ground.addColorStop(0, 'transparent');
+  ground.addColorStop(1, 'rgba(25, 55, 35, 0.3)');
+  ctx.fillStyle = ground;
+  ctx.fillRect(0, H * 0.78, W, H * 0.22);
+
+  // normal flowers
+  flowers.forEach(f => {
+    const local = elapsed - f.delay;
+    if (local < 0) return;
+
+    const rootP  = ease(Math.min(1, local / 0.5));
+    const stemP  = ease(Math.max(0, Math.min(1, (local - STAGE.stem) / 1.75)));
+    const leafP  = ease(Math.max(0, Math.min(1, (local - STAGE.leaf) / 0.95)));
+    const budP   = ease(Math.max(0, Math.min(1, (local - STAGE.bud) / 0.8)));
+    const openP  = ease(Math.max(0, Math.min(1, (local - STAGE.open) / 1.2)));
+    const budFade = openP > 0 ? Math.max(0, 1 - openP * 2.0) : 1;
+
+    drawRoot(f, rootP);
+    const tip = drawStemAndLeaves(f, stemP, leafP, time);
+
+    if (openP > 0.03) {
+      drawBloom(f, tip.tipX, tip.tipY, openP, time);
+    } else if (budP > 0) {
+      drawBud(f, tip.tipX, tip.tipY, budP * budFade);
+    }
+  });
+
+  // show rose message after main garden is mostly done
+  if (!mainDone && elapsed > 22) {
+    mainDone = true;
+    roseMsg.classList.add('show');
+  }
+
+  // realistic roses
+  if (rosesStarted) {
+    const roseElapsed = (now - roseStartT) / 1000;
+    roses.forEach(f => {
+      const local = roseElapsed - f.delay;
+      if (local < 0) return;
+
+      const rootP  = ease(Math.min(1, local / 0.5));
+      const stemP  = ease(Math.max(0, Math.min(1, (local - STAGE.stem) / 1.8)));
+      const leafP  = ease(Math.max(0, Math.min(1, (local - STAGE.leaf) / 1.0)));
+      const budP   = ease(Math.max(0, Math.min(1, (local - STAGE.bud) / 0.85)));
+      const openP  = ease(Math.max(0, Math.min(1, (local - STAGE.open) / 1.3)));
+      const budFade = openP > 0 ? Math.max(0, 1 - openP * 2.0) : 1;
+
+      drawRoot(f, rootP);
+      const tip = drawStemAndLeaves(f, stemP, leafP, time);
+
+      if (openP > 0.03) {
+        drawRealisticRose(f, tip.tipX, tip.tipY, openP, time);
+      } else if (budP > 0) {
+        drawBud(f, tip.tipX, tip.tipY, budP * budFade);
+      }
+    });
+  }
+
+  requestAnimationFrame(frame);
+}
+
+seeBtn.addEventListener('click', () => {
+  intro.classList.add('hide');
+  startT = 0;
+  started = true;
+  music.play().catch(() => {});
+  requestAnimationFrame(frame);
+
+  for (let i = 0; i < 14; i++) {
+    const sp = document.createElement('div');
+    sp.className = 'sparkle';
+    sp.textContent = ['✨', '🌸', '💕', '🌷', '💖', '🌺'][i % 6];
+    sp.style.left = Math.random() * 100 + 'vw';
+    sp.style.animationDelay = (Math.random() * 6) + 's';
+    sp.style.animationDuration = (5.5 + Math.random() * 4) + 's';
+    document.body.appendChild(sp);
   }
 });
 
-// ═══════════════════════════════════════════════
-//  LOGIN
-// ═══════════════════════════════════════════════
-window.doLogin = function() {
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const err = document.getElementById('loginError');
-  const btn = document.getElementById('loginBtn');
+/* click on rose message → grow real roses */
+roseMsg.addEventListener('click', () => {
+  if (rosesStarted) return;
+  rosesStarted = true;
+  roseStartT = performance.now();
+  roseMsg.classList.remove('show');
 
-  if (!user || !pass) {
-    err.textContent = 'Please enter username & password';
-    return;
-  }
-
-  btn.classList.add('loading');
-  btn.innerHTML = '<span class="loading-spinner"></span>';
-
-  setTimeout(() => {
-    if (user === ADMIN_USER && pass === ADMIN_PASS) {
-      err.textContent = '';
-      localStorage.setItem('lion_admin_logged', '1');
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      loadKeys();
-      showToast('Welcome, Admin!', 'success');
-    } else {
-      err.textContent = 'Invalid credentials';
-      btn.classList.remove('loading');
-      btn.innerHTML = '▶ LOGIN';
-    }
-  }, 700);
-};
-
-window.doLogout = function() {
-  localStorage.removeItem('lion_admin_logged');
-  location.reload();
-};
-
-// ═══════════════════════════════════════════════
-//  LOAD KEYS — Realtime DB
-// ═══════════════════════════════════════════════
-window.loadKeys = async function() {
-  const tbody = document.getElementById('keysTable');
-  tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><span class="loading-spinner"></span> Loading...</td></tr>';
-
-  try {
-    const snapshot = await get(ref(db, 'licenses'));
-    allKeys = [];
-
-    if (snapshot.exists()) {
-      const data = snapshot.val();
-      Object.keys(data).forEach(key => {
-        allKeys.push({ id: key, ...data[key] });
-      });
-    }
-
-    // sort by createdAt desc
-    allKeys.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-
-    renderKeys(allKeys);
-    updateStats();
-
-  } catch (e) {
-    console.error(e);
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Error: ' + e.message + '</td></tr>';
-    showToast('Failed to load: ' + e.message, 'error');
-  }
-};
-
-function renderKeys(keys) {
-  const tbody = document.getElementById('keysTable');
-
-  if (keys.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No keys found. Click "ADD KEY" to create one.</td></tr>';
-    return;
-  }
-
-  const now = Date.now();
-
-  tbody.innerHTML = keys.map(k => {
-    const expiry = k.expiry || 0;
-    const isExpired = expiry < now;
-    const status = k.status || 'active';
-
-    let badgeClass = 'active';
-    let badgeText = 'ACTIVE';
-    if (status === 'banned') {
-      badgeClass = 'banned';
-      badgeText = 'BANNED';
-    } else if (isExpired) {
-      badgeClass = 'expired';
-      badgeText = 'EXPIRED';
-    }
-
-    const expiryDate = expiry
-      ? new Date(expiry).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-      : '—';
-
-    const device = k.deviceID ? k.deviceID.substring(0, 12) + '...' : '—';
-    const logins = k.loginCount || 0;
-
-    return `
-      <tr>
-        <td><code style="color: #FF4D79; font-size: 11px;">${k.id}</code></td>
-        <td><span class="badge ${badgeClass}">${badgeText}</span></td>
-        <td>${expiryDate}</td>
-        <td><code style="color: #B38A9A; font-size: 11px;">${device}</code></td>
-        <td>${logins}</td>
-        <td>
-          <div class="row-actions">
-            <button class="icon-btn" onclick="editKey('${k.id}')" title="Edit">✎</button>
-            <button class="icon-btn" onclick="deleteKey('${k.id}')" title="Delete">🗑</button>
-            <button class="icon-btn" onclick="resetDevice('${k.id}')" title="Reset device">↻</button>
-          </div>
-        </td>
-      </tr>
-    `;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════
-//  STATS
-// ═══════════════════════════════════════════════
-function updateStats() {
-  const now = Date.now();
-  let active = 0, expired = 0, bound = 0;
-
-  allKeys.forEach(k => {
-    if (k.status === 'banned') return;
-    if ((k.expiry || 0) < now) expired++;
-    else active++;
-    if (k.deviceID) bound++;
-  });
-
-  document.getElementById('statTotal').textContent = allKeys.length;
-  document.getElementById('statActive').textContent = active;
-  document.getElementById('statExpired').textContent = expired;
-  document.getElementById('statBound').textContent = bound;
-}
-
-// ═══════════════════════════════════════════════
-//  SEARCH
-// ═══════════════════════════════════════════════
-window.filterKeys = function() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  if (!q) { renderKeys(allKeys); return; }
-
-  const filtered = allKeys.filter(k =>
-    k.id.toLowerCase().includes(q) ||
-    (k.deviceID || '').toLowerCase().includes(q)
-  );
-  renderKeys(filtered);
-};
-
-// ═══════════════════════════════════════════════
-//  ADD / EDIT
-// ═══════════════════════════════════════════════
-window.openAddModal = function() {
-  currentEditKey = null;
-  document.getElementById('modalTitle').textContent = 'ADD NEW KEY';
-  document.getElementById('keyInput').value = 'LION-' + generateRandom(4) + '-' + generateRandom(4) + '-' + generateRandom(4);
-  document.getElementById('keyInput').disabled = false;
-  document.getElementById('statusInput').value = 'active';
-  document.getElementById('expiryInput').value = getDatePlusDays(30);
-  document.getElementById('deviceInput').value = '';
-  document.getElementById('keyModal').classList.add('active');
-};
-
-window.editKey = function(id) {
-  const k = allKeys.find(x => x.id === id);
-  if (!k) return;
-
-  currentEditKey = id;
-  document.getElementById('modalTitle').textContent = 'EDIT KEY';
-  document.getElementById('keyInput').value = id;
-  document.getElementById('keyInput').disabled = true;
-  document.getElementById('statusInput').value = k.status || 'active';
-
-  if (k.expiry) {
-    const d = new Date(k.expiry);
-    document.getElementById('expiryInput').value = d.toISOString().split('T')[0];
-  } else {
-    document.getElementById('expiryInput').value = getDatePlusDays(30);
-  }
-
-  document.getElementById('deviceInput').value = k.deviceID || '';
-  document.getElementById('keyModal').classList.add('active');
-};
-
-window.closeModal = function() {
-  document.getElementById('keyModal').classList.remove('active');
-  currentEditKey = null;
-};
-
-window.saveKey = async function() {
-  const key = document.getElementById('keyInput').value.trim().toUpperCase();
-  const status = document.getElementById('statusInput').value.trim() || 'active';
-  const expiryDate = document.getElementById('expiryInput').value;
-  const device = document.getElementById('deviceInput').value.trim();
-
-  if (!key) { showToast('Key required', 'error'); return; }
-  if (!expiryDate) { showToast('Expiry date required', 'error'); return; }
-
-  const btn = document.getElementById('saveKeyBtn');
-  btn.classList.add('loading');
-  btn.innerHTML = '<span class="loading-spinner"></span>';
-
-  try {
-    const expiryTs = new Date(expiryDate).getTime();
-
-    if (currentEditKey) {
-      // Update existing
-      await update(ref(db, 'licenses/' + currentEditKey), {
-        status,
-        expiry: expiryTs,
-        deviceID: device,
-      });
-      showToast('Key updated successfully', 'success');
-    } else {
-      // Add new
-      const docRef = ref(db, 'licenses/' + key);
-      const existing = await get(docRef);
-      if (existing.exists()) {
-        showToast('Key already exists!', 'error');
-        btn.classList.remove('loading');
-        btn.innerHTML = 'SAVE';
-        return;
-      }
-
-      await set(docRef, {
-        status,
-        expiry: expiryTs,
-        deviceID: device,
-        loginCount: 0,
-        createdAt: Date.now(),
-      });
-      showToast('Key added successfully', 'success');
-    }
-
-    closeModal();
-    loadKeys();
-  } catch (e) {
-    console.error(e);
-    showToast('Failed: ' + e.message, 'error');
-  }
-
-  btn.classList.remove('loading');
-  btn.innerHTML = 'SAVE';
-};
-
-// ═══════════════════════════════════════════════
-//  DELETE
-// ═══════════════════════════════════════════════
-window.deleteKey = async function(id) {
-  if (!confirm('Delete key:\n' + id + '?')) return;
-
-  try {
-    await remove(ref(db, 'licenses/' + id));
-    showToast('Key deleted', 'success');
-    loadKeys();
-  } catch (e) {
-    showToast('Failed: ' + e.message, 'error');
-  }
-};
-
-window.resetDevice = async function(id) {
-  if (!confirm('Reset device binding for:\n' + id + '?')) return;
-
-  try {
-    await update(ref(db, 'licenses/' + id), {
-      deviceID: '',
-    });
-    showToast('Device reset — user can login on new device', 'success');
-    loadKeys();
-  } catch (e) {
-    showToast('Failed: ' + e.message, 'error');
-  }
-};
-
-// ═══════════════════════════════════════════════
-//  EXPORT
-// ═══════════════════════════════════════════════
-window.exportKeys = function() {
-  const data = JSON.stringify(allKeys, null, 2);
-  const blob = new Blob([data], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'lion-keys-' + Date.now() + '.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('Exported ' + allKeys.length + ' keys', 'success');
-};
-
-// ═══════════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════════
-function generateRandom(len) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let out = '';
-  for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
-  return out;
-}
-
-function getDatePlusDays(days) {
-  const d = new Date();
-  d.setDate(d.getDate() + days);
-  return d.toISOString().split('T')[0];
-}
-
-function showToast(msg, type = 'info') {
-  const t = document.getElementById('toast');
-  const icon = document.getElementById('toastIcon');
-  const txt = document.getElementById('toastMsg');
-
-  txt.textContent = msg;
-  t.className = 'toast ' + type;
-
-  if (type === 'success') icon.textContent = '✓';
-  else if (type === 'error') icon.textContent = '✕';
-  else icon.textContent = '✦';
-
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
-}
-
-// ═══════════════════════════════════════════════
-//  AUTO LOGIN
-// ═══════════════════════════════════════════════
-window.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('lion_admin_logged') === '1') {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    loadKeys();
-  }
-
-  document.getElementById('loginPass').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
+  // create the special roses
+  ROSE_LAYOUT.forEach(l => roses.push(createFlower(l, true)));
 });
 </script>
-
 </body>
 </html>
