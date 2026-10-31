@@ -1,1078 +1,583 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Butterfly & Flower Garden for Cutie 💖</title>
-<!-- FontAwesome for Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #030208;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    user-select: none;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>For Someone Special 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      user-select: none;
+    }
 
-  /* Intro Screen Overlay */
-  #intro {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: radial-gradient(ellipse at center, #110820 0%, #030208 85%);
-    transition: opacity 1.3s ease, visibility 1.3s;
-    padding: 30px 20px 40px;
-    text-align: center;
-  }
-  #intro.hide {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #0d0208;
+      color: #ffffff;
+    }
 
-  .intro-header {
-    margin-top: 10px;
-    animation: fadeDown 1.5s ease both;
-  }
+    /* Fixed Instagram Handle */
+    #insta-handle {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 1000;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffb6c1;
+      text-decoration: none;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 77, 109, 0.4);
+      border-radius: 30px;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.4), inset 0 0 10px rgba(255, 77, 109, 0.2);
+      animation: instaGlow 2.5s ease-in-out infinite alternate;
+      transition: transform 0.3s ease;
+    }
+    #insta-handle:hover {
+      transform: scale(1.05);
+      color: #fff;
+    }
 
-  .msg {
-    max-width: 600px;
-    color: #ffc1d4;
-    font-size: clamp(18px, 4.5vw, 25px);
-    line-height: 1.6;
-    letter-spacing: 0.4px;
-    text-shadow: 0 0 25px rgba(255, 158, 192, 0.6);
-  }
-  .msg .heart {
-    display: inline-block;
-    animation: heartbeat 1.6s ease-in-out infinite;
-  }
+    @keyframes instaGlow {
+      0% {
+        box-shadow: 0 0 10px rgba(255, 77, 109, 0.4), inset 0 0 5px rgba(255, 77, 109, 0.2);
+        border-color: rgba(255, 77, 109, 0.4);
+      }
+      100% {
+        box-shadow: 0 0 22px rgba(255, 77, 109, 0.9), inset 0 0 12px rgba(255, 77, 109, 0.5);
+        border-color: rgba(255, 182, 193, 0.9);
+      }
+    }
 
-  /* Container for 3D Butterfly on Intro Page */
-  #intro-butterfly-box {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 48vh;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    /* Music Button */
+    #music-btn {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      z-index: 1000;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 77, 109, 0.2);
+      border: 1px solid rgba(255, 182, 193, 0.5);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+      transition: all 0.3s ease;
+    }
+    #music-btn:hover {
+      transform: scale(1.1);
+    }
 
-  #seeBtn {
-    background: linear-gradient(135deg, #ff4d7a, #3b82f6);
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    padding: 18px 42px;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 35px rgba(255, 77, 122, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: fadeUp 1.7s ease both;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  #seeBtn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 50px rgba(255, 77, 122, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
-  }
-  #seeBtn:active { transform: scale(0.96); }
+    /* Page Container System */
+    .page {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease, visibility 0.8s ease, transform 0.8s ease;
+      transform: scale(0.96);
+      background: radial-gradient(circle at center, #260515 0%, #0d0208 100%);
+    }
 
-  /* Rose message on garden page */
-  #roseMsg {
-    position: fixed;
-    top: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    background: rgba(20, 8, 25, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 120, 160, 0.4);
-    color: #ffc1d4;
-    font-size: 15px;
-    padding: 12px 28px;
-    border-radius: 40px;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease, transform 0.4s, box-shadow 0.4s;
-    box-shadow: 0 0 25px rgba(255, 80, 130, 0.3);
-    white-space: nowrap;
-  }
-  #roseMsg.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #roseMsg:hover {
-    transform: translateX(-50%) scale(1.05);
-    box-shadow: 0 0 35px rgba(255, 80, 130, 0.6);
-  }
+    .page.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
 
-  /* Canvases */
-  canvas {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
+    /* Card Styling */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 182, 193, 0.25);
+      border-radius: 24px;
+      padding: 30px;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 77, 109, 0.2);
+    }
 
-  #webgl-canvas {
-    z-index: 2;
-    pointer-events: none;
-  }
+    h1, h2 {
+      color: #ffccd5;
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-shadow: 0 0 12px rgba(255, 77, 109, 0.6);
+    }
 
-  #c {
-    z-index: 1;
-  }
+    p {
+      color: #f8edeb;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    14%      { transform: scale(1.28); }
-    28%      { transform: scale(1); }
-    42%      { transform: scale(1.16); }
-  }
+    .btn {
+      background: linear-gradient(135deg, #ff4d6d, #c9184a);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 77, 109, 0.6);
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 77, 109, 0.9);
+    }
+    .btn:active {
+      transform: translateY(1px);
+    }
 
-  /* Audio player button */
-  #musicToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 60;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(20, 10, 30, 0.7);
-    border: 1px solid rgba(255, 150, 200, 0.4);
-    color: #ff9ec0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(255, 100, 150, 0.3);
-    transition: transform 0.2s;
-  }
-  #musicToggle:hover { transform: scale(1.1); }
-</style>
+    /* Page 1 Specific */
+    .profile-img-container {
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #ff4d6d, #ffb6c1);
+      box-shadow: 0 0 30px rgba(255, 77, 109, 0.7);
+    }
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Page 2 Specific */
+    .gif-container {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 182, 193, 0.4);
+      box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+    }
+    .gif-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Page 3 Solar System */
+    .solar-container {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 10px auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sun {
+      width: 45px;
+      height: 45px;
+      background: radial-gradient(circle, #fff, #ff4d6d);
+      border-radius: 50%;
+      box-shadow: 0 0 35px #ff4d6d, 0 0 60px #ff758f;
+    }
+    .orbit {
+      position: absolute;
+      border: 1px dashed rgba(255, 182, 193, 0.25);
+      border-radius: 50%;
+      animation: spin linear infinite;
+    }
+    .orbit-1 { width: 100px; height: 100px; animation-duration: 4s; }
+    .orbit-2 { width: 170px; height: 170px; animation-duration: 7s; }
+    .orbit-3 { width: 240px; height: 240px; animation-duration: 11s; }
+
+    .planet {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+    }
+    .p1 { width: 10px; height: 10px; background: #ffb6c1; box-shadow: 0 0 8px #ffb6c1; }
+    .p2 { width: 14px; height: 14px; background: #ff4d6d; box-shadow: 0 0 10px #ff4d6d; }
+    .p3 { width: 18px; height: 18px; background: #fff; box-shadow: 0 0 12px #fff; }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Canvas backgrounds for P4 & P6 */
+    canvas.bg-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Page 5 Scratch Card */
+    .scratch-container {
+      position: relative;
+      width: 280px;
+      height: 140px;
+      margin: 15px auto 25px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 25px rgba(255, 77, 109, 0.5);
+    }
+    .scratch-reveal {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ff4d6d, #800f2f);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .scratch-reveal h3 {
+      color: #fff;
+      font-size: 20px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      touch-action: none;
+    }
+
+    /* Hearts Floating Background */
+    .heart-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .floating-heart {
+      position: absolute;
+      color: rgba(255, 77, 109, 0.3);
+      font-size: 20px;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- WebGL Canvas for Particle Butterflies -->
-<canvas id="webgl-canvas"></canvas>
+  <!-- Insta Handle Fixed -->
+  <a id="insta-handle" href="https://instagram.com/siva_huu12" target="_blank">@siva_huu12</a>
 
-<!-- 2D Canvas for Flowers, Garden & Sparkles -->
-<canvas id="c"></canvas>
+  <!-- Music Button -->
+  <button id="music-btn" onclick="toggleMusic()">🎵</button>
 
-<!-- Intro Screen -->
-<div id="intro">
-  <div class="intro-header">
-    <div class="msg">
-      Hi cutie I am <b>sivasingh</b><br>
-      I made this beautiful butterfly for you <span class="heart">💖</span>
+  <!-- Audio Element -->
+  <audio id="bgSong" loop>
+    <source src="song1.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Floating Hearts Canvas Container -->
+  <div class="heart-bg" id="heartBg"></div>
+
+  <!-- PAGE 1: Welcome Intro -->
+  <div class="page active" id="page1">
+    <div class="card">
+      <div class="profile-img-container">
+        <img src="photo.jpg" alt="Cutie" class="profile-img" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'">
+      </div>
+      <h1>hii 💗 cutie</h1>
+      <p>I made something really special for you 💖<br>Ready to explore a little magic?</p>
+      <button class="btn" onclick="nextPage(2)">Begin Journey ✨</button>
     </div>
   </div>
 
-  <div id="intro-butterfly-box">
-    <!-- WebGL Butterfly will be centered here initially -->
+  <!-- PAGE 2: GIF & Friendly Message -->
+  <div class="page" id="page2">
+    <div class="card">
+      <div class="gif-container">
+        <img src="gif1.gif" alt="Cute Gif" onerror="this.src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHJuZDN1dzB4OTd1eHF2eW5kbnJ4aG03bWttNmJzcWZzb2VvazYzZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw.cLS1cf5vBDURy/giphy.gif'">
+      </div>
+      <h2>Something Cute For You 🌸</h2>
+      <p>I just wanted to bring a little smile to your face today. Meeting you was genuinely one of the sweetest moments! ✨</p>
+      <button class="btn" onclick="nextPage(3)">Next Magic 🚀</button>
+    </div>
   </div>
 
-  <button id="seeBtn">
-    <span>Click to See Flower Garden</span>
-    <i class="fa-solid fa-wand-magic-sparkles"></i>
-  </button>
-</div>
+  <!-- PAGE 3: Solar System -->
+  <div class="page" id="page3">
+    <div class="card">
+      <h2>My Universe 🌌</h2>
+      <p>Out of all the stars and planets in this giant galaxy...</p>
+      <div class="solar-container">
+        <div class="sun"></div>
+        <div class="orbit orbit-1"><div class="planet p1"></div></div>
+        <div class="orbit orbit-2"><div class="planet p2"></div></div>
+        <div class="orbit orbit-3"><div class="planet p3"></div></div>
+      </div>
+      <p style="font-size: 14px; color: #ffccd5; margin-bottom: 15px;">You shine the brightest! ✨</p>
+      <button class="btn" onclick="nextPage(4)">Fly Further 🦋</button>
+    </div>
+  </div>
 
-<!-- Interactive Rose Button -->
-<div id="roseMsg">I think you're missing a rose? Click here 🌹</div>
+  <!-- PAGE 4: Glowing Butterfly Animation -->
+  <div class="page" id="page4">
+    <canvas id="butterflyCanvas" class="bg-canvas"></canvas>
+    <div class="card page-content">
+      <h2>Pure Wings 🦋</h2>
+      <p>Like a butterfly floating softly through the air, you bring so much warmth and grace wherever you go ✨</p>
+      <button class="btn" onclick="nextPage(5)">One Question 🤭</button>
+    </div>
+  </div>
 
-<!-- Music Player Controls -->
-<button id="musicToggle" title="Toggle Music">
-  <i class="fa-solid fa-music" id="musicIcon"></i>
-</button>
-
-<audio id="music" loop preload="auto">
-  <source src="song1.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-/* =========================================================================
-   1. 3D WEBGL PARTICLE BUTTERFLY ENGINE (Fay Curve + Multiple Swarm)
-   ========================================================================= */
-
-const vsSource = `
-  attribute vec3 a_basePosition;
-  attribute float a_weight;
-  attribute float a_isWing;
-  attribute float a_phase;
-
-  uniform mat4 u_projectionMatrix;
-  uniform mat4 u_viewMatrix;
-  uniform vec3 u_butterflyPos;
-  uniform float u_time;
-  uniform float u_flapSpeed;
-  uniform float u_flapAmount;
-  uniform float u_scale;
-
-  varying float v_weight;
-  varying float v_shimmer;
-
-  void main() {
-      // Wing flap physics with tip delay
-      float th = u_flapSpeed * u_time;
-      float ax = abs(a_basePosition.x);
-      float phi = u_flapAmount * sin(th - 1.0 * ax) * a_isWing;
-      float c = cos(phi);
-      float s = sin(phi);
-
-      vec3 pos = a_basePosition * u_scale;
-      pos.x = a_basePosition.x * u_scale * c;
-      pos.y = (a_basePosition.y + 0.08 * ax * s + 0.02 * sin(2.0 * th)) * u_scale;
-      pos.z = (a_basePosition.z + ax * s) * u_scale;
-
-      // Slight downward viewing tilt
-      float tiltAngle = 0.18;
-      float tc = cos(tiltAngle);
-      float ts = sin(tiltAngle);
+  <!-- PAGE 5: Scratch Card Reveal -->
+  <div class="page" id="page5">
+    <div class="card">
+      <h2>Scratch To Reveal 🎁</h2>
+      <p>Scratch the box below with your finger or mouse!</p>
       
-      vec3 tiltedPos;
-      tiltedPos.x = pos.x;
-      tiltedPos.y = pos.y * tc - pos.z * ts;
-      tiltedPos.z = pos.y * ts + pos.z * tc;
+      <div class="scratch-container">
+        <div class="scratch-reveal">
+          <h3>Kya tum meri friend banogi? 🤭💖</h3>
+          <p style="font-size: 12px; margin: 5px 0 0; color: #ffb6c1;">(Will you be my friend?)</p>
+        </div>
+        <canvas id="scratchCanvas" width="280" height="140"></canvas>
+      </div>
 
-      tiltedPos += u_butterflyPos;
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button class="btn" onclick="nextPage(6)">YES! 💖</button>
+        <button class="btn" onclick="nextPage(6)" style="background: linear-gradient(135deg, #ff8fa3, #ff4d6d);">Of Course! 💕</button>
+      </div>
+    </div>
+  </div>
 
-      v_shimmer = 0.85 + 0.15 * sin(u_time * 4.0 + a_phase);
-      v_weight = a_weight;
+  <!-- PAGE 6: Fireworks Celebration -->
+  <div class="page" id="page6">
+    <canvas id="fireworksCanvas" class="bg-canvas"></canvas>
+    <div class="card page-content" style="background: rgba(255, 255, 255, 0.08);">
+      <h1 style="font-size: 28px; margin-bottom: 10px;">YAY! 🎉</h1>
+      <h2>I am so happy we are friends! 💕✨</h2>
+      <p>This is the start of a wonderful friendship. Thank you for being so amazing!</p>
+      <button class="btn" onclick="nextPage(1)">Replay Magic 🔄</button>
+    </div>
+  </div>
 
-      vec4 mvPosition = u_viewMatrix * vec4(tiltedPos, 1.0);
-      gl_Position = u_projectionMatrix * mvPosition;
+  <script>
+    // Audio Player Toggle
+    const song = document.getElementById('bgSong');
+    let isPlaying = false;
 
-      gl_PointSize = max(1.0, (2.2 * a_weight * v_shimmer * (3.5 / -mvPosition.z)));
-  }
-`;
-
-const fsSource = `
-  precision mediump float;
-
-  varying float v_weight;
-  varying float v_shimmer;
-
-  vec3 getBluePalette(float t) {
-      t = clamp(t, 0.0, 1.0);
-      vec3 c0 = vec3(0.0, 0.0, 0.02);
-      vec3 c1 = vec3(0.0, 0.0, 0.43);
-      vec3 c2 = vec3(0.0, 0.0, 0.92);
-      vec3 c3 = vec3(0.08, 0.10, 1.0);
-      vec3 c4 = vec3(0.31, 0.37, 1.0);
-      vec3 c5 = vec3(0.53, 0.59, 1.0);
-
-      if (t < 0.15) return mix(c0, c1, t / 0.15);
-      if (t < 0.40) return mix(c1, c2, (t - 0.15) / 0.25);
-      if (t < 0.62) return mix(c2, c3, (t - 0.40) / 0.22);
-      if (t < 0.85) return mix(c3, c4, (t - 0.62) / 0.23);
-      return mix(c4, c5, (t - 0.85) / 0.15);
-  }
-
-  void main() {
-      vec2 coord = gl_PointCoord - vec2(0.5);
-      float distSq = dot(coord, coord);
-      if (distSq > 0.25) discard;
-
-      float alpha = exp(-distSq * 10.0);
-      float intensity = v_weight * v_shimmer * 0.5;
-      vec3 color = getBluePalette(intensity);
-      color += vec3(0.2, 0.4, 0.8) * alpha * intensity;
-
-      gl_FragColor = vec4(color * alpha, alpha * min(1.0, intensity));
-  }
-`;
-
-function fayCurve(theta) {
-  const sinT = Math.sin(theta);
-  const r = Math.exp(sinT) - 2 * Math.cos(4 * theta) + Math.pow(Math.sin((2 * theta - Math.PI) / 24), 5);
-  return [(sinT * r) / 4.6, (Math.cos(theta) * r) / 4.6 - 0.12];
-}
-
-function randomNormal(mean = 0, std = 1) {
-  let u1 = Math.random(), u2 = Math.random();
-  let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-  return z0 * std + mean;
-}
-
-function generateButterflyData(numParticles) {
-  const shares = { edge: 0.13, vein: 0.15, spot: 0.07, body: 0.08, antenna: 0.025 };
-  const counts = {
-    edge: Math.floor(numParticles * shares.edge),
-    vein: Math.floor(numParticles * shares.vein),
-    spot: Math.floor(numParticles * shares.spot),
-    body: Math.floor(numParticles * shares.body),
-    antenna: Math.floor(numParticles * shares.antenna),
-  };
-  counts.wing = numParticles - (counts.edge + counts.vein + counts.spot + counts.body + counts.antenna);
-
-  const positions = [], weights = [], isWings = [], phases = [];
-
-  function halfTheta(m) {
-    const arr = [];
-    for (let i = 0; i < m; i++) arr.push(Math.random() * Math.PI + 2 * Math.PI * Math.floor(Math.random() * 6));
-    return arr;
-  }
-
-  function mirrored(thetas) {
-    const pts = [];
-    for (let i = 0; i < thetas.length; i++) {
-      const [x, y] = fayCurve(thetas[i]);
-      const side = Math.random() < 0.5 ? -1.0 : 1.0;
-      pts.push([side * Math.abs(x), y]);
+    function toggleMusic() {
+      if (isPlaying) {
+        song.pause();
+        document.getElementById('music-btn').innerText = '🎵';
+      } else {
+        song.play().catch(e => console.log('Audio play error:', e));
+        document.getElementById('music-btn').innerText = '🔊';
+      }
+      isPlaying = !isPlaying;
     }
-    return pts;
-  }
 
-  function addPart(pts, weightVal, isWingVal) {
-    for (let i = 0; i < pts.length; i++) {
-      positions.push(pts[i][0], pts[i][1], pts[i][2]);
-      weights.push(weightVal);
-      isWings.push(isWingVal ? 1.0 : 0.0);
-      phases.push(Math.random() * Math.PI * 2.0);
-    }
-  }
+    // Navigation System
+    let currentPage = 1;
 
-  // Wing Membrane
-  let ths = halfTheta(counts.wing);
-  let mPts = mirrored(ths);
-  addPart(mPts.map(pt => [pt[0] * Math.pow(Math.random(), 0.6), pt[1] * Math.pow(Math.random(), 0.6), randomNormal(0, 0.008)]), 0.30, true);
-
-  // Edges
-  ths = halfTheta(counts.edge);
-  mPts = mirrored(ths);
-  addPart(mPts.map(pt => [pt[0] * (1.0 - Math.pow(Math.random(), 3.0) * 0.035), pt[1] * (1.0 - Math.pow(Math.random(), 3.0) * 0.035), randomNormal(0, 0.004)]), 0.85, true);
-
-  // Veins
-  const veinAngles = [0.12, 0.55, 0.98, 1.41, 1.84, 2.27, 2.70, 3.02];
-  let veinThetas = [];
-  for (let i = 0; i < counts.vein; i++) {
-    veinThetas.push(veinAngles[Math.floor(Math.random() * veinAngles.length)] + 2 * Math.PI * Math.floor(Math.random() * 6) + randomNormal(0, 0.004));
-  }
-  mPts = mirrored(veinThetas);
-  addPart(mPts.map(pt => [pt[0] * Math.pow(Math.random(), 0.85), pt[1] * Math.pow(Math.random(), 0.85), randomNormal(0, 0.004)]), 0.75, true);
-
-  // Eye Spots
-  const centres = [{ t0: 1.05, per: 3, fill: 0.62 }, { t0: 2.35, per: 3, fill: 0.60 }, { t0: 0.80, per: 4, fill: 0.90 }];
-  let spotPts = [];
-  for (let i = 0; i < counts.spot; i++) {
-    let c = centres[Math.floor(Math.random() * centres.length)];
-    let [x0, y0] = fayCurve(c.t0 + 2 * Math.PI * c.per);
-    let k = Math.random();
-    let rad = k < 0.55 ? 0.050 : (k < 0.85 ? 0.028 : Math.random() * 0.014);
-    let a = Math.random() * Math.PI * 2.0;
-    let side = Math.random() < 0.5 ? -1.0 : 1.0;
-    spotPts.push([side * x0 * c.fill + Math.cos(a) * rad, y0 * c.fill + Math.sin(a) * rad, randomNormal(0, 0.004)]);
-  }
-  addPart(spotPts, 1.0, true);
-
-  // Body
-  let bodyPts = [];
-  for (let i = 0; i < counts.body; i++) {
-    let dx = randomNormal(), dy = randomNormal(), dz = randomNormal();
-    let len = Math.sqrt(dx * dx + dy * dy + dz * dz) + 1e-9;
-    dx /= len; dy /= len; dz /= len;
-    let vol = Math.pow(Math.random(), 1 / 3);
-    let t = Math.random(), p = Math.random();
-    let isAb = p < 0.55, isTh = p >= 0.55 && p < 0.82;
-    let cy = isAb ? (0.02 - 0.44 * t) : (isTh ? (0.09 + randomNormal(0, 0.03)) : 0.175);
-    let rr = (isAb ? (0.030 * (1.0 - 0.55 * t)) : (isTh ? 0.048 : 0.034)) * vol;
-    bodyPts.push([dx * rr, cy + dy * rr * (isAb ? 3.0 : 1.0), dz * rr]);
-  }
-  addPart(bodyPts, 1.1, false);
-
-  // Antennae
-  let antennaPts = [];
-  for (let i = 0; i < counts.antenna; i++) {
-    let t = Math.random(), side = Math.random() < 0.5 ? -1.0 : 1.0;
-    let jit = t > 0.93 ? 0.012 : 0.002;
-    antennaPts.push([
-      side * (0.015 + 0.17 * Math.pow(t, 1.2)) + randomNormal(0, 1) * jit,
-      0.20 + 0.30 * t - 0.12 * t * t + randomNormal(0, 1) * jit,
-      0.02 * t
-    ]);
-  }
-  addPart(antennaPts, 0.95, false);
-
-  return {
-    positions: new Float32Array(positions),
-    weights: new Float32Array(weights),
-    isWings: new Float32Array(isWings),
-    phases: new Float32Array(phases),
-    count: positions.length / 3
-  };
-}
-
-class WebGLButterflySystem {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.gl = canvas.getContext('webgl', { antialias: true, alpha: true });
-    if (!this.gl) return;
-
-    this.butterflies = [
-      { pos: [0, 0, 0], target: [0, 0, 0], scale: 1.0, speed: 3.0, flapSpeed: 3.0, offsetPhase: 0 },
-      { pos: [2, 2, 0], target: [0.5, 0.2, 0], scale: 0.65, speed: 2.2, flapSpeed: 3.6, offsetPhase: 1.5 },
-      { pos: [-2, -2, 0], target: [-0.5, -0.1, 0], scale: 0.55, speed: 1.8, flapSpeed: 4.0, offsetPhase: 3.1 }
-    ];
-
-    this.initShaders();
-    this.initBuffers();
-    this.resize();
-  }
-
-  initShaders() {
-    const gl = this.gl;
-    const vs = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vs, vsSource); gl.compileShader(vs);
-
-    const fs = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fs, fsSource); gl.compileShader(fs);
-
-    this.program = gl.createProgram();
-    gl.attachShader(this.program, vs);
-    gl.attachShader(this.program, fs);
-    gl.linkProgram(this.program);
-    gl.useProgram(this.program);
-
-    this.attribs = {
-      basePosition: gl.getAttribLocation(this.program, 'a_basePosition'),
-      weight: gl.getAttribLocation(this.program, 'a_weight'),
-      isWing: gl.getAttribLocation(this.program, 'a_isWing'),
-      phase: gl.getAttribLocation(this.program, 'a_phase')
-    };
-
-    this.uniforms = {
-      projectionMatrix: gl.getUniformLocation(this.program, 'u_projectionMatrix'),
-      viewMatrix: gl.getUniformLocation(this.program, 'u_viewMatrix'),
-      butterflyPos: gl.getUniformLocation(this.program, 'u_butterflyPos'),
-      time: gl.getUniformLocation(this.program, 'u_time'),
-      flapSpeed: gl.getUniformLocation(this.program, 'u_flapSpeed'),
-      flapAmount: gl.getUniformLocation(this.program, 'u_flapAmount'),
-      scale: gl.getUniformLocation(this.program, 'u_scale')
-    };
-
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    gl.disable(gl.DEPTH_TEST);
-  }
-
-  initBuffers() {
-    const gl = this.gl;
-    this.data = generateButterflyData(35000);
-
-    const bindBuf = (arr, attrib) => {
-      const buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(attrib);
-      gl.vertexAttribPointer(attrib, attrib === this.attribs.basePosition ? 3 : 1, gl.FLOAT, false, 0, 0);
-    };
-
-    bindBuf(this.data.positions, this.attribs.basePosition);
-    bindBuf(this.data.weights, this.attribs.weight);
-    bindBuf(this.data.isWings, this.attribs.isWing);
-    bindBuf(this.data.phases, this.attribs.phase);
-  }
-
-  resize() {
-    const gl = this.gl;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    this.canvas.width = width * window.devicePixelRatio;
-    this.canvas.height = height * window.devicePixelRatio;
-    gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-
-    const aspect = width / height;
-    const fov = 45 * Math.PI / 180;
-    const f = 1.0 / Math.tan(fov / 2);
-
-    const proj = new Float32Array([
-      f / aspect, 0, 0, 0,
-      0, f, 0, 0,
-      0, 0, (100 + 0.1) / (0.1 - 100), -1,
-      0, 0, (2 * 100 * 0.1) / (0.1 - 100), 0
-    ]);
-
-    const view = new Float32Array([
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, -3.2, 1
-    ]);
-
-    gl.useProgram(this.program);
-    gl.uniformMatrix4fv(this.uniforms.projectionMatrix, false, proj);
-    gl.uniformMatrix4fv(this.uniforms.viewMatrix, false, view);
-  }
-
-  render(time, dt, inGardenMode, landingPoints) {
-    const gl = this.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.useProgram(this.program);
-    gl.uniform1f(this.uniforms.flapAmount, 0.55);
-
-    const activeCount = inGardenMode ? 3 : 1;
-
-    for (let i = 0; i < activeCount; i++) {
-      let b = this.butterflies[i];
-
-      if (inGardenMode && landingPoints && landingPoints.length > 0) {
-        // Flutter around flowers in garden mode
-        let targetPt = landingPoints[i % landingPoints.length];
-        let hoverX = targetPt.x + Math.sin(time * 1.5 + b.offsetPhase) * 0.18;
-        let hoverY = targetPt.y + Math.cos(time * 2.0 + b.offsetPhase) * 0.12;
-
-        b.target[0] = hoverX;
-        b.target[1] = hoverY;
+    function nextPage(pageNum) {
+      // Auto play music on first button click if not started
+      if (!isPlaying && pageNum === 2) {
+        toggleMusic();
       }
 
-      // Interp movement towards target
-      let lerp = Math.min(1.0, b.speed * dt);
-      b.pos[0] += (b.target[0] - b.pos[0]) * lerp;
-      b.pos[1] += (b.target[1] - b.pos[1]) * lerp;
-      b.pos[2] += (b.target[2] - b.pos[2]) * lerp;
-
-      gl.uniform1f(this.uniforms.time, time + b.offsetPhase);
-      gl.uniform1f(this.uniforms.flapSpeed, b.flapSpeed);
-      gl.uniform1f(this.uniforms.scale, b.scale);
-      gl.uniform3fv(this.uniforms.butterflyPos, b.pos);
-
-      gl.drawArrays(gl.POINTS, 0, this.data.count);
-    }
-  }
-}
-
-
-/* =========================================================================
-   2. 2D CANVAS FLOWER GARDEN ENGINE & PARTICLES
-   ========================================================================= */
-
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
-const music = document.getElementById('music');
-const intro = document.getElementById('intro');
-const seeBtn = document.getElementById('seeBtn');
-const roseMsg = document.getElementById('roseMsg');
-
-let W, H;
-const particles = [];
-const flowers = [];
-const roses = [];
-let started = false;
-let rosesStarted = false;
-let roseStartT = 0;
-let mainDone = false;
-let gardenStartTime = 0;
-
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-  if (window.butterflySystem) window.butterflySystem.resize();
-}
-window.addEventListener('resize', resize);
-
-/* Floating particles */
-class Particle {
-  constructor() { this.reset(true); }
-  reset(init) {
-    this.x = Math.random() * W;
-    this.y = init ? Math.random() * H : H + 40;
-    this.r = 1.0 + Math.random() * 2.8;
-    this.speed = 0.18 + Math.random() * 0.5;
-    this.a = 0.07 + Math.random() * 0.22;
-    this.col = Math.random() > 0.38 ? '#ff9ec0' : (Math.random() > 0.5 ? '#60a5fa' : '#ffe0ec');
-    this.wobble = Math.random() * Math.PI * 2;
-  }
-  update() {
-    this.y -= this.speed;
-    this.x += Math.sin(this.wobble + this.y * 0.008) * 0.35;
-    if (this.y < -40) this.reset(false);
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = this.col;
-    ctx.globalAlpha = this.a;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-}
-for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-const PRESETS = [
-  { petalDeep: '#e91e63', petalMid: '#ff80ab', petalLight: '#ffc1d4', bud: '#f48fb1', core: '#ffd54f', glow: 'rgba(255,70,130,0.55)' },
-  { petalDeep: '#ce93d8', petalMid: '#f3e5f5', petalLight: '#faf5ff', bud: '#e1bee7', core: '#fff', glow: 'rgba(220,180,255,0.5)' },
-  { petalDeep: '#ad1457', petalMid: '#ec407a', petalLight: '#f8bbd0', bud: '#f06292', core: null, glow: 'rgba(180,30,90,0.55)' },
-  { petalDeep: '#ef6c00', petalMid: '#ffb300', petalLight: '#ffe082', bud: '#ff8f00', core: '#4e342e', glow: 'rgba(255,150,0,0.45)' },
-  { petalDeep: '#7b1fa2', petalMid: '#ba68c8', petalLight: '#e1bee7', bud: '#ce93d8', core: '#ffd54f', glow: 'rgba(150,60,200,0.5)' },
-  { petalDeep: '#e57373', petalMid: '#ef9a9a', petalLight: '#ffcdd2', bud: '#ef9a9a', core: '#fff59d', glow: 'rgba(255,120,120,0.5)' },
-  { petalDeep: '#f06292', petalMid: '#f8bbd0', petalLight: '#fce4ec', bud: '#f48fb1', core: '#ffecb3', glow: 'rgba(240,100,150,0.5)' }
-];
-
-const ROSE_PRESETS = [
-  { petalDeep: '#b71c1c', petalMid: '#e53935', petalLight: '#ef9a9a', bud: '#c62828', core: '#ffd54f', glow: 'rgba(200,30,40,0.6)' },
-  { petalDeep: '#c2185b', petalMid: '#f06292', petalLight: '#f8bbd0', bud: '#ec407a', core: '#ffecb3', glow: 'rgba(220,50,100,0.55)' },
-  { petalDeep: '#e91e63', petalMid: '#f48fb1', petalLight: '#fce4ec', bud: '#f06292', core: '#fff59d', glow: 'rgba(240,80,130,0.5)' },
-  { petalDeep: '#880e4f', petalMid: '#ad1457', petalLight: '#f48fb1', bud: '#c2185b', core: '#ffd54f', glow: 'rgba(160,20,70,0.55)' },
-  { petalDeep: '#d32f2f', petalMid: '#ef5350', petalLight: '#ffcdd2', bud: '#e57373', core: '#fff8e1', glow: 'rgba(230,60,60,0.5)' }
-];
-
-const STAGE = { root: 0.0, stem: 0.4, leaf: 1.55, bud: 2.5, open: 3.3 };
-
-function createFlower(cfg, isRose = false) {
-  return {
-    cx: cfg.x,
-    base: 0.93,
-    maxH: cfg.h,
-    ang: cfg.ang * Math.PI / 180,
-    delay: cfg.delay,
-    preset: isRose ? ROSE_PRESETS[cfg.p % ROSE_PRESETS.length] : PRESETS[cfg.p % PRESETS.length],
-    petals: cfg.petals || 6,
-    isTulip: cfg.tulip || false,
-    isSun: cfg.sun || false,
-    isRose: isRose,
-    sway: 0.12 + Math.random() * 0.28,
-    swaySpeed: 0.55 + Math.random() * 0.7,
-    phase: Math.random() * Math.PI * 2,
-    tipPos: { x: 0, y: 0 }
-  };
-}
-
-const LAYOUT = [
-  { x: 0.07, h: 0.40, delay: 0.0,  ang: -30, p: 0, petals: 7 },
-  { x: 0.17, h: 0.52, delay: 1.1,  ang: -20, p: 3, petals: 16, sun: true },
-  { x: 0.27, h: 0.46, delay: 2.3,  ang: -12, p: 1, petals: 6 },
-  { x: 0.37, h: 0.58, delay: 3.5,  ang: -5,  p: 2, petals: 3, tulip: true },
-  { x: 0.47, h: 0.64, delay: 4.7,  ang: 0,   p: 0, petals: 8 },
-  { x: 0.57, h: 0.50, delay: 5.9,  ang: 7,   p: 4, petals: 6 },
-  { x: 0.67, h: 0.56, delay: 7.1,  ang: 13,  p: 5, petals: 7 },
-  { x: 0.77, h: 0.44, delay: 8.3,  ang: 20,  p: 1, petals: 6 },
-  { x: 0.87, h: 0.48, delay: 9.5,  ang: 27,  p: 6, petals: 7 },
-  { x: 0.13, h: 0.32, delay: 10.8, ang: -24, p: 2, petals: 3, tulip: true },
-  { x: 0.31, h: 0.30, delay: 12.0, ang: -9,  p: 0, petals: 6 },
-  { x: 0.51, h: 0.34, delay: 13.2, ang: 5,   p: 3, petals: 14, sun: true },
-  { x: 0.71, h: 0.31, delay: 14.4, ang: 16,  p: 5, petals: 6 },
-  { x: 0.41, h: 0.38, delay: 15.6, ang: -3,  p: 6, petals: 7 },
-  { x: 0.61, h: 0.36, delay: 16.8, ang: 11,  p: 0, petals: 6 },
-  { x: 0.22, h: 0.26, delay: 18.0, ang: -15, p: 4, petals: 5 },
-  { x: 0.82, h: 0.28, delay: 19.2, ang: 22,  p: 1, petals: 6 }
-];
-LAYOUT.forEach(l => flowers.push(createFlower(l)));
-
-const ROSE_LAYOUT = [
-  { x: 0.18, h: 0.55, delay: 0.0,  ang: -18, p: 0, petals: 9 },
-  { x: 0.32, h: 0.62, delay: 1.4,  ang: -8,  p: 1, petals: 10 },
-  { x: 0.48, h: 0.68, delay: 2.8,  ang: 0,   p: 2, petals: 11 },
-  { x: 0.64, h: 0.60, delay: 4.2,  ang: 9,   p: 3, petals: 10 },
-  { x: 0.78, h: 0.52, delay: 5.6,  ang: 18,  p: 4, petals: 9 },
-  { x: 0.25, h: 0.40, delay: 7.0,  ang: -12, p: 0, petals: 8 },
-  { x: 0.55, h: 0.42, delay: 8.4,  ang: 6,   p: 1, petals: 9 },
-  { x: 0.72, h: 0.38, delay: 9.8,  ang: 15,  p: 2, petals: 8 }
-];
-
-function ease(t) { return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3); }
-function easeBack(t) {
-  const c = 1.7;
-  return t <= 0 ? 0 : t >= 1 ? 1 : 1 + c * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
-}
-
-function drawRoot(f, p) {
-  if (p <= 0) return;
-  const x = f.cx * W, y = f.base * H;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(f.ang);
-  const s = ease(p) * 18;
-  const soil = ctx.createRadialGradient(0, 4, 2, 0, 6, s * 1.8);
-  soil.addColorStop(0, 'rgba(70, 45, 35, 0.85)');
-  soil.addColorStop(1, 'rgba(40, 25, 20, 0.0)');
-  ctx.beginPath();
-  ctx.ellipse(0, 6, s * 1.7, s * 0.65, 0, 0, Math.PI * 2);
-  ctx.fillStyle = soil;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(65, 40, 35, 0.7)';
-  ctx.lineWidth = 1.5;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-8, 4); ctx.quadraticCurveTo(-14, 15, -6, 22);
-  ctx.moveTo(7, 5);  ctx.quadraticCurveTo(15, 14, 8, 21);
-  ctx.moveTo(0, 3);  ctx.quadraticCurveTo(3, 16, -2, 24);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function drawStemAndLeaves(f, stemP, leafP, time) {
-  const h = f.maxH * H * ease(stemP);
-  if (h < 2) return { tipX: f.cx * W, tipY: f.base * H };
-
-  const sway = Math.sin(time * f.swaySpeed + f.phase) * f.sway * (h / (f.maxH * H));
-  const x = f.cx * W, y = f.base * H;
-
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(f.ang + sway * 0.18);
-
-  const stemGrad = ctx.createLinearGradient(0, 0, 0, -h);
-  stemGrad.addColorStop(0, '#1b5e20');
-  stemGrad.addColorStop(0.4, '#2e7d32');
-  stemGrad.addColorStop(1, '#66bb6a');
-
-  ctx.beginPath();
-  ctx.moveTo(-2.2, 0);
-  ctx.quadraticCurveTo(6 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, -1.5 + sway * 3, -h);
-  ctx.lineTo(1.5 + sway * 3, -h);
-  ctx.quadraticCurveTo(8 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, 2.2, 0);
-  ctx.closePath();
-  ctx.fillStyle = stemGrad;
-  ctx.shadowColor = 'rgba(60, 140, 60, 0.4)';
-  ctx.shadowBlur = 8;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  if (leafP > 0) {
-    const leaves = [
-      { pos: 0.70, side: -1, size: 1.1, rot: 0.72 },
-      { pos: 0.52, side:  1, size: 1.0, rot: 0.68 },
-      { pos: 0.36, side: -1, size: 0.85, rot: 0.75 },
-      { pos: 0.24, side:  1, size: 0.72, rot: 0.65 }
-    ];
-    leaves.forEach((L, i) => {
-      const lp = Math.max(0, Math.min(1, (leafP - i * 0.11) / 0.42));
-      if (lp <= 0) return;
-      const ly = -h * L.pos;
-      const sc = ease(lp) * L.size;
-      ctx.save();
-      ctx.translate(sway * 2.5, ly);
-      ctx.rotate(L.side * L.rot * sc);
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(L.side * 10 * sc, -6 * sc, L.side * 26 * sc, 4 * sc, L.side * 22 * sc, 14 * sc);
-      ctx.bezierCurveTo(L.side * 14 * sc, 10 * sc, L.side * 6 * sc, 5 * sc, 0, 0);
-      const lg = ctx.createLinearGradient(0, 0, L.side * 22 * sc, 10 * sc);
-      lg.addColorStop(0, '#a5d6a7');
-      lg.addColorStop(0.5, '#66bb6a');
-      lg.addColorStop(1, '#388e3c');
-      ctx.fillStyle = lg;
-      ctx.globalAlpha = 0.92 * sc;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.restore();
-    });
-  }
-  ctx.restore();
-
-  const tipX = x + Math.sin(f.ang + sway * 0.18) * h;
-  const tipY = y - Math.cos(f.ang + sway * 0.18) * h;
-  return { tipX, tipY };
-}
-
-function drawBud(f, tipX, tipY, budP) {
-  if (budP <= 0) return;
-  const s = ease(budP);
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang);
-  ctx.scale(s, s);
-
-  ctx.beginPath();
-  ctx.ellipse(0, -12, 11, 16, 0, 0, Math.PI * 2);
-  const bg = ctx.createLinearGradient(0, 0, 0, -28);
-  bg.addColorStop(0, f.preset.bud);
-  bg.addColorStop(0.55, f.preset.petalMid);
-  bg.addColorStop(1, f.preset.petalDeep);
-  ctx.fillStyle = bg;
-  ctx.shadowColor = f.preset.glow;
-  ctx.shadowBlur = 14;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  ctx.restore();
-}
-
-function drawBloom(f, tipX, tipY, openP, time) {
-  if (openP <= 0) return;
-  const s = 0.1 + easeBack(openP) * 0.9;
-  const pr = f.preset;
-  const breathe = 1 + Math.sin(time * 1.6 + f.phase) * 0.03;
-
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang + Math.sin(time * 0.65 + f.phase) * 0.05);
-  ctx.scale(s * breathe, s * breathe);
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 52, 0, Math.PI * 2);
-  const gl = ctx.createRadialGradient(0, 0, 6, 0, 0, 52);
-  gl.addColorStop(0, pr.glow);
-  gl.addColorStop(1, 'transparent');
-  ctx.fillStyle = gl;
-  ctx.fill();
-
-  const total = f.petals;
-  for (let i = 0; i < total; i++) {
-    const a = (i / total) * Math.PI * 2 - Math.PI / 2 + 0.15;
-    ctx.save();
-    ctx.rotate(a);
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.bezierCurveTo(20, -12, 18, -34, 0, -40);
-    ctx.bezierCurveTo(-18, -34, -20, -12, 0, 0);
-    const pg = ctx.createLinearGradient(0, 0, 0, -42);
-    pg.addColorStop(0, pr.petalDeep);
-    pg.addColorStop(0.5, pr.petalMid);
-    pg.addColorStop(1, pr.petalLight);
-    ctx.fillStyle = pg;
-    ctx.shadowColor = pr.glow;
-    ctx.shadowBlur = 10;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  if (pr.core) {
-    ctx.beginPath();
-    ctx.arc(0, 0, 10, 0, Math.PI * 2);
-    const cg = ctx.createRadialGradient(-3, -3, 1, 0, 0, 10);
-    cg.addColorStop(0, '#fffde7');
-    cg.addColorStop(0.5, pr.core);
-    cg.addColorStop(1, '#ffb300');
-    ctx.fillStyle = cg;
-    ctx.shadowColor = 'rgba(255,200,50,0.7)';
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-  ctx.restore();
-}
-
-function drawRealisticRose(f, tipX, tipY, openP, time) {
-  if (openP <= 0) return;
-  const s = 0.12 + easeBack(openP) * 0.88;
-  const pr = f.preset;
-  const breathe = 1 + Math.sin(time * 1.5 + f.phase) * 0.028;
-
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang + Math.sin(time * 0.6 + f.phase) * 0.04);
-  ctx.scale(s * breathe, s * breathe);
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 58, 0, Math.PI * 2);
-  const gl = ctx.createRadialGradient(0, 0, 8, 0, 0, 58);
-  gl.addColorStop(0, pr.glow);
-  gl.addColorStop(1, 'transparent');
-  ctx.fillStyle = gl;
-  ctx.fill();
-
-  const layers = [
-    { count: 5, radius: 38, width: 22, offset: 0.0 },
-    { count: 7, radius: 32, width: 19, offset: 0.3 },
-    { count: 8, radius: 25, width: 16, offset: 0.55 },
-    { count: 6, radius: 18, width: 13, offset: 0.8 },
-    { count: 5, radius: 12, width: 10, offset: 1.1 }
-  ];
-
-  layers.forEach((layer, li) => {
-    for (let i = 0; i < layer.count; i++) {
-      const a = (i / layer.count) * Math.PI * 2 - Math.PI / 2 + layer.offset + li * 0.2;
-      ctx.save();
-      ctx.rotate(a);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(layer.width, -layer.radius * 0.4, layer.width * 0.8, -layer.radius, 0, -layer.radius);
-      ctx.bezierCurveTo(-layer.width * 0.8, -layer.radius, -layer.width, -layer.radius * 0.4, 0, 0);
-
-      const pg = ctx.createLinearGradient(0, 0, 0, -layer.radius);
-      pg.addColorStop(0, pr.petalDeep);
-      pg.addColorStop(0.6, pr.petalMid);
-      pg.addColorStop(1, pr.petalLight);
-
-      ctx.fillStyle = pg;
-      ctx.shadowColor = pr.glow;
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.restore();
-    }
-  });
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 6, 0, Math.PI * 2);
-  ctx.fillStyle = pr.petalDeep;
-  ctx.fill();
-  ctx.restore();
-}
-
-function renderFlower(f, localT, time) {
-  const rootP = Math.max(0, Math.min(1, (localT - STAGE.root) / 0.5));
-  const stemP = Math.max(0, Math.min(1, (localT - STAGE.stem) / 1.25));
-  const leafP = Math.max(0, Math.min(1, (localT - STAGE.leaf) / 1.0));
-  const budP  = Math.max(0, Math.min(1, (localT - STAGE.bud) / 0.8));
-  const openP = Math.max(0, Math.min(1, (localT - STAGE.open) / 1.3));
-
-  drawRoot(f, rootP);
-  const { tipX, tipY } = drawStemAndLeaves(f, stemP, leafP, time);
-  f.tipPos = { x: tipX, y: tipY };
-
-  if (openP > 0) {
-    if (f.isRose) drawRealisticRose(f, tipX, tipY, openP, time);
-    else drawBloom(f, tipX, tipY, openP, time);
-  } else if (budP > 0) {
-    drawBud(f, tipX, tipY, budP);
-  }
-}
-
-/* Screen coordinates to normalized WebGL target (-0.8 to 0.8) */
-function getLandingPointsNormalized() {
-  let activeFlowers = flowers.filter(f => f.tipPos && f.tipPos.x > 0);
-  if (rosesStarted) activeFlowers = activeFlowers.concat(roses);
-
-  if (activeFlowers.length === 0) return [{ x: 0, y: 0 }];
-
-  return activeFlowers.map(f => {
-    let normX = ((f.tipPos.x / W) * 2 - 1) * 0.75;
-    let normY = (-(f.tipPos.y / H) * 2 + 1) * 0.65;
-    return { x: normX, y: normY };
-  });
-}
-
-let lastTime = performance.now();
-
-function animate(now) {
-  requestAnimationFrame(animate);
-  const dt = Math.min((now - lastTime) / 1000, 1 / 20);
-  lastTime = now;
-  const time = now / 1000;
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Floating ambient particles
-  particles.forEach(p => { p.update(); p.draw(); });
-
-  let landingPts = [];
-
-  if (started) {
-    const elapsed = time - gardenStartTime;
-
-    // Render normal flowers
-    flowers.forEach(f => {
-      const localT = Math.max(0, elapsed - f.delay);
-      renderFlower(f, localT, time);
-    });
-
-    if (elapsed > 16.0 && !mainDone) {
-      mainDone = true;
-      roseMsg.classList.add('show');
-    }
-
-    // Render special roses after user clicks rose button
-    if (rosesStarted) {
-      const roseElapsed = time - roseStartT;
-      roses.forEach(r => {
-        const localT = Math.max(0, roseElapsed - r.delay);
-        renderFlower(r, localT, time);
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
       });
+
+      const targetPage = document.getElementById('page' + pageNum);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        currentPage = pageNum;
+      }
+
+      // Trigger specific canvas animations
+      if (pageNum === 4) initButterfly();
+      if (pageNum === 5) initScratchCard();
+      if (pageNum === 6) initFireworks();
     }
 
-    landingPts = getLandingPointsNormalized();
-  }
-
-  // Render 3D WebGL Butterfly Engine
-  if (window.butterflySystem) {
-    window.butterflySystem.render(time, dt, started, landingPts);
-  }
-}
-
-/* =========================================================================
-   3. EVENT LISTENERS & INTERACTION FLOW
-   ========================================================================= */
-
-window.addEventListener('DOMContentLoaded', () => {
-  resize();
-  window.butterflySystem = new WebGLButterflySystem(document.getElementById('webgl-canvas'));
-
-  // Initial Mouse Follow on Intro Screen
-  window.addEventListener('mousemove', (e) => {
-    if (!started && window.butterflySystem) {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      window.butterflySystem.butterflies[0].target = [x * 0.45, y * 0.45, 0];
+    // Floating background hearts
+    const heartBg = document.getElementById('heartBg');
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerText = ['💖', '💕', '💗', '🌸', '✨'][Math.floor(Math.random() * 5)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDelay = (Math.random() * 8) + 's';
+      heart.style.fontSize = (14 + Math.random() * 16) + 'px';
+      heartBg.appendChild(heart);
     }
-  });
 
-  window.addEventListener('touchmove', (e) => {
-    if (!started && window.butterflySystem && e.touches.length > 0) {
-      const touch = e.touches[0];
-      const x = (touch.clientX / window.innerWidth) * 2 - 1;
-      const y = -(touch.clientY / window.innerHeight) * 2 + 1;
-      window.butterflySystem.butterflies[0].target = [x * 0.45, y * 0.45, 0];
+    // PAGE 4: Butterfly Canvas Animation
+    let bCtx, bCanvas, butterflyAnimId;
+    function initButterfly() {
+      bCanvas = document.getElementById('butterflyCanvas');
+      bCtx = bCanvas.getContext('2d');
+      bCanvas.width = window.innerWidth;
+      bCanvas.height = window.innerHeight;
+
+      let t = 0;
+      function render() {
+        bCtx.clearRect(0, 0, bCanvas.width, bCanvas.height);
+        
+        // Draw glowing floating butterfly particles
+        const cx = bCanvas.width / 2 + Math.sin(t * 0.02) * 80;
+        const cy = bCanvas.height / 2 + Math.cos(t * 0.03) * 40;
+        const flap = Math.sin(t * 0.15) * 0.5 + 0.5;
+
+        for (let i = 0; i < 400; i++) {
+          const angle = (i / 400) * Math.PI * 4;
+          const r = Math.sin(2 * angle) * 60;
+          const px = cx + Math.cos(angle) * r * flap;
+          const py = cy + Math.sin(angle) * r;
+
+          bCtx.beginPath();
+          bCtx.arc(px + (Math.random() - 0.5) * 10, py + (Math.random() - 0.5) * 10, Math.random() * 2 + 1, 0, Math.PI * 2);
+          bCtx.fillStyle = `rgba(${150 + Math.floor(Math.random() * 105)}, 180, 255, ${Math.random() * 0.8})`;
+          bCtx.fill();
+        }
+
+        t++;
+        if (currentPage === 4) butterflyAnimId = requestAnimationFrame(render);
+      }
+      render();
     }
-  }, { passive: true });
 
-  // Transition to Flower Garden Page
-  seeBtn.addEventListener('click', () => {
-    intro.classList.add('hide');
-    started = true;
-    gardenStartTime = performance.now() / 1000;
+    // PAGE 5: Scratch Card Implementation
+    function initScratchCard() {
+      const canvas = document.getElementById('scratchCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      ctx.fillStyle = '#c9184a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Decorative text on scratch layer
+      ctx.fillStyle = '#ffccd5';
+      ctx.font = '16px Poppins, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Scratch here with 💕', canvas.width / 2, canvas.height / 2 + 5);
 
-    // Try playing background music
-    music.play().catch(() => {
-      console.log('Autoplay audio paused by browser');
-    });
-  });
+      let isDrawing = false;
 
-  // Special Rose Garden Reveal
-  roseMsg.addEventListener('click', () => {
-    if (rosesStarted) return;
-    rosesStarted = true;
-    roseStartT = performance.now() / 1000;
+      function scratch(e) {
+        if (!isDrawing) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.touches[0].clientX) - rect.left;
+        const y = (e.clientY || e.touches[0].clientY) - rect.top;
 
-    ROSE_LAYOUT.forEach(l => roses.push(createFlower(l, true)));
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath();
+        ctx.arc(x, y, 18, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
-    roseMsg.innerText = "Blooming Realistic Roses for You 🌹💖";
-    setTimeout(() => { roseMsg.style.opacity = '0'; }, 5000);
-  });
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mousemove', scratch);
 
-  // Audio Toggle Button
-  const musicToggle = document.getElementById('musicToggle');
-  const musicIcon = document.getElementById('musicIcon');
-  musicToggle.addEventListener('click', () => {
-    if (music.paused) {
-      music.play();
-      musicIcon.className = "fa-solid fa-music";
-    } else {
-      music.pause();
-      musicIcon.className = "fa-solid fa-volume-xmark";
+      canvas.addEventListener('touchstart', () => isDrawing = true);
+      canvas.addEventListener('touchend', () => isDrawing = false);
+      canvas.addEventListener('touchmove', scratch);
     }
-  });
 
-  requestAnimationFrame(animate);
-});
-</script>
+    // PAGE 6: Fireworks Blast
+    let fCtx, fCanvas, fireworksAnimId;
+    function initFireworks() {
+      fCanvas = document.getElementById('fireworksCanvas');
+      fCtx = fCanvas.getContext('2d');
+      fCanvas.width = window.innerWidth;
+      fCanvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#ff4d6d', '#ff758f', '#ffb6c1', '#ffffff', '#ff8fa3'];
+
+      function createExplosion(x, y) {
+        for (let i = 0; i < 60; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 6 + 2;
+          particles.push({
+            x: x,
+            y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color: colors[Math.floor(Math.random() * colors.length)]
+          });
+        }
+      }
+
+      // Initial explosions
+      createExplosion(fCanvas.width / 2, fCanvas.height / 3);
+      setInterval(() => {
+        if (currentPage === 6) {
+          createExplosion(Math.random() * fCanvas.width, Math.random() * (fCanvas.height * 0.6));
+        }
+      }, 700);
+
+      function render() {
+        fCtx.fillStyle = 'rgba(13, 2, 8, 0.2)';
+        fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
+
+        particles.forEach((p, index) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.08; // gravity
+          p.alpha -= 0.015;
+
+          fCtx.beginPath();
+          fCtx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+          fCtx.fillStyle = p.color;
+          fCtx.globalAlpha = Math.max(0, p.alpha);
+          fCtx.fill();
+          fCtx.globalAlpha = 1;
+
+          if (p.alpha <= 0) particles.splice(index, 1);
+        });
+
+        if (currentPage === 6) fireworksAnimId = requestAnimationFrame(render);
+      }
+      render();
+    }
+  </script>
 </body>
 </html>
