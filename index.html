@@ -1,1078 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Butterfly & Flower Garden for Cutie 💖</title>
-<!-- FontAwesome for Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background: #030208;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    user-select: none;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Princess Day, Varsha 👸✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            background: radial-gradient(circle at center, #2b0626 0%, #120010 60%, #000000 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden; margin: 0; color: #ffffff; user-select: none;
+        }
 
-  /* Intro Screen Overlay */
-  #intro {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background: radial-gradient(ellipse at center, #110820 0%, #030208 85%);
-    transition: opacity 1.3s ease, visibility 1.3s;
-    padding: 30px 20px 40px;
-    text-align: center;
-  }
-  #intro.hide {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
+        .header-tag {
+            position: fixed; top: 14px; width: 100%; text-align: center;
+            z-index: 100; font-family: 'Cinzel Decorative', cursive;
+            color: #ffd700; font-size: 1.1rem; letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
 
-  .intro-header {
-    margin-top: 10px;
-    animation: fadeDown 1.5s ease both;
-  }
+        .slide {
+            display: none; position: fixed; inset: 0; width: 100%; height: 100vh;
+            align-items: center; justify-content: center; flex-direction: column;
+            transition: all 0.7s ease-in-out; opacity: 0; z-index: 20; padding: 24px; text-align: center;
+        }
+        .slide.active { display: flex; opacity: 1; transform: scale(1); }
 
-  .msg {
-    max-width: 600px;
-    color: #ffc1d4;
-    font-size: clamp(18px, 4.5vw, 25px);
-    line-height: 1.6;
-    letter-spacing: 0.4px;
-    text-shadow: 0 0 25px rgba(255, 158, 192, 0.6);
-  }
-  .msg .heart {
-    display: inline-block;
-    animation: heartbeat 1.6s ease-in-out infinite;
-  }
+        .royal-title { 
+            font-family: 'Dancing Script', cursive; 
+            background: linear-gradient(to right, #fff0f5, #ffd700, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.7));
+            font-size: 3.1rem; margin-top: 12px; font-weight: 700; line-height: 1.2;
+        }
+        
+        .sub-text { 
+            color: #ffe6f2; font-weight: 500; font-size: 1.1rem; 
+            max-width: 420px; margin-top: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9); 
+        }
+        
+        .gif-frame { 
+            width: 230px; height: 230px; border-radius: 50%; 
+            border: 4px solid #ffd700; 
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.5), inset 0 0 20px rgba(255, 0, 204, 0.5); 
+            object-fit: cover; 
+            background: rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; justify-content: center; font-size: 6rem;
+        }
 
-  /* Container for 3D Butterfly on Intro Page */
-  #intro-butterfly-box {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 48vh;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+        .glow-btn { 
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #d4af37); 
+            background-size: 200% auto;
+            padding: 14px 36px; border-radius: 50px; font-weight: 700; 
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.6); 
+            cursor: pointer; transition: 0.4s; margin-top: 22px;
+            color: white; border: 1px solid rgba(255, 215, 0, 0.6); font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+        .glow-btn:hover { 
+            background-position: right center;
+            transform: scale(1.08); 
+            box-shadow: 0 0 35px #ffd700; 
+        }
+        
+        .no-btn { 
+            background: rgba(255, 255, 255, 0.1); color: #ddd; 
+            padding: 12px 26px; border-radius: 50px; cursor: pointer; 
+            transition: 0.2s; margin-top: 22px; border: 1px solid rgba(255,255,255,0.2);
+        }
 
-  #seeBtn {
-    background: linear-gradient(135deg, #ff4d7a, #3b82f6);
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    padding: 18px 42px;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 35px rgba(255, 77, 122, 0.6), 0 0 20px rgba(59, 130, 246, 0.4);
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: fadeUp 1.7s ease both;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  #seeBtn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 50px rgba(255, 77, 122, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
-  }
-  #seeBtn:active { transform: scale(0.96); }
+        /* Royal Orbit */
+        .solar-system { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; }
+        .orbit { position: absolute; border: 1.5px dashed rgba(255, 215, 0, 0.5); border-radius: 50%; animation: spin linear infinite; }
+        .orbit-1 { width: 170px; height: 170px; animation-duration: 6s; }
+        .orbit-2 { width: 250px; height: 250px; animation-duration: 10s; animation-direction: reverse; }
+        .planet { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 24px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-  /* Rose message on garden page */
-  #roseMsg {
-    position: fixed;
-    top: 22px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    background: rgba(20, 8, 25, 0.78);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 120, 160, 0.4);
-    color: #ffc1d4;
-    font-size: 15px;
-    padding: 12px 28px;
-    border-radius: 40px;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease, transform 0.4s, box-shadow 0.4s;
-    box-shadow: 0 0 25px rgba(255, 80, 130, 0.3);
-    white-space: nowrap;
-  }
-  #roseMsg.show {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  #roseMsg:hover {
-    transform: translateX(-50%) scale(1.05);
-    box-shadow: 0 0 35px rgba(255, 80, 130, 0.6);
-  }
+        /* Floating Sparkles & Crowns */
+        .star { position: absolute; background: #ffd700; border-radius: 50%; box-shadow: 0 0 10px #ffd700; animation: twinkle var(--d) infinite alternate; }
+        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.7); } 100% { opacity: 1; transform: scale(1.4); } }
 
-  /* Canvases */
-  canvas {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
+        .hold-container { width: 280px; height: 18px; background: rgba(255,255,255,0.15); border-radius: 20px; margin-top: 20px; overflow: hidden; position: relative; border: 1.5px solid #ffd700; }
+        #holdProgress { position: absolute; left: 0; top: 0; height: 100%; background: linear-gradient(90deg, #ff1493, #ffd700); width: 0%; box-shadow: 0 0 20px #ffd700; }
 
-  #webgl-canvas {
-    z-index: 2;
-    pointer-events: none;
-  }
+        .royal-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 215, 0, 0.5);
+            border-radius: 24px;
+            padding: 25px;
+            max-width: 380px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        }
 
-  #c {
-    z-index: 1;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    14%      { transform: scale(1.28); }
-    28%      { transform: scale(1); }
-    42%      { transform: scale(1.16); }
-  }
-
-  /* Audio player button */
-  #musicToggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 60;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(20, 10, 30, 0.7);
-    border: 1px solid rgba(255, 150, 200, 0.4);
-    color: #ff9ec0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 20px rgba(255, 100, 150, 0.3);
-    transition: transform 0.2s;
-  }
-  #musicToggle:hover { transform: scale(1.1); }
-</style>
+        #videoLayer { display: none; position: fixed; inset: 0; background: radial-gradient(circle, #2b0626, #000); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; padding: 20px; text-align: center; }
+        video { width: 100%; max-height: 80vh; object-fit: contain; border-radius: 20px; }
+    </style>
 </head>
 <body>
 
-<!-- WebGL Canvas for Particle Butterflies -->
-<canvas id="webgl-canvas"></canvas>
+    <div class="header-tag">👑 Happy Princess Day, Varsha 👑</div>
 
-<!-- 2D Canvas for Flowers, Garden & Sparkles -->
-<canvas id="c"></canvas>
+    <audio id="bgMusic" loop src="tere-liye.mp3"></audio>
+    <div id="stars-container" class="fixed inset-0 pointer-events-none"></div>
 
-<!-- Intro Screen -->
-<div id="intro">
-  <div class="intro-header">
-    <div class="msg">
-      Hi cutie I am <b>sivasingh</b><br>
-      today 18 november so i am wishing you happy princess day 🤭🤭<span class="heart">💖</span>
+    <!-- Slide 1 -->
+    <div id="slide1" class="slide active">
+        <div class="gif-frame">👸</div>
+        <h1 class="royal-title">Hey Princess Varsha! ✨</h1>
+        <p class="sub-text">Aaj ka din sirf tumhare naam... kyunki tum kisi fairytale ki princess se kam nahi ho!</p>
+        <button onclick="startApp()" class="glow-btn">Open Your Royal Surprise 👑</button>
     </div>
-  </div>
 
-  <div id="intro-butterfly-box">
-    <!-- WebGL Butterfly will be centered here initially -->
-  </div>
-
-  <button id="seeBtn">
-    <span>Is pe click karo 🤭🤭</span>
-    <i class="fa-solid fa-wand-magic-sparkles"></i>
-  </button>
-</div>
-
-<!-- Interactive Rose Button -->
-<div id="roseMsg">I think you're missing a rose? Click here 🌹</div>
-
-<!-- Music Player Controls -->
-<button id="musicToggle" title="Toggle Music">
-  <i class="fa-solid fa-music" id="musicIcon"></i>
-</button>
-
-<audio id="music" loop preload="auto">
-  <source src="song1.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-/* =========================================================================
-   1. 3D WEBGL PARTICLE BUTTERFLY ENGINE (Fay Curve + Multiple Swarm)
-   ========================================================================= */
-
-const vsSource = `
-  attribute vec3 a_basePosition;
-  attribute float a_weight;
-  attribute float a_isWing;
-  attribute float a_phase;
-
-  uniform mat4 u_projectionMatrix;
-  uniform mat4 u_viewMatrix;
-  uniform vec3 u_butterflyPos;
-  uniform float u_time;
-  uniform float u_flapSpeed;
-  uniform float u_flapAmount;
-  uniform float u_scale;
-
-  varying float v_weight;
-  varying float v_shimmer;
-
-  void main() {
-      // Wing flap physics with tip delay
-      float th = u_flapSpeed * u_time;
-      float ax = abs(a_basePosition.x);
-      float phi = u_flapAmount * sin(th - 1.0 * ax) * a_isWing;
-      float c = cos(phi);
-      float s = sin(phi);
-
-      vec3 pos = a_basePosition * u_scale;
-      pos.x = a_basePosition.x * u_scale * c;
-      pos.y = (a_basePosition.y + 0.08 * ax * s + 0.02 * sin(2.0 * th)) * u_scale;
-      pos.z = (a_basePosition.z + ax * s) * u_scale;
-
-      // Slight downward viewing tilt
-      float tiltAngle = 0.18;
-      float tc = cos(tiltAngle);
-      float ts = sin(tiltAngle);
-      
-      vec3 tiltedPos;
-      tiltedPos.x = pos.x;
-      tiltedPos.y = pos.y * tc - pos.z * ts;
-      tiltedPos.z = pos.y * ts + pos.z * tc;
-
-      tiltedPos += u_butterflyPos;
-
-      v_shimmer = 0.85 + 0.15 * sin(u_time * 4.0 + a_phase);
-      v_weight = a_weight;
-
-      vec4 mvPosition = u_viewMatrix * vec4(tiltedPos, 1.0);
-      gl_Position = u_projectionMatrix * mvPosition;
-
-      gl_PointSize = max(1.0, (2.2 * a_weight * v_shimmer * (3.5 / -mvPosition.z)));
-  }
-`;
-
-const fsSource = `
-  precision mediump float;
-
-  varying float v_weight;
-  varying float v_shimmer;
-
-  vec3 getBluePalette(float t) {
-      t = clamp(t, 0.0, 1.0);
-      vec3 c0 = vec3(0.0, 0.0, 0.02);
-      vec3 c1 = vec3(0.0, 0.0, 0.43);
-      vec3 c2 = vec3(0.0, 0.0, 0.92);
-      vec3 c3 = vec3(0.08, 0.10, 1.0);
-      vec3 c4 = vec3(0.31, 0.37, 1.0);
-      vec3 c5 = vec3(0.53, 0.59, 1.0);
-
-      if (t < 0.15) return mix(c0, c1, t / 0.15);
-      if (t < 0.40) return mix(c1, c2, (t - 0.15) / 0.25);
-      if (t < 0.62) return mix(c2, c3, (t - 0.40) / 0.22);
-      if (t < 0.85) return mix(c3, c4, (t - 0.62) / 0.23);
-      return mix(c4, c5, (t - 0.85) / 0.15);
-  }
-
-  void main() {
-      vec2 coord = gl_PointCoord - vec2(0.5);
-      float distSq = dot(coord, coord);
-      if (distSq > 0.25) discard;
-
-      float alpha = exp(-distSq * 10.0);
-      float intensity = v_weight * v_shimmer * 0.5;
-      vec3 color = getBluePalette(intensity);
-      color += vec3(0.2, 0.4, 0.8) * alpha * intensity;
-
-      gl_FragColor = vec4(color * alpha, alpha * min(1.0, intensity));
-  }
-`;
-
-function fayCurve(theta) {
-  const sinT = Math.sin(theta);
-  const r = Math.exp(sinT) - 2 * Math.cos(4 * theta) + Math.pow(Math.sin((2 * theta - Math.PI) / 24), 5);
-  return [(sinT * r) / 4.6, (Math.cos(theta) * r) / 4.6 - 0.12];
-}
-
-function randomNormal(mean = 0, std = 1) {
-  let u1 = Math.random(), u2 = Math.random();
-  let z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
-  return z0 * std + mean;
-}
-
-function generateButterflyData(numParticles) {
-  const shares = { edge: 0.13, vein: 0.15, spot: 0.07, body: 0.08, antenna: 0.025 };
-  const counts = {
-    edge: Math.floor(numParticles * shares.edge),
-    vein: Math.floor(numParticles * shares.vein),
-    spot: Math.floor(numParticles * shares.spot),
-    body: Math.floor(numParticles * shares.body),
-    antenna: Math.floor(numParticles * shares.antenna),
-  };
-  counts.wing = numParticles - (counts.edge + counts.vein + counts.spot + counts.body + counts.antenna);
-
-  const positions = [], weights = [], isWings = [], phases = [];
-
-  function halfTheta(m) {
-    const arr = [];
-    for (let i = 0; i < m; i++) arr.push(Math.random() * Math.PI + 2 * Math.PI * Math.floor(Math.random() * 6));
-    return arr;
-  }
-
-  function mirrored(thetas) {
-    const pts = [];
-    for (let i = 0; i < thetas.length; i++) {
-      const [x, y] = fayCurve(thetas[i]);
-      const side = Math.random() < 0.5 ? -1.0 : 1.0;
-      pts.push([side * Math.abs(x), y]);
-    }
-    return pts;
-  }
-
-  function addPart(pts, weightVal, isWingVal) {
-    for (let i = 0; i < pts.length; i++) {
-      positions.push(pts[i][0], pts[i][1], pts[i][2]);
-      weights.push(weightVal);
-      isWings.push(isWingVal ? 1.0 : 0.0);
-      phases.push(Math.random() * Math.PI * 2.0);
-    }
-  }
-
-  // Wing Membrane
-  let ths = halfTheta(counts.wing);
-  let mPts = mirrored(ths);
-  addPart(mPts.map(pt => [pt[0] * Math.pow(Math.random(), 0.6), pt[1] * Math.pow(Math.random(), 0.6), randomNormal(0, 0.008)]), 0.30, true);
-
-  // Edges
-  ths = halfTheta(counts.edge);
-  mPts = mirrored(ths);
-  addPart(mPts.map(pt => [pt[0] * (1.0 - Math.pow(Math.random(), 3.0) * 0.035), pt[1] * (1.0 - Math.pow(Math.random(), 3.0) * 0.035), randomNormal(0, 0.004)]), 0.85, true);
-
-  // Veins
-  const veinAngles = [0.12, 0.55, 0.98, 1.41, 1.84, 2.27, 2.70, 3.02];
-  let veinThetas = [];
-  for (let i = 0; i < counts.vein; i++) {
-    veinThetas.push(veinAngles[Math.floor(Math.random() * veinAngles.length)] + 2 * Math.PI * Math.floor(Math.random() * 6) + randomNormal(0, 0.004));
-  }
-  mPts = mirrored(veinThetas);
-  addPart(mPts.map(pt => [pt[0] * Math.pow(Math.random(), 0.85), pt[1] * Math.pow(Math.random(), 0.85), randomNormal(0, 0.004)]), 0.75, true);
-
-  // Eye Spots
-  const centres = [{ t0: 1.05, per: 3, fill: 0.62 }, { t0: 2.35, per: 3, fill: 0.60 }, { t0: 0.80, per: 4, fill: 0.90 }];
-  let spotPts = [];
-  for (let i = 0; i < counts.spot; i++) {
-    let c = centres[Math.floor(Math.random() * centres.length)];
-    let [x0, y0] = fayCurve(c.t0 + 2 * Math.PI * c.per);
-    let k = Math.random();
-    let rad = k < 0.55 ? 0.050 : (k < 0.85 ? 0.028 : Math.random() * 0.014);
-    let a = Math.random() * Math.PI * 2.0;
-    let side = Math.random() < 0.5 ? -1.0 : 1.0;
-    spotPts.push([side * x0 * c.fill + Math.cos(a) * rad, y0 * c.fill + Math.sin(a) * rad, randomNormal(0, 0.004)]);
-  }
-  addPart(spotPts, 1.0, true);
-
-  // Body
-  let bodyPts = [];
-  for (let i = 0; i < counts.body; i++) {
-    let dx = randomNormal(), dy = randomNormal(), dz = randomNormal();
-    let len = Math.sqrt(dx * dx + dy * dy + dz * dz) + 1e-9;
-    dx /= len; dy /= len; dz /= len;
-    let vol = Math.pow(Math.random(), 1 / 3);
-    let t = Math.random(), p = Math.random();
-    let isAb = p < 0.55, isTh = p >= 0.55 && p < 0.82;
-    let cy = isAb ? (0.02 - 0.44 * t) : (isTh ? (0.09 + randomNormal(0, 0.03)) : 0.175);
-    let rr = (isAb ? (0.030 * (1.0 - 0.55 * t)) : (isTh ? 0.048 : 0.034)) * vol;
-    bodyPts.push([dx * rr, cy + dy * rr * (isAb ? 3.0 : 1.0), dz * rr]);
-  }
-  addPart(bodyPts, 1.1, false);
-
-  // Antennae
-  let antennaPts = [];
-  for (let i = 0; i < counts.antenna; i++) {
-    let t = Math.random(), side = Math.random() < 0.5 ? -1.0 : 1.0;
-    let jit = t > 0.93 ? 0.012 : 0.002;
-    antennaPts.push([
-      side * (0.015 + 0.17 * Math.pow(t, 1.2)) + randomNormal(0, 1) * jit,
-      0.20 + 0.30 * t - 0.12 * t * t + randomNormal(0, 1) * jit,
-      0.02 * t
-    ]);
-  }
-  addPart(antennaPts, 0.95, false);
-
-  return {
-    positions: new Float32Array(positions),
-    weights: new Float32Array(weights),
-    isWings: new Float32Array(isWings),
-    phases: new Float32Array(phases),
-    count: positions.length / 3
-  };
-}
-
-class WebGLButterflySystem {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.gl = canvas.getContext('webgl', { antialias: true, alpha: true });
-    if (!this.gl) return;
-
-    this.butterflies = [
-      { pos: [0, 0, 0], target: [0, 0, 0], scale: 1.0, speed: 3.0, flapSpeed: 3.0, offsetPhase: 0 },
-      { pos: [2, 2, 0], target: [0.5, 0.2, 0], scale: 0.65, speed: 2.2, flapSpeed: 3.6, offsetPhase: 1.5 },
-      { pos: [-2, -2, 0], target: [-0.5, -0.1, 0], scale: 0.55, speed: 1.8, flapSpeed: 4.0, offsetPhase: 3.1 }
-    ];
-
-    this.initShaders();
-    this.initBuffers();
-    this.resize();
-  }
-
-  initShaders() {
-    const gl = this.gl;
-    const vs = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vs, vsSource); gl.compileShader(vs);
-
-    const fs = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fs, fsSource); gl.compileShader(fs);
-
-    this.program = gl.createProgram();
-    gl.attachShader(this.program, vs);
-    gl.attachShader(this.program, fs);
-    gl.linkProgram(this.program);
-    gl.useProgram(this.program);
-
-    this.attribs = {
-      basePosition: gl.getAttribLocation(this.program, 'a_basePosition'),
-      weight: gl.getAttribLocation(this.program, 'a_weight'),
-      isWing: gl.getAttribLocation(this.program, 'a_isWing'),
-      phase: gl.getAttribLocation(this.program, 'a_phase')
-    };
-
-    this.uniforms = {
-      projectionMatrix: gl.getUniformLocation(this.program, 'u_projectionMatrix'),
-      viewMatrix: gl.getUniformLocation(this.program, 'u_viewMatrix'),
-      butterflyPos: gl.getUniformLocation(this.program, 'u_butterflyPos'),
-      time: gl.getUniformLocation(this.program, 'u_time'),
-      flapSpeed: gl.getUniformLocation(this.program, 'u_flapSpeed'),
-      flapAmount: gl.getUniformLocation(this.program, 'u_flapAmount'),
-      scale: gl.getUniformLocation(this.program, 'u_scale')
-    };
-
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    gl.disable(gl.DEPTH_TEST);
-  }
-
-  initBuffers() {
-    const gl = this.gl;
-    this.data = generateButterflyData(35000);
-
-    const bindBuf = (arr, attrib) => {
-      const buf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-      gl.bufferData(gl.ARRAY_BUFFER, arr, gl.STATIC_DRAW);
-      gl.enableVertexAttribArray(attrib);
-      gl.vertexAttribPointer(attrib, attrib === this.attribs.basePosition ? 3 : 1, gl.FLOAT, false, 0, 0);
-    };
-
-    bindBuf(this.data.positions, this.attribs.basePosition);
-    bindBuf(this.data.weights, this.attribs.weight);
-    bindBuf(this.data.isWings, this.attribs.isWing);
-    bindBuf(this.data.phases, this.attribs.phase);
-  }
-
-  resize() {
-    const gl = this.gl;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    this.canvas.width = width * window.devicePixelRatio;
-    this.canvas.height = height * window.devicePixelRatio;
-    gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-
-    const aspect = width / height;
-    const fov = 45 * Math.PI / 180;
-    const f = 1.0 / Math.tan(fov / 2);
-
-    const proj = new Float32Array([
-      f / aspect, 0, 0, 0,
-      0, f, 0, 0,
-      0, 0, (100 + 0.1) / (0.1 - 100), -1,
-      0, 0, (2 * 100 * 0.1) / (0.1 - 100), 0
-    ]);
-
-    const view = new Float32Array([
-      1, 0, 0, 0,
-      0, 1, 0, 0,
-      0, 0, 1, 0,
-      0, 0, -3.2, 1
-    ]);
-
-    gl.useProgram(this.program);
-    gl.uniformMatrix4fv(this.uniforms.projectionMatrix, false, proj);
-    gl.uniformMatrix4fv(this.uniforms.viewMatrix, false, view);
-  }
-
-  render(time, dt, inGardenMode, landingPoints) {
-    const gl = this.gl;
-    gl.clearColor(0, 0, 0, 0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.useProgram(this.program);
-    gl.uniform1f(this.uniforms.flapAmount, 0.55);
-
-    const activeCount = inGardenMode ? 3 : 1;
-
-    for (let i = 0; i < activeCount; i++) {
-      let b = this.butterflies[i];
-
-      if (inGardenMode && landingPoints && landingPoints.length > 0) {
-        // Flutter around flowers in garden mode
-        let targetPt = landingPoints[i % landingPoints.length];
-        let hoverX = targetPt.x + Math.sin(time * 1.5 + b.offsetPhase) * 0.18;
-        let hoverY = targetPt.y + Math.cos(time * 2.0 + b.offsetPhase) * 0.12;
-
-        b.target[0] = hoverX;
-        b.target[1] = hoverY;
-      }
-
-      // Interp movement towards target
-      let lerp = Math.min(1.0, b.speed * dt);
-      b.pos[0] += (b.target[0] - b.pos[0]) * lerp;
-      b.pos[1] += (b.target[1] - b.pos[1]) * lerp;
-      b.pos[2] += (b.target[2] - b.pos[2]) * lerp;
-
-      gl.uniform1f(this.uniforms.time, time + b.offsetPhase);
-      gl.uniform1f(this.uniforms.flapSpeed, b.flapSpeed);
-      gl.uniform1f(this.uniforms.scale, b.scale);
-      gl.uniform3fv(this.uniforms.butterflyPos, b.pos);
-
-      gl.drawArrays(gl.POINTS, 0, this.data.count);
-    }
-  }
-}
-
-
-/* =========================================================================
-   2. 2D CANVAS FLOWER GARDEN ENGINE & PARTICLES
-   ========================================================================= */
-
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
-const music = document.getElementById('music');
-const intro = document.getElementById('intro');
-const seeBtn = document.getElementById('seeBtn');
-const roseMsg = document.getElementById('roseMsg');
-
-let W, H;
-const particles = [];
-const flowers = [];
-const roses = [];
-let started = false;
-let rosesStarted = false;
-let roseStartT = 0;
-let mainDone = false;
-let gardenStartTime = 0;
-
-function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-  if (window.butterflySystem) window.butterflySystem.resize();
-}
-window.addEventListener('resize', resize);
-
-/* Floating particles */
-class Particle {
-  constructor() { this.reset(true); }
-  reset(init) {
-    this.x = Math.random() * W;
-    this.y = init ? Math.random() * H : H + 40;
-    this.r = 1.0 + Math.random() * 2.8;
-    this.speed = 0.18 + Math.random() * 0.5;
-    this.a = 0.07 + Math.random() * 0.22;
-    this.col = Math.random() > 0.38 ? '#ff9ec0' : (Math.random() > 0.5 ? '#60a5fa' : '#ffe0ec');
-    this.wobble = Math.random() * Math.PI * 2;
-  }
-  update() {
-    this.y -= this.speed;
-    this.x += Math.sin(this.wobble + this.y * 0.008) * 0.35;
-    if (this.y < -40) this.reset(false);
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = this.col;
-    ctx.globalAlpha = this.a;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
-}
-for (let i = 0; i < 70; i++) particles.push(new Particle());
-
-const PRESETS = [
-  { petalDeep: '#e91e63', petalMid: '#ff80ab', petalLight: '#ffc1d4', bud: '#f48fb1', core: '#ffd54f', glow: 'rgba(255,70,130,0.55)' },
-  { petalDeep: '#ce93d8', petalMid: '#f3e5f5', petalLight: '#faf5ff', bud: '#e1bee7', core: '#fff', glow: 'rgba(220,180,255,0.5)' },
-  { petalDeep: '#ad1457', petalMid: '#ec407a', petalLight: '#f8bbd0', bud: '#f06292', core: null, glow: 'rgba(180,30,90,0.55)' },
-  { petalDeep: '#ef6c00', petalMid: '#ffb300', petalLight: '#ffe082', bud: '#ff8f00', core: '#4e342e', glow: 'rgba(255,150,0,0.45)' },
-  { petalDeep: '#7b1fa2', petalMid: '#ba68c8', petalLight: '#e1bee7', bud: '#ce93d8', core: '#ffd54f', glow: 'rgba(150,60,200,0.5)' },
-  { petalDeep: '#e57373', petalMid: '#ef9a9a', petalLight: '#ffcdd2', bud: '#ef9a9a', core: '#fff59d', glow: 'rgba(255,120,120,0.5)' },
-  { petalDeep: '#f06292', petalMid: '#f8bbd0', petalLight: '#fce4ec', bud: '#f48fb1', core: '#ffecb3', glow: 'rgba(240,100,150,0.5)' }
-];
-
-const ROSE_PRESETS = [
-  { petalDeep: '#b71c1c', petalMid: '#e53935', petalLight: '#ef9a9a', bud: '#c62828', core: '#ffd54f', glow: 'rgba(200,30,40,0.6)' },
-  { petalDeep: '#c2185b', petalMid: '#f06292', petalLight: '#f8bbd0', bud: '#ec407a', core: '#ffecb3', glow: 'rgba(220,50,100,0.55)' },
-  { petalDeep: '#e91e63', petalMid: '#f48fb1', petalLight: '#fce4ec', bud: '#f06292', core: '#fff59d', glow: 'rgba(240,80,130,0.5)' },
-  { petalDeep: '#880e4f', petalMid: '#ad1457', petalLight: '#f48fb1', bud: '#c2185b', core: '#ffd54f', glow: 'rgba(160,20,70,0.55)' },
-  { petalDeep: '#d32f2f', petalMid: '#ef5350', petalLight: '#ffcdd2', bud: '#e57373', core: '#fff8e1', glow: 'rgba(230,60,60,0.5)' }
-];
-
-const STAGE = { root: 0.0, stem: 0.4, leaf: 1.55, bud: 2.5, open: 3.3 };
-
-function createFlower(cfg, isRose = false) {
-  return {
-    cx: cfg.x,
-    base: 0.93,
-    maxH: cfg.h,
-    ang: cfg.ang * Math.PI / 180,
-    delay: cfg.delay,
-    preset: isRose ? ROSE_PRESETS[cfg.p % ROSE_PRESETS.length] : PRESETS[cfg.p % PRESETS.length],
-    petals: cfg.petals || 6,
-    isTulip: cfg.tulip || false,
-    isSun: cfg.sun || false,
-    isRose: isRose,
-    sway: 0.12 + Math.random() * 0.28,
-    swaySpeed: 0.55 + Math.random() * 0.7,
-    phase: Math.random() * Math.PI * 2,
-    tipPos: { x: 0, y: 0 }
-  };
-}
-
-const LAYOUT = [
-  { x: 0.07, h: 0.40, delay: 0.0,  ang: -30, p: 0, petals: 7 },
-  { x: 0.17, h: 0.52, delay: 1.1,  ang: -20, p: 3, petals: 16, sun: true },
-  { x: 0.27, h: 0.46, delay: 2.3,  ang: -12, p: 1, petals: 6 },
-  { x: 0.37, h: 0.58, delay: 3.5,  ang: -5,  p: 2, petals: 3, tulip: true },
-  { x: 0.47, h: 0.64, delay: 4.7,  ang: 0,   p: 0, petals: 8 },
-  { x: 0.57, h: 0.50, delay: 5.9,  ang: 7,   p: 4, petals: 6 },
-  { x: 0.67, h: 0.56, delay: 7.1,  ang: 13,  p: 5, petals: 7 },
-  { x: 0.77, h: 0.44, delay: 8.3,  ang: 20,  p: 1, petals: 6 },
-  { x: 0.87, h: 0.48, delay: 9.5,  ang: 27,  p: 6, petals: 7 },
-  { x: 0.13, h: 0.32, delay: 10.8, ang: -24, p: 2, petals: 3, tulip: true },
-  { x: 0.31, h: 0.30, delay: 12.0, ang: -9,  p: 0, petals: 6 },
-  { x: 0.51, h: 0.34, delay: 13.2, ang: 5,   p: 3, petals: 14, sun: true },
-  { x: 0.71, h: 0.31, delay: 14.4, ang: 16,  p: 5, petals: 6 },
-  { x: 0.41, h: 0.38, delay: 15.6, ang: -3,  p: 6, petals: 7 },
-  { x: 0.61, h: 0.36, delay: 16.8, ang: 11,  p: 0, petals: 6 },
-  { x: 0.22, h: 0.26, delay: 18.0, ang: -15, p: 4, petals: 5 },
-  { x: 0.82, h: 0.28, delay: 19.2, ang: 22,  p: 1, petals: 6 }
-];
-LAYOUT.forEach(l => flowers.push(createFlower(l)));
-
-const ROSE_LAYOUT = [
-  { x: 0.18, h: 0.55, delay: 0.0,  ang: -18, p: 0, petals: 9 },
-  { x: 0.32, h: 0.62, delay: 1.4,  ang: -8,  p: 1, petals: 10 },
-  { x: 0.48, h: 0.68, delay: 2.8,  ang: 0,   p: 2, petals: 11 },
-  { x: 0.64, h: 0.60, delay: 4.2,  ang: 9,   p: 3, petals: 10 },
-  { x: 0.78, h: 0.52, delay: 5.6,  ang: 18,  p: 4, petals: 9 },
-  { x: 0.25, h: 0.40, delay: 7.0,  ang: -12, p: 0, petals: 8 },
-  { x: 0.55, h: 0.42, delay: 8.4,  ang: 6,   p: 1, petals: 9 },
-  { x: 0.72, h: 0.38, delay: 9.8,  ang: 15,  p: 2, petals: 8 }
-];
-
-function ease(t) { return t < 0 ? 0 : t > 1 ? 1 : 1 - Math.pow(1 - t, 3); }
-function easeBack(t) {
-  const c = 1.7;
-  return t <= 0 ? 0 : t >= 1 ? 1 : 1 + c * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
-}
-
-function drawRoot(f, p) {
-  if (p <= 0) return;
-  const x = f.cx * W, y = f.base * H;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(f.ang);
-  const s = ease(p) * 18;
-  const soil = ctx.createRadialGradient(0, 4, 2, 0, 6, s * 1.8);
-  soil.addColorStop(0, 'rgba(70, 45, 35, 0.85)');
-  soil.addColorStop(1, 'rgba(40, 25, 20, 0.0)');
-  ctx.beginPath();
-  ctx.ellipse(0, 6, s * 1.7, s * 0.65, 0, 0, Math.PI * 2);
-  ctx.fillStyle = soil;
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(65, 40, 35, 0.7)';
-  ctx.lineWidth = 1.5;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(-8, 4); ctx.quadraticCurveTo(-14, 15, -6, 22);
-  ctx.moveTo(7, 5);  ctx.quadraticCurveTo(15, 14, 8, 21);
-  ctx.moveTo(0, 3);  ctx.quadraticCurveTo(3, 16, -2, 24);
-  ctx.stroke();
-  ctx.restore();
-}
-
-function drawStemAndLeaves(f, stemP, leafP, time) {
-  const h = f.maxH * H * ease(stemP);
-  if (h < 2) return { tipX: f.cx * W, tipY: f.base * H };
-
-  const sway = Math.sin(time * f.swaySpeed + f.phase) * f.sway * (h / (f.maxH * H));
-  const x = f.cx * W, y = f.base * H;
-
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate(f.ang + sway * 0.18);
-
-  const stemGrad = ctx.createLinearGradient(0, 0, 0, -h);
-  stemGrad.addColorStop(0, '#1b5e20');
-  stemGrad.addColorStop(0.4, '#2e7d32');
-  stemGrad.addColorStop(1, '#66bb6a');
-
-  ctx.beginPath();
-  ctx.moveTo(-2.2, 0);
-  ctx.quadraticCurveTo(6 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, -1.5 + sway * 3, -h);
-  ctx.lineTo(1.5 + sway * 3, -h);
-  ctx.quadraticCurveTo(8 * Math.sin(f.ang * 1.3 + sway), -h * 0.5, 2.2, 0);
-  ctx.closePath();
-  ctx.fillStyle = stemGrad;
-  ctx.shadowColor = 'rgba(60, 140, 60, 0.4)';
-  ctx.shadowBlur = 8;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-
-  if (leafP > 0) {
-    const leaves = [
-      { pos: 0.70, side: -1, size: 1.1, rot: 0.72 },
-      { pos: 0.52, side:  1, size: 1.0, rot: 0.68 },
-      { pos: 0.36, side: -1, size: 0.85, rot: 0.75 },
-      { pos: 0.24, side:  1, size: 0.72, rot: 0.65 }
-    ];
-    leaves.forEach((L, i) => {
-      const lp = Math.max(0, Math.min(1, (leafP - i * 0.11) / 0.42));
-      if (lp <= 0) return;
-      const ly = -h * L.pos;
-      const sc = ease(lp) * L.size;
-      ctx.save();
-      ctx.translate(sway * 2.5, ly);
-      ctx.rotate(L.side * L.rot * sc);
-
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(L.side * 10 * sc, -6 * sc, L.side * 26 * sc, 4 * sc, L.side * 22 * sc, 14 * sc);
-      ctx.bezierCurveTo(L.side * 14 * sc, 10 * sc, L.side * 6 * sc, 5 * sc, 0, 0);
-      const lg = ctx.createLinearGradient(0, 0, L.side * 22 * sc, 10 * sc);
-      lg.addColorStop(0, '#a5d6a7');
-      lg.addColorStop(0.5, '#66bb6a');
-      lg.addColorStop(1, '#388e3c');
-      ctx.fillStyle = lg;
-      ctx.globalAlpha = 0.92 * sc;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.restore();
-    });
-  }
-  ctx.restore();
-
-  const tipX = x + Math.sin(f.ang + sway * 0.18) * h;
-  const tipY = y - Math.cos(f.ang + sway * 0.18) * h;
-  return { tipX, tipY };
-}
-
-function drawBud(f, tipX, tipY, budP) {
-  if (budP <= 0) return;
-  const s = ease(budP);
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang);
-  ctx.scale(s, s);
-
-  ctx.beginPath();
-  ctx.ellipse(0, -12, 11, 16, 0, 0, Math.PI * 2);
-  const bg = ctx.createLinearGradient(0, 0, 0, -28);
-  bg.addColorStop(0, f.preset.bud);
-  bg.addColorStop(0.55, f.preset.petalMid);
-  bg.addColorStop(1, f.preset.petalDeep);
-  ctx.fillStyle = bg;
-  ctx.shadowColor = f.preset.glow;
-  ctx.shadowBlur = 14;
-  ctx.fill();
-  ctx.shadowBlur = 0;
-  ctx.restore();
-}
-
-function drawBloom(f, tipX, tipY, openP, time) {
-  if (openP <= 0) return;
-  const s = 0.1 + easeBack(openP) * 0.9;
-  const pr = f.preset;
-  const breathe = 1 + Math.sin(time * 1.6 + f.phase) * 0.03;
-
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang + Math.sin(time * 0.65 + f.phase) * 0.05);
-  ctx.scale(s * breathe, s * breathe);
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 52, 0, Math.PI * 2);
-  const gl = ctx.createRadialGradient(0, 0, 6, 0, 0, 52);
-  gl.addColorStop(0, pr.glow);
-  gl.addColorStop(1, 'transparent');
-  ctx.fillStyle = gl;
-  ctx.fill();
-
-  const total = f.petals;
-  for (let i = 0; i < total; i++) {
-    const a = (i / total) * Math.PI * 2 - Math.PI / 2 + 0.15;
-    ctx.save();
-    ctx.rotate(a);
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.bezierCurveTo(20, -12, 18, -34, 0, -40);
-    ctx.bezierCurveTo(-18, -34, -20, -12, 0, 0);
-    const pg = ctx.createLinearGradient(0, 0, 0, -42);
-    pg.addColorStop(0, pr.petalDeep);
-    pg.addColorStop(0.5, pr.petalMid);
-    pg.addColorStop(1, pr.petalLight);
-    ctx.fillStyle = pg;
-    ctx.shadowColor = pr.glow;
-    ctx.shadowBlur = 10;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  if (pr.core) {
-    ctx.beginPath();
-    ctx.arc(0, 0, 10, 0, Math.PI * 2);
-    const cg = ctx.createRadialGradient(-3, -3, 1, 0, 0, 10);
-    cg.addColorStop(0, '#fffde7');
-    cg.addColorStop(0.5, pr.core);
-    cg.addColorStop(1, '#ffb300');
-    ctx.fillStyle = cg;
-    ctx.shadowColor = 'rgba(255,200,50,0.7)';
-    ctx.shadowBlur = 12;
-    ctx.fill();
-  }
-  ctx.restore();
-}
-
-function drawRealisticRose(f, tipX, tipY, openP, time) {
-  if (openP <= 0) return;
-  const s = 0.12 + easeBack(openP) * 0.88;
-  const pr = f.preset;
-  const breathe = 1 + Math.sin(time * 1.5 + f.phase) * 0.028;
-
-  ctx.save();
-  ctx.translate(tipX, tipY);
-  ctx.rotate(f.ang + Math.sin(time * 0.6 + f.phase) * 0.04);
-  ctx.scale(s * breathe, s * breathe);
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 58, 0, Math.PI * 2);
-  const gl = ctx.createRadialGradient(0, 0, 8, 0, 0, 58);
-  gl.addColorStop(0, pr.glow);
-  gl.addColorStop(1, 'transparent');
-  ctx.fillStyle = gl;
-  ctx.fill();
-
-  const layers = [
-    { count: 5, radius: 38, width: 22, offset: 0.0 },
-    { count: 7, radius: 32, width: 19, offset: 0.3 },
-    { count: 8, radius: 25, width: 16, offset: 0.55 },
-    { count: 6, radius: 18, width: 13, offset: 0.8 },
-    { count: 5, radius: 12, width: 10, offset: 1.1 }
-  ];
-
-  layers.forEach((layer, li) => {
-    for (let i = 0; i < layer.count; i++) {
-      const a = (i / layer.count) * Math.PI * 2 - Math.PI / 2 + layer.offset + li * 0.2;
-      ctx.save();
-      ctx.rotate(a);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(layer.width, -layer.radius * 0.4, layer.width * 0.8, -layer.radius, 0, -layer.radius);
-      ctx.bezierCurveTo(-layer.width * 0.8, -layer.radius, -layer.width, -layer.radius * 0.4, 0, 0);
-
-      const pg = ctx.createLinearGradient(0, 0, 0, -layer.radius);
-      pg.addColorStop(0, pr.petalDeep);
-      pg.addColorStop(0.6, pr.petalMid);
-      pg.addColorStop(1, pr.petalLight);
-
-      ctx.fillStyle = pg;
-      ctx.shadowColor = pr.glow;
-      ctx.shadowBlur = 8;
-      ctx.fill();
-      ctx.restore();
-    }
-  });
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 6, 0, Math.PI * 2);
-  ctx.fillStyle = pr.petalDeep;
-  ctx.fill();
-  ctx.restore();
-}
-
-function renderFlower(f, localT, time) {
-  const rootP = Math.max(0, Math.min(1, (localT - STAGE.root) / 0.5));
-  const stemP = Math.max(0, Math.min(1, (localT - STAGE.stem) / 1.25));
-  const leafP = Math.max(0, Math.min(1, (localT - STAGE.leaf) / 1.0));
-  const budP  = Math.max(0, Math.min(1, (localT - STAGE.bud) / 0.8));
-  const openP = Math.max(0, Math.min(1, (localT - STAGE.open) / 1.3));
-
-  drawRoot(f, rootP);
-  const { tipX, tipY } = drawStemAndLeaves(f, stemP, leafP, time);
-  f.tipPos = { x: tipX, y: tipY };
-
-  if (openP > 0) {
-    if (f.isRose) drawRealisticRose(f, tipX, tipY, openP, time);
-    else drawBloom(f, tipX, tipY, openP, time);
-  } else if (budP > 0) {
-    drawBud(f, tipX, tipY, budP);
-  }
-}
-
-/* Screen coordinates to normalized WebGL target (-0.8 to 0.8) */
-function getLandingPointsNormalized() {
-  let activeFlowers = flowers.filter(f => f.tipPos && f.tipPos.x > 0);
-  if (rosesStarted) activeFlowers = activeFlowers.concat(roses);
-
-  if (activeFlowers.length === 0) return [{ x: 0, y: 0 }];
-
-  return activeFlowers.map(f => {
-    let normX = ((f.tipPos.x / W) * 2 - 1) * 0.75;
-    let normY = (-(f.tipPos.y / H) * 2 + 1) * 0.65;
-    return { x: normX, y: normY };
-  });
-}
-
-let lastTime = performance.now();
-
-function animate(now) {
-  requestAnimationFrame(animate);
-  const dt = Math.min((now - lastTime) / 1000, 1 / 20);
-  lastTime = now;
-  const time = now / 1000;
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Floating ambient particles
-  particles.forEach(p => { p.update(); p.draw(); });
-
-  let landingPts = [];
-
-  if (started) {
-    const elapsed = time - gardenStartTime;
-
-    // Render normal flowers
-    flowers.forEach(f => {
-      const localT = Math.max(0, elapsed - f.delay);
-      renderFlower(f, localT, time);
-    });
-
-    if (elapsed > 16.0 && !mainDone) {
-      mainDone = true;
-      roseMsg.classList.add('show');
-    }
-
-    // Render special roses after user clicks rose button
-    if (rosesStarted) {
-      const roseElapsed = time - roseStartT;
-      roses.forEach(r => {
-        const localT = Math.max(0, roseElapsed - r.delay);
-        renderFlower(r, localT, time);
-      });
-    }
-
-    landingPts = getLandingPointsNormalized();
-  }
-
-  // Render 3D WebGL Butterfly Engine
-  if (window.butterflySystem) {
-    window.butterflySystem.render(time, dt, started, landingPts);
-  }
-}
-
-/* =========================================================================
-   3. EVENT LISTENERS & INTERACTION FLOW
-   ========================================================================= */
-
-window.addEventListener('DOMContentLoaded', () => {
-  resize();
-  window.butterflySystem = new WebGLButterflySystem(document.getElementById('webgl-canvas'));
-
-  // Initial Mouse Follow on Intro Screen
-  window.addEventListener('mousemove', (e) => {
-    if (!started && window.butterflySystem) {
-      const x = (e.clientX / window.innerWidth) * 2 - 1;
-      const y = -(e.clientY / window.innerHeight) * 2 + 1;
-      window.butterflySystem.butterflies[0].target = [x * 0.45, y * 0.45, 0];
-    }
-  });
-
-  window.addEventListener('touchmove', (e) => {
-    if (!started && window.butterflySystem && e.touches.length > 0) {
-      const touch = e.touches[0];
-      const x = (touch.clientX / window.innerWidth) * 2 - 1;
-      const y = -(touch.clientY / window.innerHeight) * 2 + 1;
-      window.butterflySystem.butterflies[0].target = [x * 0.45, y * 0.45, 0];
-    }
-  }, { passive: true });
-
-  // Transition to Flower Garden Page
-  seeBtn.addEventListener('click', () => {
-    intro.classList.add('hide');
-    started = true;
-    gardenStartTime = performance.now() / 1000;
-
-    // Try playing background music
-    music.play().catch(() => {
-      console.log('Autoplay audio paused by browser');
-    });
-  });
-
-  // Special Rose Garden Reveal
-  roseMsg.addEventListener('click', () => {
-    if (rosesStarted) return;
-    rosesStarted = true;
-    roseStartT = performance.now() / 1000;
-
-    ROSE_LAYOUT.forEach(l => roses.push(createFlower(l, true)));
-
-    roseMsg.innerText = "Blooming Realistic Roses for You 🌹💖";
-    setTimeout(() => { roseMsg.style.opacity = '0'; }, 5000);
-  });
-
-  // Audio Toggle Button
-  const musicToggle = document.getElementById('musicToggle');
-  const musicIcon = document.getElementById('musicIcon');
-  musicToggle.addEventListener('click', () => {
-    if (music.paused) {
-      music.play();
-      musicIcon.className = "fa-solid fa-music";
-    } else {
-      music.pause();
-      musicIcon.className = "fa-solid fa-volume-xmark";
-    }
-  });
-
-  requestAnimationFrame(animate);
-});
-</script>
+    <!-- Slide 2 -->
+    <div id="slide2" class="slide">
+        <div class="gif-frame">🌸</div>
+        <h1 class="royal-title">Pure Magic & Grace</h1>
+        <p class="sub-text">Varsha, tumhari smile aur tumhari baatein kisi ka bhi boring din khoobsurat bana sakti hain!</p>
+        <button onclick="next()" class="glow-btn">Aage Dekho 💕</button>
+    </div>
+
+    <!-- Slide 3 -->
+    <div id="slide3" class="slide">
+        <div class="gif-frame">✨</div>
+        <h1 class="royal-title">Our Bond is Special 😌</h1>
+        <p class="sub-text">Ek aisi dost jo har pal ko yaadgar bana de—tumhari vibe sabse alag aur sabse pyari hai.</p>
+        <button onclick="next()" class="glow-btn">Next Chapter ✨</button>
+    </div>
+
+    <!-- Slide 4: Interactive Hold -->
+    <div id="slide4" class="slide">
+        <div class="text-8xl mb-4 transition-all duration-300" id="pulseHeart">👑</div>
+        <h1 class="text-2xl font-bold text-amber-300">Varsha ke liye respect & care meter!</h1>
+        <p class="text-sm text-pink-200 mt-1">Button ko dabaye rakho...</p>
+        <div class="hold-container"><div id="holdProgress"></div></div>
+        <button id="holdBtn" class="glow-btn mt-6 select-none">PRESS & HOLD FOR CROWN 💖</button>
+    </div>
+
+    <!-- Slide 5 -->
+    <div id="slide5" class="slide">
+        <div class="gif-frame">💎</div>
+        <h1 class="royal-title">One in a Billion, Varsha!</h1>
+        <p class="sub-text">Tumhari kindness, tumhara style, aur tumhara dil—sach mein ek asli Queen jaisa hai.</p>
+        <button onclick="next()" class="glow-btn">Keep Going...</button>
+    </div>
+
+    <!-- Slide 6: Solar System -->
+    <div id="slide6" class="slide">
+        <div class="solar-system">
+            <div class="orbit orbit-1"><span class="planet">👑</span></div>
+            <div class="orbit orbit-2"><span class="planet">💖</span></div>
+            <div class="text-6xl">👸</div>
+        </div>
+        <h1 class="royal-title mt-8">Center of Good Vibes!</h1>
+        <p class="sub-text">Jahan Varsha hoti hai, wahan khushiyan apne aap aa jati hain.</p>
+        <button onclick="next()" class="glow-btn">Aage Badho 🚀</button>
+    </div>
+
+    <!-- Slide 7 -->
+    <div id="slide7" class="slide">
+        <div class="gif-frame">🦋</div>
+        <h1 class="royal-title">Always Keep Smiling! 🥺</h1>
+        <p class="sub-text">Kabhi bhi udaas mat hona, kyunki tumhari hasi sabse zyada khoobsurat lagti hai.</p>
+        <button onclick="next()" class="glow-btn">Ek Khaas Baat...</button>
+    </div>
+
+    <!-- Slide 8 -->
+    <div id="slide8" class="slide">
+        <div class="royal-card">
+            <h1 class="royal-title" style="font-size: 2.5rem;">My Brightest Star ⭐</h1>
+            <p class="sub-text mt-3">Lakho sitaron ki bheed mein bhi, ek dost ke roop mein tumhari jagah hamesha sabse upar rahegi.</p>
+        </div>
+        <button onclick="next()" class="glow-btn">Bas Ek Last Sawal ✨</button>
+    </div>
+
+    <!-- Slide 9: Friendly Romantic Proposal -->
+    <div id="slide9" class="slide">
+        <div class="gif-frame">💐</div>
+        <h1 class="royal-title">Hamesha Meri Best Friend Rahogi? ❤️</h1>
+        <p class="sub-text">...aur mujhe hamesha apni khushiyon mein shamil karogi? 👑</p>
+        <div id="btnContainer" class="flex flex-wrap justify-center gap-3">
+            <button onclick="next()" class="glow-btn">YES, ALWAYS! 😍</button>
+            <button id="noBtn" onclick="trapNo()" class="no-btn">Sochungi 🙈</button>
+        </div>
+    </div>
+
+    <!-- Slide 10: Final Royal Message from Siva Singh -->
+    <div id="slide10" class="slide">
+        <div class="royal-card">
+            <div class="text-5xl mb-2">👑💖👑</div>
+            <h1 class="royal-title" style="font-size: 2.6rem;">Happy Princess Day, Varsha!</h1>
+            <p class="sub-text mt-3">
+                Tum jaisi dost milna kisi blessing se kam nahi. Hamesha aise hi chamakti raho aur muskurati raho!
+            </p>
+            <p class="mt-4 text-amber-300 font-bold tracking-wider" style="font-family: 'Cinzel Decorative', cursive;">
+                — Forever Your Friend, Siva Singh ✨
+            </p>
+        </div>
+        <button onclick="playSurprise()" class="glow-btn animate-bounce">FINAL CELEBRATION 🎁</button>
+    </div>
+
+    <!-- Final Video / Celebration Layer -->
+    <div id="videoLayer">
+        <video id="vPlayer" playsinline src="video1.mp4"></video>
+        <div id="fallbackCelebration" style="display:none;" class="royal-card">
+            <div class="text-7xl mb-4">👸✨🎉</div>
+            <h1 class="royal-title">Stay Blessed Princess Varsha!</h1>
+            <p class="sub-text mt-2">Wishing you endless happiness, success, and smiles today & always!</p>
+            <p class="mt-4 text-amber-300 font-semibold">— With warm wishes, Siva Singh 💖</p>
+            <button onclick="location.reload()" class="glow-btn">Replay Magic 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        let step = 1;
+        const music = document.getElementById('bgMusic');
+
+        // Golden Sparkles Background
+        const starContainer = document.getElementById('stars-container');
+        for(let i=0; i<110; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random()*3.5 + 1.5 + 'px';
+            star.style.width = size; star.style.height = size;
+            star.style.left = Math.random()*100 + 'vw';
+            star.style.top = Math.random()*100 + 'vh';
+            star.style.setProperty('--d', (Math.random()*2+1)+'s');
+            starContainer.appendChild(star);
+        }
+
+        function startApp() { 
+            music.play().catch(() => {}); 
+            next(); 
+        }
+
+        function next() {
+            document.querySelectorAll('.slide').forEach(s => { 
+                s.classList.remove('active'); 
+                s.style.display='none'; 
+            });
+            step++;
+            const current = document.getElementById('slide'+step);
+            if(current) { 
+                current.style.display='flex'; 
+                setTimeout(() => current.classList.add('active'), 50); 
+            }
+        }
+
+        // Cute No Button Trap
+        function trapNo() {
+            const container = document.getElementById('btnContainer');
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.display = 'none';
+            
+            for(let i=0; i<4; i++) {
+                const newYes = document.createElement('button');
+                newYes.innerHTML = "PAKKA YES! 👑💖";
+                newYes.className = "glow-btn";
+                newYes.onclick = next;
+                container.appendChild(newYes);
+            }
+        }
+
+        // Press & Hold Crown Logic
+        let hVal = 0, hInt;
+        const hBtn = document.getElementById('holdBtn'), hProg = document.getElementById('holdProgress'), pHeart = document.getElementById('pulseHeart');
+        
+        const startH = (e) => { 
+            e.preventDefault(); 
+            pHeart.style.transform = 'scale(1.6) rotate(10deg)';
+            hInt = setInterval(() => { 
+                hVal += 2.5; 
+                hProg.style.width = hVal + '%'; 
+                if(hVal >= 100) { clearInterval(hInt); next(); } 
+            }, 35); 
+        };
+        const endH = () => { 
+            clearInterval(hInt); 
+            hVal = 0; 
+            hProg.style.width = '0%'; 
+            pHeart.style.transform = 'scale(1) rotate(0deg)'; 
+        };
+        
+        hBtn.onmousedown = hBtn.ontouchstart = startH; 
+        window.onmouseup = window.ontouchend = endH;
+
+        function playSurprise() { 
+            const layer = document.getElementById('videoLayer');
+            const video = document.getElementById('vPlayer');
+            const fallback = document.getElementById('fallbackCelebration');
+            layer.style.display = 'flex';
+            
+            video.play().then(() => {
+                music.pause();
+                video.onended = () => { location.reload(); };
+            }).catch(() => {
+                // Agar video1.mp4 folder mein nahi hai toh royal card dikhayega
+                video.style.display = 'none';
+                fallback.style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>
