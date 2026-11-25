@@ -2,714 +2,1299 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Varsha ❤️ From Siva</title>
-    <!-- Tailwind CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Penguin Holding a Rose</title>
+    <!-- Tailwind CSS for clean, modern, minimal UI -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Tone.js for gentle synthesized pop & chime sounds -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-    <!-- Google Fonts: Great Vibes, Playfair Display, and Poppins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <!-- Google Fonts for romantic script & soft rounded typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom Fonts & Romantic Animations */
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Quicksand', sans-serif;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 30%, #4a0e2e 0%, #240515 55%, #12020a 100%);
+            background: linear-gradient(135deg, #ffe4ec 0%, #f3e7ff 50%, #e0c3fc 100%);
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
         }
-
-        .font-cursive {
-            font-family: 'Great Vibes', cursive;
+        .font-romantic {
+            font-family: 'Dancing Script', cursive;
         }
-
-        .font-serif-romantic {
-            font-family: 'Playfair Display', serif;
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            touch-action: manipulation;
         }
-
-        /* Ambient Romantic Bokeh Lights */
-        .bokeh {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(28px);
-            opacity: 0.45;
-            pointer-events: none;
-            animation: floatBokeh 14s infinite ease-in-out alternate;
+        /* Glassmorphism UI controls */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.88);
+            box-shadow: 0 8px 32px rgba(214, 112, 156, 0.22);
         }
-
-        @keyframes floatBokeh {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(25px, -35px) scale(1.15); }
-            100% { transform: translate(-20px, 20px) scale(0.95); }
+        .intro-card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 60px rgba(225, 75, 138, 0.25), 0 0 40px rgba(255, 182, 213, 0.45);
+            animation: floatCard 3.5s ease-in-out infinite;
         }
-
-        /* Glassmorphism Card Glow */
-        .romantic-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 182, 193, 0.28);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65),
-                        0 0 40px rgba(244, 63, 94, 0.25),
-                        inset 0 0 20px rgba(255, 255, 255, 0.06);
-            animation: cardEntrance 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
-
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+        .btn-hover {
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        /* Heartbeat Pulse Animation */
-        .heartbeat {
-            display: inline-block;
-            animation: beat 1.3s infinite ease-in-out;
+        .btn-hover:hover {
+            transform: translateY(-2px) scale(1.04);
         }
-
-        @keyframes beat {
-            0%, 100% { transform: scale(1); }
-            25% { transform: scale(1.25); }
-            45% { transform: scale(1.05); }
-            65% { transform: scale(1.2); }
-        }
-
-        /* Floating Blast Text Reveal */
-        .blast-reveal-text {
-            position: fixed;
-            pointer-events: none;
-            z-index: 40;
-            transform: translate(-50%, -50%);
-            animation: blastTextAnim 2.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            text-shadow: 0 0 12px rgba(255, 77, 109, 0.95), 
-                         0 0 24px rgba(255, 182, 193, 0.8),
-                         0 2px 4px rgba(0, 0, 0, 0.6);
-            white-space: nowrap;
-        }
-
-        @keyframes blastTextAnim {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(0.4);
-            }
-            20% {
-                opacity: 1;
-                transform: translate(-50%, -65%) scale(1.15);
-            }
-            75% {
-                opacity: 1;
-                transform: translate(-50%, -105%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -135%) scale(0.95);
-            }
-        }
-
-        /* Shimmer Button Effect */
-        .btn-glow {
-            background: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
-            box-shadow: 0 10px 25px -5px rgba(244, 63, 94, 0.55), 0 0 15px rgba(251, 113, 133, 0.4);
-            transition: all 0.25s ease;
-        }
-
-        .btn-glow:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 15px 30px -5px rgba(244, 63, 94, 0.75), 0 0 22px rgba(251, 113, 133, 0.6);
-        }
-
-        .btn-glow:active {
-            transform: translateY(1px) scale(0.97);
-        }
-
-        /* Subtle Star Twinkle */
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 0.95; transform: scale(1.2); }
+        .btn-hover:active {
+            transform: translateY(0) scale(0.97);
         }
     </style>
 </head>
-<body class="relative w-screen h-screen flex items-center justify-center text-white">
+<body class="relative w-screen h-screen overflow-hidden">
 
-    <!-- Ambient Romantic Bokeh Lights Background -->
-    <div id="ambient-bg" class="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div class="bokeh w-64 h-64 bg-rose-600 top-10 left-8" style="animation-delay: 0s;"></div>
-        <div class="bokeh w-80 h-80 bg-pink-500 bottom-10 right-6" style="animation-delay: -4s;"></div>
-        <div class="bokeh w-56 h-56 bg-fuchsia-600 top-1/2 left-1/4" style="animation-delay: -7s;"></div>
-        <div class="bokeh w-72 h-72 bg-red-600 top-1/4 right-1/4" style="animation-delay: -2s;"></div>
-    </div>
+    <!-- Main Drawing Canvas -->
+    <canvas id="penguinCanvas"></canvas>
 
-    <!-- Interactive Balloon & Confetti Canvas -->
-    <canvas id="balloonCanvas" class="fixed inset-0 w-full h-full z-10 cursor-pointer"></canvas>
+    <!-- Romantic Intro Overlay for Aaru from Siva -->
+    <div id="introOverlay" class="fixed inset-0 z-30 flex items-center justify-center p-5 bg-pink-950/15 backdrop-blur-[3px] transition-all duration-700">
+        <div class="intro-card max-w-md w-full rounded-3xl p-7 sm:p-9 text-center relative overflow-hidden">
+            <!-- Soft decorative glow corner -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-pink-300/30 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-36 h-36 bg-purple-300/30 rounded-full blur-2xl pointer-events-none"></div>
 
-    <!-- Sound Toggle Control (Top Right) -->
-    <button id="soundToggle" aria-label="Toggle Pop Sound" 
-        class="fixed top-4 right-4 z-30 flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-pink-300/30 text-pink-100 text-xs sm:text-sm font-medium transition-all shadow-lg active:scale-95">
-        <span id="soundIcon" class="text-base">🔇</span>
-        <span id="soundLabel">Sound Off</span>
-    </button>
-
-    <!-- Main Center Glassmorphism Confession Card -->
-    <main class="relative z-20 w-[92%] max-w-lg mx-auto pointer-events-none">
-        <div class="romantic-card rounded-3xl p-6 sm:p-9 text-center pointer-events-auto relative overflow-hidden">
-            
-            <!-- Top Decorative Divider -->
-            <div class="flex items-center justify-center gap-3 mb-3 opacity-85">
-                <span class="h-[1px] w-10 sm:w-14 bg-gradient-to-r from-transparent to-pink-300"></span>
-                <span class="text-rose-400 text-lg heartbeat">❤️</span>
-                <span class="h-[1px] w-10 sm:w-14 bg-gradient-to-l from-transparent to-pink-300"></span>
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-pink-100 text-2xl mb-4 shadow-inner animate-bounce">
+                💌
             </div>
 
-            <!-- Greeting Header -->
-            <h1 class="font-cursive text-4xl sm:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-rose-200 to-amber-100 drop-shadow-sm mb-2 leading-tight">
-                Hi Varsha, I am Siva
+            <h1 class="font-romantic text-3xl sm:text-4xl font-bold text-pink-600 mb-3 leading-snug drop-shadow-sm">
+                Hi Aaru, I am Siva
             </h1>
 
-            <!-- Heartfelt Confession Message -->
-            <div class="space-y-4 mt-4 mb-6">
-                <p class="font-serif-romantic italic text-lg sm:text-2xl text-pink-50 leading-relaxed tracking-wide">
-                    “So main bas itna kehna chahunga — <br class="hidden sm:inline">
-                    <span class="text-rose-300 font-semibold not-italic">tum mujhe pasand ho</span>, and 
-                    <span class="text-rose-400 font-bold not-italic drop-shadow">I love you</span>.”
-                </p>
+            <p class="text-pink-950/90 text-lg sm:text-xl font-semibold leading-relaxed mb-6">
+                I made this penguin for you 🫣
+            </p>
 
-                <div class="w-16 h-[1px] bg-pink-300/30 mx-auto"></div>
+            <button id="startSurpriseBtn" class="btn-hover w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white font-bold text-base sm:text-lg shadow-lg shadow-pink-500/35 cursor-pointer flex items-center justify-center gap-2 mx-auto">
+                <span>Open Surprise</span>
+                <span>💖</span>
+            </button>
 
-                <p class="text-sm sm:text-base text-pink-100/90 font-light leading-relaxed px-2">
-                    Ab tumhe jo bhi reply karna hai, <span class="font-medium text-pink-200 underline decoration-rose-400/70 underline-offset-4">DM me bata do</span>. 💌
-                </p>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-5">
-                <button id="celebrateBtn" 
-                    class="btn-glow w-full sm:w-auto px-6 py-3 rounded-full text-white font-medium text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer">
-                    <span>Send More Balloons</span>
-                    <span class="text-lg">🎈❤️</span>
-                </button>
-            </div>
-
-            <!-- Subtle Interactive Hint -->
-            <p class="mt-4 text-[11px] sm:text-xs text-pink-200/60 tracking-wide">
-                ✨ Tap any floating balloon to pop it ✨
+            <p class="mt-4 text-xs text-pink-700/75 font-medium">
+                Starting automatically in <span id="introCountdown">5</span>s...
             </p>
         </div>
-    </main>
+    </div>
 
-    <!-- Floating Blast Text Overlay Container -->
-    <div id="blastTextContainer" class="fixed inset-0 pointer-events-none z-40 overflow-hidden"></div>
+    <!-- Top Status Pill -->
+    <div id="topStatusBar" class="fixed top-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none opacity-0 transition-opacity duration-500">
+        <div class="glass-panel px-4 sm:px-5 py-1.5 sm:py-2 rounded-full flex items-center gap-2.5 text-pink-900 font-semibold text-xs sm:text-sm shadow-sm">
+            <span id="statusDot" class="w-2.5 h-2.5 rounded-full bg-pink-500 animate-pulse"></span>
+            <span id="statusText">Sketching romantic scenery...</span>
+        </div>
+    </div>
+
+    <!-- Bottom Floating Control Bar -->
+    <div id="bottomControlBar" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-10 w-max max-w-[95vw] opacity-0 transition-opacity duration-500">
+        <div class="glass-panel px-3.5 sm:px-4 py-2 rounded-full flex items-center gap-2 sm:gap-3">
+            <!-- Replay All Button -->
+            <button id="replayBtn" class="btn-hover flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-pink-500 text-white font-semibold text-xs sm:text-sm shadow-md hover:bg-pink-600 cursor-pointer" title="Replay from Intro">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>Replay All</span>
+            </button>
+
+            <!-- Play/Pause Toggle -->
+            <button id="playPauseBtn" class="btn-hover flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/85 text-pink-900 font-semibold text-xs sm:text-sm cursor-pointer" title="Pause or Resume">
+                <svg id="pauseIcon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                </svg>
+                <svg id="playIcon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span id="playPauseText">Pause</span>
+            </button>
+
+            <!-- Divider -->
+            <div class="h-5 w-[1px] bg-pink-300/60 mx-0.5"></div>
+
+            <!-- Speed Controls -->
+            <div class="flex items-center gap-1 bg-pink-100/75 p-1 rounded-full">
+                <button data-speed="0.75" class="speed-btn px-2.5 py-1 rounded-full text-xs font-bold text-pink-800 hover:bg-white/70 transition cursor-pointer">0.75x</button>
+                <button data-speed="1" class="speed-btn px-2.5 py-1 rounded-full text-xs font-bold bg-white text-pink-600 shadow-sm transition cursor-pointer">1x</button>
+                <button data-speed="1.5" class="speed-btn px-2.5 py-1 rounded-full text-xs font-bold text-pink-800 hover:bg-white/70 transition cursor-pointer">1.5x</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         /**
-         * Romantic Balloon & Confetti Engine for Varsha ❤️
-         * Handles floating glossy balloons with "I Love You ❤️ Varsha",
-         * automatic random pops, tap-to-pop interaction, particle bursts,
-         * and gentle synthesized audio feedback.
+         * ROMANTIC PENGUIN FOR AARU FROM SIVA
+         * Features:
+         * 1. Personalized dreamy intro card ("Hi Aaru, I am Siva. I made this penguin for you 🫣")
+         * 2. Progressive step-by-step drawing of a cute penguin holding a blooming red rose
+         * 3. Floating pastel & red heart/round balloons that pop automatically & on tap
+         *    to reveal glowing "I love you Aaru ❤️" messages and confetti bursts!
          */
-        (function () {
-            const canvas = document.getElementById('balloonCanvas');
-            const ctx = canvas.getContext('2d');
-            const blastTextContainer = document.getElementById('blastTextContainer');
-            const celebrateBtn = document.getElementById('celebrateBtn');
-            const soundToggle = document.getElementById('soundToggle');
-            const soundIcon = document.getElementById('soundIcon');
-            const soundLabel = document.getElementById('soundLabel');
-            const ambientBg = document.getElementById('ambient-bg');
 
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-            let dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const canvas = document.getElementById('penguinCanvas');
+        const ctx = canvas.getContext('2d');
 
-            // Sound state using Tone.js
-            let soundEnabled = false;
-            let popSynth = null;
-            let chimeSynth = null;
+        // UI Elements
+        const introOverlay = document.getElementById('introOverlay');
+        const startSurpriseBtn = document.getElementById('startSurpriseBtn');
+        const introCountdownEl = document.getElementById('introCountdown');
+        const topStatusBar = document.getElementById('topStatusBar');
+        const bottomControlBar = document.getElementById('bottomControlBar');
+        const statusText = document.getElementById('statusText');
+        const statusDot = document.getElementById('statusDot');
+        const replayBtn = document.getElementById('replayBtn');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const playIcon = document.getElementById('playIcon');
+        const playPauseText = document.getElementById('playPauseText');
+        const speedBtns = document.querySelectorAll('.speed-btn');
 
-            // Entities arrays
-            let balloons = [];
-            let particles = [];
-            let ambientHearts = [];
+        // Animation State
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-            // Romantic Color Palettes for Glossy Balloons
-            const BALLOON_PALETTES = [
-                { main: '#f43f5e', light: '#fda4af', dark: '#9f1239' }, // Classic Rose Red
-                { main: '#ec4899', light: '#f9a8d4', dark: '#9d174d' }, // Romantic Pink
-                { main: '#e11d48', light: '#fecdd3', dark: '#881337' }, // Deep Crimson
-                { main: '#fb7185', light: '#ffe4e6', dark: '#be123c' }, // Soft Coral Pink
-                { main: '#d946ef', light: '#f5d0fe', dark: '#86198f' }, // Magenta Glow
-                { main: '#f59e0b', light: '#fde68a', dark: '#b45309' }  // Rose-Gold Accent
-            ];
+        let isIntroActive = true;
+        let introTimer = 5.0; // Auto-starts after 5 seconds if user doesn't click
+        let isPaused = false;
+        let speedMultiplier = 1;
+        let elapsedTime = 0; // Progress in seconds for the drawing sequence
+        let lastFrameTime = performance.now();
+        let idleTime = 0; // Continuous timer for breathing, blinking & floating elements
 
-            // Resize Handler for High-DPI Crisp Canvas
-            function resizeCanvas() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                dpr = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.width = width * dpr;
-                canvas.height = height * dpr;
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        // Ambient Background Particles (Sparkles, Twinkling Stars, Mini Hearts)
+        let bgParticles = [];
+        // Floating Love Hearts emitted once the flower is revealed
+        let floatingHearts = [];
+        // Romantic Background Balloons that pop with "I love you Aaru"
+        let balloons = [];
+        // Pop burst particles (sparkles, confetti, mini hearts)
+        let popBursts = [];
+        // Floating glowing "I love you Aaru ❤️" messages left behind when balloons pop
+        let loveMessages = [];
+
+        let balloonSpawnTimer = 0;
+        let autoPopTimer = 0;
+
+        // Drawing Timeline Stages (in seconds)
+        const STAGES = {
+            GROUND_SHADOW: { start: 0.2, duration: 1.0, label: "Preparing snowy twilight for Aaru..." },
+            FEET:          { start: 1.0, duration: 1.2, label: "Drawing cute little feet..." },
+            BODY_OUTLINE:  { start: 2.0, duration: 1.8, label: "Sketching penguin silhouette..." },
+            BODY_FILL:     { start: 3.5, duration: 1.0, label: "Coloring soft charcoal coat..." },
+            BELLY_OUTLINE: { start: 4.3, duration: 1.4, label: "Shaping cozy heart belly..." },
+            BELLY_FILL:    { start: 5.4, duration: 0.9, label: "Filling creamy belly & face..." },
+            FACE_FEATURES: { start: 6.2, duration: 1.6, label: "Adding sparkling eyes & blush..." },
+            LEFT_FLIPPER:  { start: 7.6, duration: 1.0, label: "Drawing left flipper..." },
+            FLOWER_STEM:   { start: 8.4, duration: 1.3, label: "Growing a romantic rose stem..." },
+            FLOWER_BLOOM:  { start: 9.5, duration: 1.6, label: "Blooming red rose petals..." },
+            RIGHT_FLIPPER: { start: 10.8, duration: 1.1, label: "Holding the rose for Aaru..." },
+            FINISHING:     { start: 11.8, duration: 1.2, label: "Sending love from Siva..." },
+            COMPLETE:      { start: 13.0, duration: Infinity, label: "For Aaru, with love from Siva 💖" }
+        };
+
+        // Balloon color palettes (romantic reds, pinks, rose gold, lavender)
+        const BALLOON_PALETTES = [
+            { main: '#ff4d79', highlight: '#ff9ebb', string: '#e63965' },
+            { main: '#ff75a0', highlight: '#ffc2d6', string: '#d9537f' },
+            { main: '#e63956', highlight: '#ff8fa3', string: '#b8253e' },
+            { main: '#c77dff', highlight: '#e9c4ff', string: '#9d4edd' },
+            { main: '#ff8fab', highlight: '#ffe5ec', string: '#fb6f92' }
+        ];
+
+        /**
+         * Utility: Clamps a value between min and max
+         */
+        function clamp(val, min, max) {
+            return Math.max(min, Math.min(max, val));
+        }
+
+        /**
+         * Utility: Calculates normalized progress [0..1] for a specific timeline stage
+         */
+        function getProgress(stage) {
+            const raw = (elapsedTime - stage.start) / stage.duration;
+            return clamp(raw, 0, 1);
+        }
+
+        /**
+         * Utility: Smooth ease-out cubic interpolation
+         */
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        /**
+         * Utility: Smooth ease-in-out sine interpolation
+         */
+        function easeInOutSine(t) {
+            return -(Math.cos(Math.PI * t) - 1) / 2;
+        }
+
+        /**
+         * Transitions smoothly from the intro card to the live penguin drawing
+         */
+        function startExperience() {
+            if (!isIntroActive) return;
+            isIntroActive = false;
+            elapsedTime = 0;
+            floatingHearts = [];
+
+            introOverlay.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+            topStatusBar.classList.remove('opacity-0');
+            bottomControlBar.classList.remove('opacity-0');
+        }
+
+        /**
+         * Resets back to the intro screen ("Replay All")
+         */
+        function resetToIntro() {
+            isIntroActive = true;
+            introTimer = 5.0;
+            introCountdownEl.textContent = '5';
+            elapsedTime = 0;
+            floatingHearts = [];
+            popBursts = [];
+            loveMessages = [];
+
+            if (isPaused) {
+                isPaused = false;
+                pauseIcon.classList.remove('hidden');
+                playIcon.classList.add('hidden');
+                playPauseText.textContent = 'Pause';
             }
 
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
+            introOverlay.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+            topStatusBar.classList.add('opacity-0');
+            bottomControlBar.classList.add('opacity-0');
+        }
 
-            // Generate subtle twinkling stars in the background
-            function createTwinklingStars() {
-                const starCount = width < 600 ? 25 : 45;
-                for (let i = 0; i < starCount; i++) {
-                    const star = document.createElement('div');
-                    const size = Math.random() * 2.5 + 1;
-                    star.style.position = 'absolute';
-                    star.style.width = `${size}px`;
-                    star.style.height = `${size}px`;
-                    star.style.borderRadius = '50%';
-                    star.style.backgroundColor = '#ffe4e6';
-                    star.style.left = `${Math.random() * 100}%`;
-                    star.style.top = `${Math.random() * 100}%`;
-                    star.style.boxShadow = '0 0 6px #fda4af';
-                    star.style.animation = `twinkle ${2 + Math.random() * 4}s infinite ease-in-out`;
-                    star.style.animationDelay = `${Math.random() * 5}s`;
-                    ambientBg.appendChild(star);
-                }
-            }
-            createTwinklingStars();
+        startSurpriseBtn.addEventListener('click', startExperience);
 
-            // Initialize Tone.js Synthesizers on User Interaction
-            async function initAudio() {
-                if (!popSynth && typeof Tone !== 'undefined') {
-                    await Tone.start();
-                    // Soft bubble/balloon pop sound
-                    popSynth = new Tone.MembraneSynth({
-                        pitchDecay: 0.03,
-                        octaves: 3,
-                        oscillator: { type: 'sine' },
-                        envelope: { attack: 0.002, decay: 0.14, sustain: 0, release: 0.05 }
-                    }).toDestination();
-                    popSynth.volume.value = -10;
-
-                    // Gentle romantic sparkle chime
-                    chimeSynth = new Tone.PolySynth(Tone.Synth, {
-                        oscillator: { type: 'triangle' },
-                        envelope: { attack: 0.01, decay: 0.35, sustain: 0, release: 0.2 }
-                    }).toDestination();
-                    chimeSynth.volume.value = -18;
-                }
+        /**
+         * Initialize ambient background particles & initial balloons
+         */
+        function initParticles() {
+            bgParticles = [];
+            const count = Math.min(60, Math.floor((width * height) / 16000));
+            for (let i = 0; i < count; i++) {
+                bgParticles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3.2 + 1.4,
+                    speedY: Math.random() * 0.35 + 0.12,
+                    phase: Math.random() * Math.PI * 2,
+                    alpha: Math.random() * 0.55 + 0.25,
+                    isHeart: Math.random() > 0.72
+                });
             }
 
-            function playPopSound() {
-                if (!soundEnabled || !popSynth) return;
-                try {
-                    const notes = ['C5', 'E5', 'G5', 'A5', 'B5'];
-                    const randomNote = notes[Math.floor(Math.random() * notes.length)];
-                    popSynth.triggerAttackRelease('G3', '32n');
-                    if (chimeSynth) {
-                        chimeSynth.triggerAttackRelease(randomNote, '16n', '+0.02');
-                    }
-                } catch (e) {
-                    // Fail silently if audio context isn't ready
-                }
+            // Pre-populate several floating balloons across the background
+            balloons = [];
+            const initialBalloons = width < 640 ? 6 : 9;
+            for (let i = 0; i < initialBalloons; i++) {
+                spawnBalloon(Math.random() * height * 0.85 + height * 0.1);
+            }
+        }
+
+        /**
+         * Spawns a new romantic balloon at the bottom (or specified Y)
+         */
+        function spawnBalloon(customY = null) {
+            const palette = BALLOON_PALETTES[Math.floor(Math.random() * BALLOON_PALETTES.length)];
+            const radius = (width < 640 ? 22 : 28) + Math.random() * 10;
+
+            // Keep balloons nicely distributed across left & right sides so center penguin remains super clear,
+            // while still allowing some to drift gently across upper sky
+            let x;
+            if (Math.random() < 0.72) {
+                // Left or right side zones
+                const isLeft = Math.random() < 0.5;
+                x = isLeft
+                    ? radius + Math.random() * (width * 0.28)
+                    : width * 0.72 + Math.random() * (width * 0.28 - radius);
+            } else {
+                x = radius + Math.random() * (width - radius * 2);
             }
 
-            soundToggle.addEventListener('click', async () => {
-                await initAudio();
-                soundEnabled = !soundEnabled;
-                if (soundEnabled) {
-                    soundIcon.textContent = '🔊';
-                    soundLabel.textContent = 'Sound On';
-                    playPopSound();
-                } else {
-                    soundIcon.textContent = '🔇';
-                    soundLabel.textContent = 'Sound Off';
-                }
+            balloons.push({
+                x: clamp(x, radius + 10, width - radius - 10),
+                y: customY !== null ? customY : height + radius * 2.2,
+                radius: radius,
+                speedY: 32 + Math.random() * 24,
+                wobbleSpeed: 1.4 + Math.random() * 1.1,
+                wobbleAmp: 12 + Math.random() * 14,
+                phase: Math.random() * Math.PI * 2,
+                isHeartShape: Math.random() > 0.38,
+                palette: palette,
+                targetPopY: height * (0.14 + Math.random() * 0.44),
+                willAutoPop: Math.random() < 0.78,
+                scale: 1
+            });
+        }
+
+        /**
+         * Triggers a romantic balloon pop at balloon index `idx`
+         * Creates sparkle/heart confetti + reveals glowing "I love you Aaru ❤️" text!
+         */
+        function popBalloon(idx) {
+            const b = balloons[idx];
+            if (!b) return;
+
+            // 1. Create burst of hearts & sparkles
+            const particleCount = 18;
+            for (let i = 0; i < particleCount; i++) {
+                const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.3;
+                const speed = 55 + Math.random() * 110;
+                popBursts.push({
+                    x: b.x,
+                    y: b.y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - 20,
+                    size: 5 + Math.random() * 7,
+                    alpha: 1,
+                    isHeart: i % 2 === 0,
+                    color: i % 3 === 0 ? '#ffffff' : b.palette.main,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 6
+                });
+            }
+
+            // 2. Spawn floating romantic "I love you Aaru ❤️" message at the pop position
+            // Clamp X so text never gets cut off at screen edges
+            const safeX = clamp(b.x, 115, width - 115);
+            const safeY = clamp(b.y, 75, height - 110);
+
+            loveMessages.push({
+                x: safeX,
+                y: safeY,
+                vy: -24,
+                alpha: 1,
+                scale: 0.4,
+                life: 0,
+                maxLife: 2.8,
+                text: "I love you Aaru ❤️",
+                color: b.palette.main
             });
 
-            // Ambient Background Floating Mini Hearts
-            class AmbientHeart {
-                constructor() {
-                    this.reset(true);
-                }
-                reset(initial = false) {
-                    this.x = Math.random() * width;
-                    this.y = initial ? Math.random() * height : height + 20;
-                    this.size = Math.random() * 8 + 5;
-                    this.speedY = Math.random() * 0.55 + 0.25;
-                    this.swaySpeed = Math.random() * 0.02 + 0.01;
-                    this.swayOffset = Math.random() * Math.PI * 2;
-                    this.opacity = Math.random() * 0.25 + 0.08;
-                }
-                update() {
-                    this.y -= this.speedY;
-                    this.swayOffset += this.swaySpeed;
-                    this.x += Math.sin(this.swayOffset) * 0.4;
-                    if (this.y < -30) this.reset(false);
-                }
-                draw(ctx) {
-                    ctx.save();
-                    ctx.globalAlpha = this.opacity;
-                    ctx.fillStyle = '#fda4af';
-                    drawHeartPath(ctx, this.x, this.y, this.size);
-                    ctx.fill();
-                    ctx.restore();
+            // Remove popped balloon
+            balloons.splice(idx, 1);
+        }
+
+        /**
+         * Resize canvas responsively while preserving crisp Retina/HiDPI rendering
+         */
+        function handleResize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            if (bgParticles.length === 0) {
+                initParticles();
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        /**
+         * Helper: Draws a smooth heart shape centered at (x, y)
+         */
+        function drawHeartShape(ctx, x, y, size) {
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(x, y + topCurveHeight);
+            ctx.bezierCurveTo(
+                x, y,
+                x - size / 2, y,
+                x - size / 2, y + topCurveHeight
+            );
+            ctx.bezierCurveTo(
+                x - size / 2, y + (size + topCurveHeight) / 2,
+                x, y + (size + topCurveHeight) / 1.35,
+                x, y + size
+            );
+            ctx.bezierCurveTo(
+                x, y + (size + topCurveHeight) / 1.35,
+                x + size / 2, y + (size + topCurveHeight) / 2,
+                x + size / 2, y + topCurveHeight
+            );
+            ctx.bezierCurveTo(
+                x + size / 2, y,
+                x, y,
+                x, y + topCurveHeight
+            );
+            ctx.closePath();
+        }
+
+        /**
+         * Updates and renders floating background balloons, pop bursts, and "I love you Aaru ❤️" messages
+         */
+        function updateAndDrawBalloons(dt) {
+            // Spawn new balloons periodically
+            if (!isPaused) {
+                balloonSpawnTimer += dt * speedMultiplier;
+                const maxBalloons = width < 640 ? 7 : 11;
+                if (balloonSpawnTimer > 1.35 && balloons.length < maxBalloons) {
+                    balloonSpawnTimer = 0;
+                    spawnBalloon();
                 }
             }
 
-            // Helper: Draw a clean Heart Shape
-            function drawHeartPath(ctx, x, y, size) {
+            // Update & render each balloon
+            for (let i = balloons.length - 1; i >= 0; i--) {
+                const b = balloons[i];
+                if (!isPaused) {
+                    b.y -= b.speedY * dt * speedMultiplier;
+                    b.x += Math.cos(idleTime * b.wobbleSpeed + b.phase) * b.wobbleAmp * dt;
+                }
+
+                // Auto-pop when reaching target height (keeps at most 3 simultaneous messages so screen stays clean)
+                if (!isPaused && b.willAutoPop && b.y <= b.targetPopY && loveMessages.length < 3) {
+                    popBalloon(i);
+                    continue;
+                }
+
+                // Remove if floated off top of screen
+                if (b.y < -b.radius * 3) {
+                    balloons.splice(i, 1);
+                    continue;
+                }
+
+                // Draw Balloon String (wavy)
+                ctx.save();
+                ctx.strokeStyle = b.palette.string;
+                ctx.lineWidth = 1.5;
+                ctx.globalAlpha = 0.65;
                 ctx.beginPath();
-                const topCurveHeight = size * 0.3;
-                ctx.moveTo(x, y + topCurveHeight);
-                // Left lobe
-                ctx.bezierCurveTo(
-                    x, y, 
-                    x - size, y, 
-                    x - size, y + topCurveHeight
-                );
-                // Bottom left
-                ctx.bezierCurveTo(
-                    x - size, y + (size + topCurveHeight) / 2, 
-                    x, y + (size + topCurveHeight) * 0.85, 
-                    x, y + size
-                );
-                // Bottom right
-                ctx.bezierCurveTo(
-                    x, y + (size + topCurveHeight) * 0.85, 
-                    x + size, y + (size + topCurveHeight) / 2, 
-                    x + size, y + topCurveHeight
-                );
-                // Right lobe
-                ctx.bezierCurveTo(
-                    x + size, y, 
-                    x, y, 
-                    x, y + topCurveHeight
-                );
-                ctx.closePath();
-            }
+                const startY = b.isHeartShape ? b.y + b.radius * 0.95 : b.y + b.radius * 1.15;
+                ctx.moveTo(b.x, startY);
+                const sway = Math.sin(idleTime * 3 + b.phase) * 7;
+                ctx.quadraticCurveTo(b.x + sway, startY + 22, b.x - sway * 0.5, startY + 45);
+                ctx.stroke();
+                ctx.restore();
 
-            // Balloon Class
-            class Balloon {
-                constructor(customX = null, customY = null) {
-                    const isMobile = width < 600;
-                    // Large enough to clearly read "I Love You ❤️ Varsha" inside
-                    this.radiusX = isMobile ? (46 + Math.random() * 12) : (56 + Math.random() * 16);
-                    this.radiusY = this.radiusX * 1.18;
-                    this.x = customX !== null ? customX : (this.radiusX + 15 + Math.random() * (width - (this.radiusX + 15) * 2));
-                    this.y = customY !== null ? customY : (height + this.radiusY + Math.random() * 80);
-                    
-                    this.speedY = isMobile ? (1.2 + Math.random() * 1.0) : (1.4 + Math.random() * 1.2);
-                    this.swayAmplitude = 18 + Math.random() * 22;
-                    this.swayFrequency = 0.015 + Math.random() * 0.015;
-                    this.phase = Math.random() * Math.PI * 2;
-                    this.baseX = this.x;
+                // Draw Balloon Body
+                ctx.save();
+                ctx.translate(b.x, b.y);
+                const tilt = Math.sin(idleTime * 2 + b.phase) * 0.08;
+                ctx.rotate(tilt);
 
-                    // Target height where balloon will automatically pop
-                    this.autoPopY = height * (0.12 + Math.random() * 0.58);
-                    this.palette = BALLOON_PALETTES[Math.floor(Math.random() * BALLOON_PALETTES.length)];
-                    this.isHeartShape = Math.random() < 0.35; // 35% heart-shaped balloons, 65% classic oval
-                    this.stringWave = Math.random() * Math.PI * 2;
-                    this.popped = false;
-                }
+                const grad = ctx.createRadialGradient(-b.radius * 0.3, -b.radius * 0.3, b.radius * 0.1, 0, 0, b.radius * 1.25);
+                grad.addColorStop(0, b.palette.highlight);
+                grad.addColorStop(0.45, b.palette.main);
+                grad.addColorStop(1, b.palette.string);
 
-                update() {
-                    this.y -= this.speedY;
-                    this.phase += this.swayFrequency;
-                    this.stringWave += 0.06;
-                    this.x = this.baseX + Math.sin(this.phase) * this.swayAmplitude;
+                ctx.fillStyle = grad;
+                ctx.shadowColor = 'rgba(255, 105, 155, 0.22)';
+                ctx.shadowBlur = 10;
 
-                    // Keep within screen horizontal edges
-                    if (this.x < this.radiusX + 8) this.x = this.radiusX + 8;
-                    if (this.x > width - this.radiusX - 8) this.x = width - this.radiusX - 8;
-
-                    // Auto-blast when reaching its target sky altitude
-                    if (this.y <= this.autoPopY && !this.popped) {
-                        this.pop();
-                    }
-                }
-
-                draw(ctx) {
-                    ctx.save();
-
-                    // 1. Draw Flowing Curly Ribbon String
-                    const knotY = this.isHeartShape ? (this.y + this.radiusY * 0.85) : (this.y + this.radiusY);
+                if (b.isHeartShape) {
+                    const hSize = b.radius * 2.05;
+                    drawHeartShape(ctx, 0, -hSize * 0.48, hSize);
+                    ctx.fill();
+                } else {
                     ctx.beginPath();
-                    ctx.moveTo(this.x, knotY);
-                    const ctrlX1 = this.x + Math.sin(this.stringWave) * 12;
-                    const ctrlY1 = knotY + 25;
-                    const ctrlX2 = this.x - Math.sin(this.stringWave) * 12;
-                    const ctrlY2 = knotY + 50;
-                    const endX = this.x + Math.sin(this.stringWave * 0.7) * 8;
-                    const endY = knotY + 75;
-                    ctx.bezierCurveTo(ctrlX1, ctrlY1, ctrlX2, ctrlY2, endX, endY);
-                    ctx.strokeStyle = 'rgba(255, 228, 230, 0.55)';
-                    ctx.lineWidth = 1.5;
-                    ctx.stroke();
+                    ctx.ellipse(0, 0, b.radius * 0.9, b.radius * 1.12, 0, 0, Math.PI * 2);
+                    ctx.fill();
 
-                    // 2. Draw Balloon Knot
-                    ctx.fillStyle = this.palette.dark;
+                    // Balloon tie knot
                     ctx.beginPath();
-                    ctx.moveTo(this.x, knotY - 2);
-                    ctx.lineTo(this.x - 6, knotY + 6);
-                    ctx.lineTo(this.x + 6, knotY + 6);
+                    ctx.moveTo(-4, b.radius * 1.12);
+                    ctx.lineTo(4, b.radius * 1.12);
+                    ctx.lineTo(0, b.radius * 1.12 + 5);
                     ctx.closePath();
                     ctx.fill();
+                }
 
-                    // 3. Draw Balloon Body with Glossy Radial Gradient
-                    const grad = ctx.createRadialGradient(
-                        this.x - this.radiusX * 0.3,
-                        this.y - this.radiusY * 0.3,
-                        this.radiusX * 0.1,
-                        this.x,
-                        this.y,
-                        this.radiusY * 1.15
-                    );
-                    grad.addColorStop(0, this.palette.light);
-                    grad.addColorStop(0.35, this.palette.main);
-                    grad.addColorStop(1, this.palette.dark);
+                // Glossy white reflection highlight
+                ctx.shadowBlur = 0;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.52)';
+                ctx.beginPath();
+                ctx.ellipse(-b.radius * 0.32, -b.radius * 0.32, b.radius * 0.18, b.radius * 0.32, -0.45, 0, Math.PI * 2);
+                ctx.fill();
 
-                    ctx.fillStyle = grad;
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
-                    ctx.shadowBlur = 14;
-                    ctx.shadowOffsetY = 6;
+                ctx.restore();
+            }
 
-                    if (this.isHeartShape) {
-                        const heartScale = this.radiusX * 1.18;
-                        drawHeartPath(ctx, this.x, this.y - heartScale * 0.45, heartScale * 1.3);
-                        ctx.fill();
-                    } else {
-                        ctx.beginPath();
-                        ctx.ellipse(this.x, this.y, this.radiusX, this.radiusY, 0, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
+            // Update & render balloon pop burst particles
+            for (let i = popBursts.length - 1; i >= 0; i--) {
+                const p = popBursts[i];
+                if (!isPaused) {
+                    p.x += p.vx * dt;
+                    p.y += p.vy * dt;
+                    p.vy += 90 * dt; // subtle gravity
+                    p.alpha -= dt * 1.35;
+                    p.rotation += p.rotSpeed * dt;
+                }
 
-                    // Reset shadow for crisp text & specular highlight
-                    ctx.shadowColor = 'transparent';
-                    ctx.shadowBlur = 0;
-                    ctx.shadowOffsetY = 0;
+                if (p.alpha <= 0) {
+                    popBursts.splice(i, 1);
+                    continue;
+                }
 
-                    // 4. Glossy Specular Highlight Reflection
-                    ctx.save();
-                    ctx.translate(this.x - this.radiusX * 0.42, this.y - this.radiusY * 0.35);
-                    ctx.rotate(-Math.PI / 5);
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, this.radiusX * 0.14, this.radiusY * 0.26, 0, 0, Math.PI * 2);
+                ctx.save();
+                ctx.globalAlpha = clamp(p.alpha, 0, 1);
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation);
+                ctx.fillStyle = p.color;
+
+                if (p.isHeart) {
+                    drawHeartShape(ctx, 0, -p.size * 0.5, p.size * 1.4);
                     ctx.fill();
-                    ctx.restore();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, p.size * 0.45, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
 
-                    // 5. Render "I Love You ❤️ Varsha" Inside the Balloon
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
+            // Update & render glowing "I love you Aaru ❤️" messages
+            for (let i = loveMessages.length - 1; i >= 0; i--) {
+                const m = loveMessages[i];
+                if (!isPaused) {
+                    m.life += dt;
+                    m.y += m.vy * dt;
+                    // Smooth pop-in scale & fade-out near end of life
+                    const progress = m.life / m.maxLife;
+                    if (progress < 0.18) {
+                        m.scale = 0.4 + 0.65 * easeOutCubic(progress / 0.18);
+                        m.alpha = clamp(progress / 0.15, 0, 1);
+                    } else if (progress > 0.72) {
+                        m.scale = 1.05;
+                        m.alpha = clamp(1 - (progress - 0.72) / 0.28, 0, 1);
+                    } else {
+                        m.scale = 1.05;
+                        m.alpha = 1;
+                    }
+                }
+
+                if (m.life >= m.maxLife) {
+                    loveMessages.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.translate(m.x, m.y);
+                ctx.scale(m.scale, m.scale);
+                ctx.globalAlpha = clamp(m.alpha, 0, 1);
+
+                const fontSize = width < 640 ? 22 : 28;
+                ctx.font = `700 ${fontSize}px 'Dancing Script', cursive`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                // Soft glowing white halo behind romantic cursive text for crystal readability
+                ctx.shadowColor = 'rgba(255, 255, 255, 0.95)';
+                ctx.shadowBlur = 12;
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.92)';
+                ctx.strokeText(m.text, 0, 0);
+
+                // Rich romantic rose-crimson fill
+                ctx.shadowColor = 'rgba(230, 28, 80, 0.35)';
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = '#d91656';
+                ctx.fillText(m.text, 0, 0);
+
+                ctx.restore();
+            }
+        }
+
+        /**
+         * Helper: Progressive Path Drawer using lineDash trickery
+         * Smoothly animates any closed or open path from 0% to 100% length
+         */
+        function strokePathProgress(ctx, pathFn, progress, totalLength, strokeStyle, lineWidth) {
+            if (progress <= 0) return;
+            ctx.save();
+            ctx.beginPath();
+            pathFn(ctx);
+            ctx.strokeStyle = strokeStyle;
+            ctx.lineWidth = lineWidth;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            if (progress < 1) {
+                const drawLen = totalLength * easeInOutSine(progress);
+                ctx.setLineDash([drawLen, totalLength * 2]);
+                ctx.lineDashOffset = 0;
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        /**
+         * Helper: Fills a path with smooth alpha fade-in
+         */
+        function fillPathProgress(ctx, pathFn, progress, fillStyle) {
+            if (progress <= 0) return;
+            ctx.save();
+            ctx.globalAlpha *= easeOutCubic(progress);
+            ctx.beginPath();
+            pathFn(ctx);
+            ctx.fillStyle = fillStyle;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        /**
+         * Renders the romantic pastel twilight sky, glowing aura, snowy hill, and twinkling particles
+         */
+        function drawBackground(dt) {
+            // Soft pastel romantic sky gradient
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+            skyGrad.addColorStop(0, '#ffd6e7');   // Soft rose pink
+            skyGrad.addColorStop(0.5, '#f4e3ff'); // Dreamy lavender
+            skyGrad.addColorStop(1, '#e8d8ff');   // Twilight lilac
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, width, height);
+
+            // Soft glowing romantic aura behind the penguin
+            const centerX = width * 0.5;
+            const centerY = height * 0.52;
+            const auraRadius = Math.min(width, height) * 0.45;
+            const auraGrad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, auraRadius);
+            auraGrad.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
+            auraGrad.addColorStop(0.55, 'rgba(255, 228, 240, 0.45)');
+            auraGrad.addColorStop(1, 'rgba(255, 228, 240, 0)');
+            ctx.fillStyle = auraGrad;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, auraRadius, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Gentle snowy hill horizon at bottom
+            const hillGrad = ctx.createLinearGradient(0, height * 0.72, 0, height);
+            hillGrad.addColorStop(0, 'rgba(255, 250, 253, 0.85)');
+            hillGrad.addColorStop(1, 'rgba(248, 232, 248, 0.98)');
+            ctx.fillStyle = hillGrad;
+            ctx.beginPath();
+            ctx.moveTo(0, height * 0.82);
+            ctx.quadraticCurveTo(width * 0.5, height * 0.73, width, height * 0.82);
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fill();
+
+            // Update & draw ambient floating bokeh/hearts
+            bgParticles.forEach(p => {
+                if (!isPaused) {
+                    p.y -= p.speedY * (dt * 60) * 0.5;
+                    p.x += Math.sin(idleTime * 1.2 + p.phase) * 0.25;
+                    if (p.y < -20) {
+                        p.y = height + 20;
+                        p.x = Math.random() * width;
+                    }
+                }
+
+                const twinkle = 0.75 + 0.25 * Math.sin(idleTime * 2.5 + p.phase);
+                ctx.save();
+                ctx.globalAlpha = p.alpha * twinkle;
+
+                if (p.isHeart) {
+                    ctx.fillStyle = '#ff85b3';
+                    drawHeartShape(ctx, p.x, p.y, p.radius * 3.2);
+                    ctx.fill();
+                } else {
                     ctx.fillStyle = '#ffffff';
-                    ctx.shadowColor = 'rgba(80, 0, 20, 0.75)';
-                    ctx.shadowBlur = 4;
-
-                    const baseFontSize = Math.max(11, Math.round(this.radiusX * 0.24));
-                    const textCenterY = this.isHeartShape ? (this.y + this.radiusY * 0.05) : this.y;
-
-                    ctx.font = `600 ${baseFontSize}px Poppins, sans-serif`;
-                    ctx.fillText('I Love You ❤️', this.x, textCenterY - baseFontSize * 0.65);
-
-                    ctx.font = `700 ${Math.round(baseFontSize * 1.18)}px "Playfair Display", serif`;
-                    ctx.fillText('Varsha', this.x, textCenterY + baseFontSize * 0.65);
-
-                    ctx.restore();
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
                 }
-
-                isPointInside(px, py) {
-                    const dx = (px - this.x) / (this.radiusX * 1.15);
-                    const dy = (py - this.y) / (this.radiusY * 1.15);
-                    return (dx * dx + dy * dy) <= 1;
-                }
-
-                pop() {
-                    if (this.popped) return;
-                    this.popped = true;
-                    playPopSound();
-                    spawnBlastParticles(this.x, this.y, this.palette);
-                    showFloatingBlastMessage(this.x, this.y);
-                }
-            }
-
-            // Confetti & Heart Burst Particle Class
-            class BlastParticle {
-                constructor(x, y, palette) {
-                    this.x = x;
-                    this.y = y;
-                    const angle = Math.random() * Math.PI * 2;
-                    const speed = 2.5 + Math.random() * 6.5;
-                    this.vx = Math.cos(angle) * speed;
-                    this.vy = Math.sin(angle) * speed - 1.5;
-                    this.gravity = 0.14;
-                    this.friction = 0.96;
-                    this.alpha = 1;
-                    this.decay = 0.016 + Math.random() * 0.015;
-                    this.size = 5 + Math.random() * 6;
-                    this.rotation = Math.random() * Math.PI * 2;
-                    this.rotationSpeed = (Math.random() - 0.5) * 0.2;
-                    this.isHeart = Math.random() < 0.55;
-                    const colors = [palette.main, palette.light, '#ffffff', '#fda4af', '#fde047'];
-                    this.color = colors[Math.floor(Math.random() * colors.length)];
-                }
-
-                update() {
-                    this.vx *= this.friction;
-                    this.vy *= this.friction;
-                    this.vy += this.gravity;
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    this.rotation += this.rotationSpeed;
-                    this.alpha -= this.decay;
-                }
-
-                draw(ctx) {
-                    if (this.alpha <= 0) return;
-                    ctx.save();
-                    ctx.globalAlpha = Math.max(0, this.alpha);
-                    ctx.translate(this.x, this.y);
-                    ctx.rotate(this.rotation);
-                    ctx.fillStyle = this.color;
-
-                    if (this.isHeart) {
-                        drawHeartPath(ctx, 0, -this.size * 0.5, this.size * 1.3);
-                        ctx.fill();
-                    } else {
-                        ctx.fillRect(-this.size / 2, -this.size / 3, this.size, this.size * 0.6);
-                    }
-                    ctx.restore();
-                }
-            }
-
-            // Spawn Burst Particles when a Balloon Pops
-            function spawnBlastParticles(x, y, palette) {
-                const count = width < 600 ? 22 : 30;
-                for (let i = 0; i < count; i++) {
-                    particles.push(new BlastParticle(x, y, palette));
-                }
-            }
-
-            // Show Glowing "I Love You ❤️ Varsha" Text at the Exact Blast Spot
-            function showFloatingBlastMessage(x, y) {
-                // Clamp coordinates so text stays readable inside viewport
-                const safeX = Math.max(95, Math.min(width - 95, x));
-                const safeY = Math.max(60, Math.min(height - 60, y));
-
-                const el = document.createElement('div');
-                el.className = 'blast-reveal-text font-cursive text-3xl sm:text-4xl font-bold text-pink-100';
-                el.style.left = `${safeX}px`;
-                el.style.top = `${safeY}px`;
-                el.innerHTML = `I Love You <span class="text-rose-400">❤️</span> Varsha`;
-
-                blastTextContainer.appendChild(el);
-
-                setTimeout(() => {
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
-                    }
-                }, 2100);
-            }
-
-            // Spawn a Wave of Balloons
-            function launchBalloonWave(count = 6) {
-                for (let i = 0; i < count; i++) {
-                    setTimeout(() => {
-                        balloons.push(new Balloon());
-                    }, i * 240);
-                }
-            }
-
-            // Initialize Ambient Hearts & Initial Balloons
-            for (let i = 0; i < 22; i++) {
-                ambientHearts.push(new AmbientHeart());
-            }
-            launchBalloonWave(7);
-
-            // Continuous Balloon Spawner Interval
-            setInterval(() => {
-                const maxBalloons = width < 600 ? 8 : 13;
-                if (balloons.length < maxBalloons) {
-                    balloons.push(new Balloon());
-                }
-            }, 1350);
-
-            // Handle Tap / Click on Canvas to Manually Blast Balloons
-            function handleCanvasInteraction(clientX, clientY) {
-                // Check balloons from front (last drawn) to back
-                for (let i = balloons.length - 1; i >= 0; i--) {
-                    if (balloons[i].isPointInside(clientX, clientY)) {
-                        balloons[i].pop();
-                        return true;
-                    }
-                }
-                // If user taps empty space, spawn a cute mini heart burst + 1 new balloon!
-                const randomPalette = BALLOON_PALETTES[Math.floor(Math.random() * BALLOON_PALETTES.length)];
-                spawnBlastParticles(clientX, clientY, randomPalette);
-                balloons.push(new Balloon(clientX, height + 60));
-                return false;
-            }
-
-            canvas.addEventListener('pointerdown', (e) => {
-                handleCanvasInteraction(e.clientX, e.clientY);
+                ctx.restore();
             });
+        }
 
-            // "Send More Balloons" Button Action
-            celebrateBtn.addEventListener('click', async () => {
-                launchBalloonWave(width < 600 ? 7 : 11);
-                // Also create a celebratory heart burst around the button
-                const rect = celebrateBtn.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                spawnBlastParticles(centerX, centerY, BALLOON_PALETTES[0]);
-            });
+        /**
+         * Spawns and animates floating love hearts rising from the rose & penguin
+         */
+        function updateAndDrawFloatingHearts(dt, originX, originY, scale) {
+            const finishProg = getProgress(STAGES.FINISHING);
+            if (finishProg <= 0) return;
 
-            // Main 60FPS Animation Loop
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-
-                // 1. Update & Draw Subtle Floating Background Hearts
-                for (let i = 0; i < ambientHearts.length; i++) {
-                    ambientHearts[i].update();
-                    ambientHearts[i].draw(ctx);
-                }
-
-                // 2. Update & Draw Balloons
-                for (let i = balloons.length - 1; i >= 0; i--) {
-                    const b = balloons[i];
-                    b.update();
-                    if (b.popped || b.y < -b.radiusY * 2) {
-                        balloons.splice(i, 1);
-                    } else {
-                        b.draw(ctx);
-                    }
-                }
-
-                // 3. Update & Draw Confetti & Heart Blast Particles
-                for (let i = particles.length - 1; i >= 0; i--) {
-                    const p = particles[i];
-                    p.update();
-                    if (p.alpha <= 0) {
-                        particles.splice(i, 1);
-                    } else {
-                        p.draw(ctx);
-                    }
-                }
-
-                requestAnimationFrame(animate);
+            // Spawn a new floating heart periodically once rose is bloomed
+            if (!isPaused && Math.random() < dt * 2.4 * speedMultiplier) {
+                floatingHearts.push({
+                    x: originX + (Math.random() - 0.5) * 90 * scale,
+                    y: originY - 20 * scale,
+                    vx: (Math.random() - 0.5) * 28,
+                    vy: -(35 + Math.random() * 35),
+                    size: (10 + Math.random() * 10) * scale,
+                    alpha: 0.95,
+                    wobblePhase: Math.random() * Math.PI * 2,
+                    color: Math.random() > 0.4 ? '#ff4d88' : '#ff7aa8'
+                });
             }
 
-            window.onload = function () {
-                animate();
+            for (let i = floatingHearts.length - 1; i >= 0; i--) {
+                const h = floatingHearts[i];
+                if (!isPaused) {
+                    h.y += h.vy * dt;
+                    h.x += (h.vx + Math.sin(idleTime * 3 + h.wobblePhase) * 18) * dt;
+                    h.alpha -= dt * 0.26;
+                }
+
+                if (h.alpha <= 0) {
+                    floatingHearts.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.globalAlpha = clamp(h.alpha, 0, 1);
+                ctx.fillStyle = h.color;
+                drawHeartShape(ctx, h.x, h.y, h.size);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        /**
+         * Main Character & Rose Drawing Routine
+         * Coordinate system is normalized around (0, 0) at penguin's center
+         */
+        function drawPenguinAndRose(dt) {
+            const isComplete = elapsedTime >= STAGES.COMPLETE.start;
+
+            // Idle gentle sway & breathing once drawing nears completion
+            const idleBlend = clamp((elapsedTime - STAGES.FINISHING.start) / 1.5, 0, 1);
+            const swayAngle = Math.sin(idleTime * 2.1) * 0.032 * idleBlend;
+            const breathScaleY = 1 + Math.sin(idleTime * 3.2) * 0.014 * idleBlend;
+            const breathScaleX = 1 - Math.sin(idleTime * 3.2) * 0.008 * idleBlend;
+
+            // Responsive scaling so penguin looks adorable on both mobile and desktop
+            const baseUnit = Math.min(width, height);
+            const scale = clamp(baseUnit / 470, 0.58, 1.28);
+
+            const cx = width * 0.5;
+            const cy = height * 0.52;
+
+            // 1. Ground Soft Shadow (stays anchored on the snow)
+            const shadowProg = getProgress(STAGES.GROUND_SHADOW);
+            if (shadowProg > 0) {
+                ctx.save();
+                ctx.translate(cx, cy + 146 * scale);
+                ctx.scale(scale * easeOutCubic(shadowProg), scale * easeOutCubic(shadowProg));
+                const shadowGrad = ctx.createRadialGradient(0, 0, 5, 0, 0, 95);
+                shadowGrad.addColorStop(0, 'rgba(165, 118, 168, 0.32)');
+                shadowGrad.addColorStop(1, 'rgba(165, 118, 168, 0)');
+                ctx.fillStyle = shadowGrad;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 95, 22, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // Apply gentle sway pivot at the penguin's feet
+            ctx.save();
+            ctx.translate(cx, cy + 135 * scale);
+            ctx.rotate(swayAngle);
+            ctx.scale(scale * breathScaleX, scale * breathScaleY);
+            ctx.translate(0, -135); // Shift origin back to body center (0, 0)
+
+            const strokeColor = '#2d2438'; // Soft dark plum-charcoal lineart
+            const outlineWidth = 4.2;
+
+            // ==========================================
+            // 2. CUTE ORANGE FEET
+            // ==========================================
+            const feetProg = getProgress(STAGES.FEET);
+            if (feetProg > 0) {
+                const leftFootPath = (c) => {
+                    c.ellipse(-42, 134, 28, 13, -0.12, 0, Math.PI * 2);
+                };
+                const rightFootPath = (c) => {
+                    c.ellipse(42, 134, 28, 13, 0.12, 0, Math.PI * 2);
+                };
+
+                const fillAlpha = clamp((feetProg - 0.35) / 0.65, 0, 1);
+                fillPathProgress(ctx, leftFootPath, fillAlpha, '#ffaa4c');
+                fillPathProgress(ctx, rightFootPath, fillAlpha, '#ffaa4c');
+
+                strokePathProgress(ctx, leftFootPath, feetProg, 140, strokeColor, outlineWidth);
+                strokePathProgress(ctx, rightFootPath, feetProg, 140, strokeColor, outlineWidth);
+            }
+
+            // ==========================================
+            // 3. LEFT FLIPPER (Behind/Side of Body)
+            // ==========================================
+            const leftFlipperProg = getProgress(STAGES.LEFT_FLIPPER);
+            if (leftFlipperProg > 0) {
+                ctx.save();
+                // Gentle wave motion when complete
+                const wave = Math.sin(idleTime * 3.2) * 0.06 * idleBlend;
+                ctx.translate(-86, 15);
+                ctx.rotate(wave);
+                ctx.translate(86, -15);
+
+                const leftFlipperPath = (c) => {
+                    c.moveTo(-84, 5);
+                    c.bezierCurveTo(-125, 25, -132, 78, -104, 88);
+                    c.bezierCurveTo(-88, 93, -80, 65, -82, 42);
+                    c.closePath();
+                };
+
+                const fillAlpha = clamp((leftFlipperProg - 0.3) / 0.7, 0, 1);
+                fillPathProgress(ctx, leftFlipperPath, fillAlpha, '#373248');
+                strokePathProgress(ctx, leftFlipperPath, leftFlipperProg, 220, strokeColor, outlineWidth);
+                ctx.restore();
+            }
+
+            // ==========================================
+            // 4. MAIN PENGUIN BODY (Chubby Pear Shape)
+            // ==========================================
+            const bodyStrokeProg = getProgress(STAGES.BODY_OUTLINE);
+            const bodyFillProg = getProgress(STAGES.BODY_FILL);
+
+            const bodyPath = (c) => {
+                c.moveTo(0, -122);
+                // Right head & chubby body curve
+                c.bezierCurveTo(68, -122, 92, -65, 92, 18);
+                c.bezierCurveTo(92, 96, 62, 136, 0, 136);
+                // Left chubby body & head curve
+                c.bezierCurveTo(-62, 136, -92, 96, -92, 18);
+                c.bezierCurveTo(-92, -65, -68, -122, 0, -122);
+                c.closePath();
             };
-        })();
+
+            if (bodyFillProg > 0) {
+                // Soft charcoal gradient for plush look
+                const bodyGrad = ctx.createLinearGradient(-70, -110, 70, 130);
+                bodyGrad.addColorStop(0, '#453e59');
+                bodyGrad.addColorStop(1, '#2f293d');
+                fillPathProgress(ctx, bodyPath, bodyFillProg, bodyGrad);
+            }
+            if (bodyStrokeProg > 0) {
+                strokePathProgress(ctx, bodyPath, bodyStrokeProg, 720, strokeColor, outlineWidth);
+            }
+
+            // ==========================================
+            // 5. CREAMY WHITE BELLY & HEART-SHAPED FACE MASK
+            // ==========================================
+            const bellyStrokeProg = getProgress(STAGES.BELLY_OUTLINE);
+            const bellyFillProg = getProgress(STAGES.BELLY_FILL);
+
+            const bellyPath = (c) => {
+                // Cute widow's peak / heart brow between eyes
+                c.moveTo(0, -64);
+                // Right eye arch
+                c.bezierCurveTo(22, -84, 62, -74, 64, -36);
+                // Right cheek & round tummy
+                c.bezierCurveTo(76, -12, 74, 122, 0, 122);
+                // Left round tummy & cheek
+                c.bezierCurveTo(-74, 122, -76, -12, -64, -36);
+                // Left eye arch back to center
+                c.bezierCurveTo(-62, -74, -22, -84, 0, -64);
+                c.closePath();
+            };
+
+            if (bellyFillProg > 0) {
+                const bellyGrad = ctx.createLinearGradient(0, -75, 0, 122);
+                bellyGrad.addColorStop(0, '#ffffff');
+                bellyGrad.addColorStop(1, '#fff5f8');
+                fillPathProgress(ctx, bellyPath, bellyFillProg, bellyGrad);
+            }
+            if (bellyStrokeProg > 0) {
+                strokePathProgress(ctx, bellyPath, bellyStrokeProg, 620, '#dfd3e3', 2.5);
+            }
+
+            // ==========================================
+            // 6. FACE FEATURES (Eyes, Sparkles, Beak, Rosy Cheeks)
+            // ==========================================
+            const faceProg = getProgress(STAGES.FACE_FEATURES);
+            if (faceProg > 0) {
+                const eyeScale = easeOutCubic(clamp(faceProg / 0.55, 0, 1));
+                const detailAlpha = easeOutCubic(clamp((faceProg - 0.35) / 0.65, 0, 1));
+
+                // Blinking logic during idle state
+                const blinkCycle = (idleTime % 4.2);
+                const isBlinking = isComplete && (blinkCycle > 4.02);
+                const blinkScaleY = isBlinking ? 0.12 : 1;
+
+                // Draw Left & Right Eyes
+                [-31, 31].forEach((eyeX) => {
+                    ctx.save();
+                    ctx.translate(eyeX, -38);
+                    ctx.scale(eyeScale, eyeScale * blinkScaleY);
+
+                    // Main glossy dark eye
+                    ctx.fillStyle = '#241b2f';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, 11.5, 13.5, 0, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if (!isBlinking) {
+                        // Primary big white sparkle
+                        ctx.fillStyle = '#ffffff';
+                        ctx.beginPath();
+                        ctx.arc(-3.5, -4.5, 4.3, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        // Secondary tiny sparkle
+                        ctx.beginPath();
+                        ctx.arc(4, 3.5, 2, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                });
+
+                // Rosy Pink Blushing Cheeks
+                ctx.save();
+                ctx.globalAlpha = detailAlpha * 0.72;
+                const cheekPulse = 1 + Math.sin(idleTime * 4) * 0.05 * idleBlend;
+                [-47, 47].forEach((cheekX) => {
+                    const blushGrad = ctx.createRadialGradient(cheekX, -18, 1, cheekX, -18, 15 * cheekPulse);
+                    blushGrad.addColorStop(0, '#ff7aa8');
+                    blushGrad.addColorStop(1, 'rgba(255, 122, 168, 0)');
+                    ctx.fillStyle = blushGrad;
+                    ctx.beginPath();
+                    ctx.ellipse(cheekX, -18, 15 * cheekPulse, 10 * cheekPulse, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.restore();
+
+                // Cute Small Rounded Beak
+                const beakProg = clamp((faceProg - 0.25) / 0.75, 0, 1);
+                if (beakProg > 0) {
+                    const beakPath = (c) => {
+                        c.moveTo(-13, -24);
+                        c.quadraticCurveTo(0, -30, 13, -24);
+                        c.quadraticCurveTo(14, -12, 0, -9);
+                        c.quadraticCurveTo(-14, -12, -13, -24);
+                        c.closePath();
+                    };
+                    fillPathProgress(ctx, beakPath, beakProg, '#ffb347');
+                    strokePathProgress(ctx, beakPath, beakProg, 90, strokeColor, 3);
+                }
+            }
+
+            // ==========================================
+            // 7. ROMANTIC ROSE (Stem, Leaves, Blooming Petals)
+            // ==========================================
+            const stemProg = getProgress(STAGES.FLOWER_STEM);
+            const bloomProg = getProgress(STAGES.FLOWER_BLOOM);
+
+            // Subtle gentle sway & forward offering motion for the flower
+            ctx.save();
+            const flowerSway = Math.sin(idleTime * 2.6 + 0.5) * 0.045 * idleBlend;
+            ctx.translate(48, 35);
+            ctx.rotate(flowerSway);
+            ctx.translate(-48, -35);
+
+            if (stemProg > 0) {
+                // Green Rose Stem held diagonally across front-right
+                const stemPath = (c) => {
+                    c.moveTo(32, 68);
+                    c.quadraticCurveTo(52, 22, 68, -26);
+                };
+                strokePathProgress(ctx, stemPath, stemProg, 110, '#3da35d', 4.8);
+
+                // Two cute leaves branching off the stem
+                const leafProg = clamp((stemProg - 0.45) / 0.55, 0, 1);
+                if (leafProg > 0) {
+                    const leftLeaf = (c) => {
+                        c.moveTo(52, 18);
+                        c.quadraticCurveTo(32, 6, 28, 22);
+                        c.quadraticCurveTo(42, 28, 52, 18);
+                        c.closePath();
+                    };
+                    const rightLeaf = (c) => {
+                        c.moveTo(58, 4);
+                        c.quadraticCurveTo(78, -6, 80, 10);
+                        c.quadraticCurveTo(66, 16, 58, 4);
+                        c.closePath();
+                    };
+                    fillPathProgress(ctx, leftLeaf, leafProg, '#52b76e');
+                    strokePathProgress(ctx, leftLeaf, leafProg, 65, '#2b6e3f', 2.2);
+
+                    fillPathProgress(ctx, rightLeaf, leafProg, '#52b76e');
+                    strokePathProgress(ctx, rightLeaf, leafProg, 65, '#2b6e3f', 2.2);
+                }
+            }
+
+            // Rose Bloom (Layered Spiraling Petals)
+            if (bloomProg > 0) {
+                const roseX = 69;
+                const roseY = -30;
+                const bloomScale = easeOutCubic(bloomProg);
+
+                ctx.save();
+                ctx.translate(roseX, roseY);
+                ctx.scale(bloomScale, bloomScale);
+
+                // Green Sepal Base
+                ctx.fillStyle = '#3da35d';
+                ctx.beginPath();
+                ctx.moveTo(-10, 8);
+                ctx.quadraticCurveTo(0, 16, 10, 8);
+                ctx.lineTo(0, 2);
+                ctx.closePath();
+                ctx.fill();
+
+                // Outer Rose Petals (Deep Velvet Red)
+                const outerPetalPath = (c) => {
+                    c.moveTo(0, 10);
+                    c.bezierCurveTo(-24, 10, -26, -18, -8, -22);
+                    c.bezierCurveTo(-2, -26, 2, -26, 8, -22);
+                    c.bezierCurveTo(26, -18, 24, 10, 0, 10);
+                    c.closePath();
+                };
+                const roseGrad = ctx.createRadialGradient(-4, -10, 2, 0, -4, 24);
+                roseGrad.addColorStop(0, '#ff4d79');
+                roseGrad.addColorStop(0.6, '#e61c50');
+                roseGrad.addColorStop(1, '#b50e3b');
+
+                fillPathProgress(ctx, outerPetalPath, bloomProg, roseGrad);
+                strokePathProgress(ctx, outerPetalPath, bloomProg, 120, '#7a0927', 2.5);
+
+                // Inner Folded Rose Petals & Swirl
+                const innerProg = clamp((bloomProg - 0.3) / 0.7, 0, 1);
+                if (innerProg > 0) {
+                    ctx.save();
+                    ctx.globalAlpha = easeOutCubic(innerProg);
+
+                    // Left inner petal fold
+                    ctx.fillStyle = '#ff3366';
+                    ctx.beginPath();
+                    ctx.ellipse(-6, -7, 10, 12, -0.35, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Right inner petal fold
+                    ctx.fillStyle = '#d91647';
+                    ctx.beginPath();
+                    ctx.ellipse(6, -7, 10, 12, 0.35, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Center rose spiral
+                    ctx.strokeStyle = '#850a2a';
+                    ctx.lineWidth = 2.2;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.arc(0, -9, 7, 0.2, Math.PI * 1.45);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(0, -9, 3.5, Math.PI, Math.PI * 2.4);
+                    ctx.stroke();
+
+                    // Soft highlight shimmer on top petal
+                    ctx.fillStyle = 'rgba(255, 210, 225, 0.45)';
+                    ctx.beginPath();
+                    ctx.ellipse(-7, -14, 4.5, 2.2, -0.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                ctx.restore();
+            }
+            ctx.restore(); // End rose sway
+
+            // ==========================================
+            // 8. RIGHT FLIPPER (Wrapping Across Belly to Hold the Rose)
+            // ==========================================
+            const rightFlipperProg = getProgress(STAGES.RIGHT_FLIPPER);
+            if (rightFlipperProg > 0) {
+                const rightFlipperPath = (c) => {
+                    c.moveTo(86, 6);
+                    c.bezierCurveTo(96, 36, 72, 62, 34, 52);
+                    c.bezierCurveTo(22, 49, 24, 34, 38, 32);
+                    c.bezierCurveTo(58, 29, 72, 16, 86, 6);
+                    c.closePath();
+                };
+
+                const fillAlpha = clamp((rightFlipperProg - 0.3) / 0.7, 0, 1);
+                fillPathProgress(ctx, rightFlipperPath, fillAlpha, '#373248');
+                strokePathProgress(ctx, rightFlipperPath, rightFlipperProg, 195, strokeColor, outlineWidth);
+            }
+
+            // ==========================================
+            // 9. FINISHING SPARKLE & MINI HEART ABOVE HEAD
+            // ==========================================
+            const finishProg = getProgress(STAGES.FINISHING);
+            if (finishProg > 0) {
+                const popScale = easeOutCubic(finishProg);
+                const floatY = Math.sin(idleTime * 3) * 5 * idleBlend;
+
+                ctx.save();
+                ctx.translate(0, -158 + floatY);
+                ctx.scale(popScale, popScale);
+                ctx.fillStyle = '#ff4d88';
+                ctx.shadowColor = 'rgba(255, 77, 136, 0.45)';
+                ctx.shadowBlur = 12;
+                drawHeartShape(ctx, 0, -10, 22);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            ctx.restore(); // End penguin sway & scale transform
+
+            // Render floating love hearts in screen space
+            updateAndDrawFloatingHearts(dt, cx + 55 * scale, cy - 35 * scale, scale);
+        }
+
+        /**
+         * Updates the top status pill text dynamically based on drawing stage
+         */
+        function updateStatusUI() {
+            let currentLabel = STAGES.COMPLETE.label;
+            let completed = elapsedTime >= STAGES.COMPLETE.start;
+
+            for (const key of Object.keys(STAGES)) {
+                const st = STAGES[key];
+                if (elapsedTime >= st.start && elapsedTime < st.start + st.duration) {
+                    currentLabel = st.label;
+                    break;
+                }
+            }
+
+            if (isPaused) {
+                statusText.textContent = "Paused • " + currentLabel;
+                statusDot.classList.remove('animate-pulse', 'bg-pink-500');
+                statusDot.classList.add('bg-amber-400');
+            } else {
+                statusText.textContent = currentLabel;
+                statusDot.classList.remove('bg-amber-400');
+                statusDot.classList.add('bg-pink-500');
+                if (!completed) {
+                    statusDot.classList.add('animate-pulse');
+                } else {
+                    statusDot.classList.remove('animate-pulse');
+                }
+            }
+        }
+
+        /**
+         * Main Animation Loop
+         */
+        function animate(now) {
+            const rawDt = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
+            // Clamp delta time to prevent jumps when switching tabs
+            const dt = Math.min(rawDt, 0.1);
+
+            if (!isPaused) {
+                idleTime += dt * speedMultiplier;
+
+                if (isIntroActive) {
+                    introTimer -= dt;
+                    const secLeft = Math.max(0, Math.ceil(introTimer));
+                    introCountdownEl.textContent = secLeft;
+                    if (introTimer <= 0) {
+                        startExperience();
+                    }
+                } else {
+                    elapsedTime += dt * speedMultiplier;
+                }
+            }
+
+            ctx.clearRect(0, 0, width, height);
+
+            drawBackground(dt);
+            updateAndDrawBalloons(dt);
+
+            if (!isIntroActive) {
+                drawPenguinAndRose(dt);
+                updateStatusUI();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // ==========================================
+        // INTERACTIVE CONTROLS EVENT LISTENERS
+        // ==========================================
+
+        // Replay from intro
+        replayBtn.addEventListener('click', resetToIntro);
+
+        // Pause / Resume toggle
+        playPauseBtn.addEventListener('click', () => {
+            isPaused = !isPaused;
+            if (isPaused) {
+                pauseIcon.classList.add('hidden');
+                playIcon.classList.remove('hidden');
+                playPauseText.textContent = 'Resume';
+            } else {
+                pauseIcon.classList.remove('hidden');
+                playIcon.classList.add('hidden');
+                playPauseText.textContent = 'Pause';
+            }
+        });
+
+        // Speed selection buttons (0.75x, 1x, 1.5x)
+        speedBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                speedMultiplier = parseFloat(btn.dataset.speed);
+
+                // Update active pill styling
+                speedBtns.forEach(b => {
+                    b.classList.remove('bg-white', 'text-pink-600', 'shadow-sm');
+                    b.classList.add('text-pink-800');
+                });
+                btn.classList.add('bg-white', 'text-pink-600', 'shadow-sm');
+                btn.classList.remove('text-pink-800');
+            });
+        });
+
+        // Tap/click on a balloon to pop it manually & reveal "I love you Aaru ❤️",
+        // or burst cute mini hearts anywhere else!
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            // Check if user tapped any floating balloon (generous hit radius for mobile)
+            let poppedAny = false;
+            for (let i = balloons.length - 1; i >= 0; i--) {
+                const b = balloons[i];
+                const dist = Math.hypot(clickX - b.x, clickY - b.y);
+                if (dist <= b.radius * 1.45) {
+                    popBalloon(i);
+                    poppedAny = true;
+                    break;
+                }
+            }
+
+            if (!poppedAny) {
+                for (let i = 0; i < 6; i++) {
+                    floatingHearts.push({
+                        x: clickX + (Math.random() - 0.5) * 30,
+                        y: clickY + (Math.random() - 0.5) * 20,
+                        vx: (Math.random() - 0.5) * 65,
+                        vy: -(45 + Math.random() * 55),
+                        size: 12 + Math.random() * 10,
+                        alpha: 1,
+                        wobblePhase: Math.random() * Math.PI * 2,
+                        color: i % 2 === 0 ? '#ff3377' : '#ff85b3'
+                    });
+                }
+            }
+        });
+
+        // Start animation cleanly on load
+        window.onload = function () {
+            lastFrameTime = performance.now();
+            requestAnimationFrame(animate);
+        };
     </script>
 </body>
 </html>
